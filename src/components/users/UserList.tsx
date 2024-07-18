@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Modal, Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import {
   DeleteOutlined,
@@ -12,13 +12,22 @@ export interface DataType {
   key: string;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   roles: string;
 }
 
 const UserList = () => {
   const [open, setOpen] = useState(false);
   const [currentRecords, setCurrentRecords] = useState<DataType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const onClose = () => {
     setOpen(false);
@@ -42,6 +51,7 @@ const UserList = () => {
 
   const handleDelete = (record: DataType) => {
     console.log("Delete", record);
+    setIsModalOpen(true);
   };
 
   const columns: TableProps<DataType>["columns"] = [
@@ -49,7 +59,7 @@ const UserList = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      defaultSortOrder: "descend",
+      // defaultSortOrder: "descend",
       sorter: (a, b) => a.name.length - b.name.length,
       render: (text) => <a>{text}</a>,
     },
@@ -57,7 +67,7 @@ const UserList = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      defaultSortOrder: "descend",
+      // defaultSortOrder: "descend",
       sorter: (a, b) => a.email.length - b.email.length,
     },
     {
@@ -69,7 +79,7 @@ const UserList = () => {
       title: "Roles",
       key: "roles",
       dataIndex: "roles",
-      defaultSortOrder: "descend",
+      // defaultSortOrder: "descend",
       sorter: (a, b) => a.roles.length - b.roles.length,
       render: (roles) => {
         let color;
@@ -101,22 +111,22 @@ const UserList = () => {
     {
       key: "1",
       name: "John Brown",
-      phone: 32,
-      email: "New York No. 1 Lake Park",
+      phone: "0977777777",
+      email: "test01@gmail.com",
       roles: "Agent",
     },
     {
       key: "2",
       name: "Jim Green",
-      phone: 42,
-      email: "London No. 1 Lake Park",
+      phone: "0977777777",
+      email: "test02@gmail.com",
       roles: "User",
     },
     {
       key: "3",
       name: "Joe Black",
-      phone: 32,
-      email: "Sydney No. 1 Lake Park",
+      phone: "0977777777",
+      email: "test03@gmail.com",
       roles: "User",
     },
   ];
@@ -136,6 +146,13 @@ const UserList = () => {
       </div>
       <Table columns={columns} dataSource={data} />
       <UserDrawer onClose={onClose} open={open} records={currentRecords} />
+      <Modal
+        title="Deleting User"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}>
+        <p>Are you sure to delete this user?</p>
+      </Modal>
     </div>
   );
 };

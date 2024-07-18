@@ -1,10 +1,16 @@
 .logo-container {
   padding: 15px 0 15px 30px;
   transition: all 0.3s;
+  height: 62px;
 }
 
 .logo-container.collapsed {
   padding: 32px 0;
+  background-image: url("/images/logo_of_REMS.avif");
+  background-size: cover;
+  width: 75px;
+  height: 62px;
+  transition: all 0.3s;
 }
 
 .sidebar-title {
