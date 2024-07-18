@@ -1,6 +1,12 @@
-import { Button, Layout, theme } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Avatar, Button, Dropdown, Layout, theme } from "antd";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { collapseProp } from "../sideber/DashboardSidebar";
+import type { MenuProps } from "antd";
+import "./style.css";
 
 const { Header } = Layout;
 
@@ -8,6 +14,17 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <a rel="noopener noreferrer" href="/logout">
+          Log out
+        </a>
+      ),
+    },
+  ];
 
   return (
     <Header
@@ -18,6 +35,9 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
         width: "100%",
         padding: 0,
         background: colorBgContainer,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
       }}>
       <Button
         type="text"
@@ -29,6 +49,13 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
           height: 64,
         }}
       />
+      <Dropdown menu={{ items }} placement="bottomRight" trigger={["click"]}>
+        <Avatar
+          size={32}
+          icon={<UserOutlined />}
+          style={{ cursor: "pointer", marginRight: "16px" }}
+        />
+      </Dropdown>
     </Header>
   );
 };
