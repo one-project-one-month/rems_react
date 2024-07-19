@@ -1,3 +1,15 @@
+import { ConfigProvider } from "antd";
+import Router from "./routes/Router";
+
 export default function App() {
-  return <div className="bg-red-300">App</div>;
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorBgLayout: "#f5f5f5",
+        },
+      }}>
+      <Router />
+    </ConfigProvider>
+  );
 }

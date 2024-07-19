@@ -1,0 +1,41 @@
+.logo-container {
+  padding: 15px 0 15px 30px;
+  transition: all 0.3s;
+  height: 62px;
+}
+
+.logo-container.collapsed {
+  padding: 32px 0;
+  background-image: url("/images/logo_of_REMS.avif");
+  background-size: cover;
+  width: 75px;
+  height: 62px;
+  transition: all 0.3s;
+}
+
+.sidebar-title {
+  color: #3d4252;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+}
+
+.collapsed .sidebar-title {
+  font-size: 0;
+  opacity: 0;
+}
+
+.custom-menu {
+  background-color: #fdfdfd;
+}
+
+.custom-menu .ant-menu-item:hover {
+  background-color: #e6f7ff !important;
+  color: #3c3cb8 !important;
+}
+
+.custom-menu .ant-menu-item-selected {
+  background-color: #e6f7ff !important;
+  color: #3c3cb8 !important;
+}
