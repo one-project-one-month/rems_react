@@ -3,6 +3,7 @@ import {
 	SwapOutlined,
 	UserOutlined,
 	UserSwitchOutlined,
+	FundViewOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
@@ -37,6 +38,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 			key: "transactions",
 			icon: <SwapOutlined />,
 			label: "Transactions",
+		},
+		{
+			key: "review",
+			icon: <FundViewOutlined />,
+			label: "Review",
 		},
 	];
 
