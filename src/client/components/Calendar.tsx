@@ -1,7 +1,7 @@
 import { DatePicker, DatePickerProps } from "antd"
-import { useAppDispatch, useAppSelector } from "../../../app/store/hooks/appointmentHook"
-import { addAppointmentDate } from "../../../app/store/slices/appointmentSlice"
-import { next } from "../../../app/store/slices/currentPageSlice"
+import { useAppDispatch, useAppSelector } from "../../store/hooks/appointmentHook"
+import { addAppointmentDate } from "../../store/slices/appointmentSlice"
+import { next } from "../../store/slices/currentPageSlice"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat";
 

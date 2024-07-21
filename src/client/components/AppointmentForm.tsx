@@ -1,9 +1,9 @@
 import { Button, Flex, Form, Input, Space, Typography } from "antd";
 import type { FormProps } from "antd";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/store/hooks/appointmentHook";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/appointmentHook";
 import { ClockCircleOutlined, CalendarOutlined } from "@ant-design/icons";
-import { prev } from "../../../app/store/slices/currentPageSlice";
+import { prev } from "../../store/slices/currentPageSlice";
 
 
 const { Title } = Typography;

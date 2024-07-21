@@ -1,27 +1,13 @@
-import DashboardLayout from "../components/layouts/DashboardLayout";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import UserList from "../components/users/UserList";
-import AgentList from "../components/agents/AgentList";
-import Appointment from "../components/user_mobile_view/appointment/Appointment";
-import UserHome from "../components/user_mobile_view/Home";
-import Navbar from "../components/user_mobile_view/Navbar";
+import UserHome from "../client/pages/Home";
+import Navbar from "../client/layouts/Navbar";
+import AppointmentHistoryList from "../client/components/AppointmentHistoryList";
+import Appointment from "../client/components/Appointment";
+
 
 const Router = () => {
 	const config = createBrowserRouter([
-		{
-			path: "/",
-			element: <DashboardLayout />,
-			children: [
-				{
-					path: "/users",
-					element: <UserList />,
-				},
-				{
-					path: "/agents",
-					element: <AgentList />,
-				},
-			],
-		},
 		{
 			path: "user",
 			element: <Navbar />,
@@ -33,6 +19,10 @@ const Router = () => {
 				{
 					path: "appointment",
 					element: <Appointment />
+				},
+				{
+					path: "history",
+					element: <AppointmentHistoryList />
 				}
 			]
 		}
