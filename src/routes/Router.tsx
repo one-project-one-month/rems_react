@@ -2,7 +2,7 @@ import DashboardLayout from "../components/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserList from "../components/users/UserList";
 import AgentList from "../components/agents/AgentList";
-
+import DetailedListing from "../components/listings/DetailedListing"
 const Router = () => {
 	const config = createBrowserRouter([
 		{
@@ -19,6 +19,10 @@ const Router = () => {
 				},
 			],
 		},
+		{
+			path: "/listings/:id",
+			element: <DetailedListing />
+		}
 	]);
 	return <RouterProvider router={config} />;
 };
