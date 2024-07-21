@@ -4,7 +4,9 @@ import {
 	UserOutlined,
 	UserSwitchOutlined,
 	FundViewOutlined,
+	CalendarOutlined,
 } from "@ant-design/icons";
+
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
@@ -43,6 +45,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 			key: "review",
 			icon: <FundViewOutlined />,
 			label: "Review",
+		},
+		{
+			key: "appointments",
+			icon: <CalendarOutlined />,
+			label: "Appointments",
 		},
 	];
 

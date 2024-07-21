@@ -4,6 +4,7 @@ import UserList from "../components/users/UserList";
 import AgentList from "../components/agents/AgentList";
 import TransactionsList from "../components/transactions/TransactionsList";
 import Review from "../components/All Review/Review";
+import Appointments from "../components/appointments/Appointments";
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -26,6 +27,10 @@ const Router = () => {
 				{
 					path: "/transactions",
 					element: <TransactionsList />,
+				},
+				{
+					path: "/appointments",
+					element: <Appointments />,
 				},
 			],
 		},
