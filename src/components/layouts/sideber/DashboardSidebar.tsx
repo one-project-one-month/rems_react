@@ -1,5 +1,5 @@
 import { Layout, Menu, Typography } from "antd";
-import { UserOutlined, UserSwitchOutlined } from "@ant-design/icons";
+import { UserOutlined, UserSwitchOutlined , CalendarOutlined} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
@@ -29,6 +29,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 			icon: <UserSwitchOutlined />,
 			label: "Agent",
 		},
+		{
+			key : "appointments",
+			icon : <CalendarOutlined />,
+			label: "Appointments"
+		}
 	];
 
 	return (
