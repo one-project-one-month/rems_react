@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Space, Table, Tag } from "antd";
+import { Button, Empty, Input, Modal, Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import {
   DeleteOutlined,
@@ -6,20 +6,25 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import UserDrawer from "./UserDrawer";
+import UserDrawer from "./ClientDrawer";
 
 export interface DataType {
   key: string;
-  name: string;
+  client_id: number;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   roles: string;
+  address: string;
 }
 
-const UserList = () => {
+const ClientList = () => {
   const [open, setOpen] = useState(false);
   const [currentRecords, setCurrentRecords] = useState<DataType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
+  const [filteredData, setFilteredData] = useState<DataType[]>([]);
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -34,7 +39,14 @@ const UserList = () => {
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    const value = e.target.value;
+    const filtered = data.filter(
+      (item) =>
+        item.firstName.toLowerCase().includes(value.toLowerCase()) ||
+        item.lastName.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+    setIsSearched(true);
   };
 
   const handleCreate = () => {
@@ -56,12 +68,27 @@ const UserList = () => {
 
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Client Id",
+      dataIndex: "client_id",
+      key: "client_id",
       // defaultSortOrder: "descend",
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.client_id - b.client_id,
       render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Full name",
+      dataIndex: "fullname",
+      key: "fullname",
+      // defaultSortOrder: "descend",
+      sorter: (a, b) =>
+        `${a.firstName} ${a.lastName}`.localeCompare(
+          `${b.firstName} ${b.lastName}`
+        ),
+      render: (_, record) => (
+        <a>
+          {record.firstName} {record.lastName}
+        </a>
+      ),
     },
     {
       title: "Email",
@@ -74,6 +101,11 @@ const UserList = () => {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "Roles",
@@ -110,24 +142,33 @@ const UserList = () => {
   const data: DataType[] = [
     {
       key: "1",
-      name: "John Brown",
+      client_id: 1,
+      firstName: "John",
+      lastName: "Brown",
       phone: "0977777777",
       email: "test01@gmail.com",
       roles: "Agent",
+      address: "New York No. 1 Lake Park",
     },
     {
       key: "2",
-      name: "Jim Green",
+      client_id: 2,
+      firstName: "Jim",
+      lastName: "Green",
       phone: "0977777777",
       email: "test02@gmail.com",
       roles: "User",
+      address: "New York No. 1 Lake Park",
     },
     {
       key: "3",
-      name: "Joe Black",
+      client_id: 3,
+      firstName: "Joe",
+      lastName: "Black",
       phone: "0977777777",
       email: "test03@gmail.com",
       roles: "User",
+      address: "New York No. 1 Lake Park",
     },
   ];
 
@@ -141,10 +182,21 @@ const UserList = () => {
           className="w-64 md:w-80"
         />
         <Button type="primary" onClick={handleCreate}>
-          Create Users
+          Create Clients
         </Button>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={isSearched ? filteredData : data}
+        locale={{
+          emptyText: (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="No data found"
+            />
+          ),
+        }}
+      />
       <UserDrawer onClose={onClose} open={open} records={currentRecords} />
       <Modal
         title="Deleting User"
@@ -157,4 +209,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default ClientList;

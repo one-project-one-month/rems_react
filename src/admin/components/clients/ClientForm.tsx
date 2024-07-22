@@ -1,26 +1,19 @@
-/* 
-name 
-email
-password
-phone
-role
-date created
-*/
 import { Button, ConfigProvider, Form, Input, Select, Space } from "antd";
 import { RuleObject } from "antd/lib/form";
 import { StoreValue } from "rc-field-form/lib/interface";
 import { useEffect } from "react";
-import { DataType } from "./UserList";
+import { DataType } from "./ClientList";
 
 interface Props {
   onClose: () => void;
   initialValues: DataType | null;
 }
 
-const UserForm = ({ onClose, initialValues }: Props) => {
+const ClientForm = ({ onClose, initialValues }: Props) => {
   const [form] = Form.useForm();
 
   const { Option } = Select;
+  const { TextArea } = Input;
 
   useEffect(() => {
     if (initialValues) {
@@ -51,10 +44,12 @@ const UserForm = ({ onClose, initialValues }: Props) => {
   return (
     <ConfigProvider
       form={{
-        requiredMark: (label) => (
+        requiredMark: (label, { required }) => (
           <>
             {label}
-            <span style={{ color: "#ff4d4f", marginLeft: 4 }}>*</span>
+            {required && (
+              <span style={{ color: "#ff4d4f", marginLeft: 4 }}>*</span>
+            )}
           </>
         ),
       }}>
@@ -64,10 +59,18 @@ const UserForm = ({ onClose, initialValues }: Props) => {
         onFinish={onFinish}
         className="custom-form">
         <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true, message: "Please enter your name." }]}>
-          <Input placeholder="Please enter your name" />
+          name="firstName"
+          label="First Name"
+          rules={[
+            { required: true, message: "Please enter your first name." },
+          ]}>
+          <Input placeholder="Please enter your first name" />
+        </Form.Item>
+        <Form.Item
+          name="lastName"
+          label="Last Name"
+          rules={[{ required: true, message: "Please enter your last name." }]}>
+          <Input placeholder="Please enter your last name" />
         </Form.Item>
         <Form.Item
           name="email"
@@ -96,6 +99,9 @@ const UserForm = ({ onClose, initialValues }: Props) => {
             <Option value="User">User</Option>
           </Select>
         </Form.Item>
+        <Form.Item name="address" label="Address">
+          <TextArea />
+        </Form.Item>
 
         <Form.Item>
           <Space>
@@ -110,4 +116,4 @@ const UserForm = ({ onClose, initialValues }: Props) => {
   );
 };
 
-export default UserForm;
+export default ClientForm;

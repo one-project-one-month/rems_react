@@ -1,6 +1,6 @@
 import { Drawer } from "antd";
-import UserForm from "./UserForm";
-import { DataType } from "./UserList";
+import UserForm from "./ClientForm";
+import { DataType } from "./ClientList";
 import "./styles.css";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   records: DataType | null;
 }
 
-const UserDrawer = ({ onClose, open, records }: Props) => {
+const ClientDrawer = ({ onClose, open, records }: Props) => {
   return (
     <>
       <Drawer
@@ -28,4 +28,4 @@ const UserDrawer = ({ onClose, open, records }: Props) => {
   );
 };
 
-export default UserDrawer;
+export default ClientDrawer;
