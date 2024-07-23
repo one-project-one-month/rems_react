@@ -4,6 +4,7 @@ import UserHome from "../client/pages/Home";
 import Navbar from "../client/layouts/Navbar";
 import AppointmentHistoryList from "../client/components/AppointmentHistoryList";
 import Appointment from "../client/components/Appointment";
+import Transaction from "../client/pages/Transaction";
 
 
 const Router = () => {
@@ -23,6 +24,10 @@ const Router = () => {
 				{
 					path: "history",
 					element: <AppointmentHistoryList />
+				},
+				{
+					path:"transaction",
+					element:<Transaction/>
 				}
 			]
 		}
