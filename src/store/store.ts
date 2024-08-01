@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import appointmentReducer from "./slices/appointmentSlice";
 import currentPageSlice from "./slices/currentPageSlice";
+import { appointmentApi } from "../services/apis/appointmentApi";
+import appointmentSlice from "./slices/appointmentSlice";
 
 // Configure the store with the appointment reducer
 const store = configureStore({
   reducer: {
-    appointment: appointmentReducer,
+    appointment: appointmentSlice,
     currentPage: currentPageSlice,
+    [appointmentApi.reducerPath]: appointmentApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(appointmentApi.middleware),
 });
 
 // Infer the RootState and AppDispatch types from the store itself
