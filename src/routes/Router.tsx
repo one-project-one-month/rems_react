@@ -1,6 +1,6 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import UserHome from "../client/pages/Home";
+import Home from "../client/pages/Home";
 import Navbar from "../client/layouts/Navbar";
 import AppointmentHistoryList from "../client/components/AppointmentHistoryList";
 import Appointment from "../client/components/Appointment";
@@ -14,7 +14,7 @@ const Router = () => {
 			children: [
 				{
 					index: true,
-					element: <UserHome />
+					element: <Home />
 				},
 				{
 					path: "appointment",
