@@ -1,9 +1,11 @@
 import React from 'react';
+import Navbar from '../layouts/Navbar';
+import HomeGroup from '../components/HomeGroup';
 
 
 const Home: React.FC = () => {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
+    <div className="relative min-h-screen w-full overflow-hidden bg-orange-50">
       {/* Fixed Background Image */}
       <div
         className="fixed inset-0 bg-cover bg-center"
@@ -36,12 +38,23 @@ const Home: React.FC = () => {
                 <form action="" className='bg-white col-span-10 text-black rounded-s-md h-24 py-6'>
                   <div className='grid grid-cols-4'>
                     <div className='flex flex-col border-r px-4'>
-                      <label htmlFor="name" className='text-sm mb-2'>Keywords</label>
-                      <input type="text" name="name" className='text-black outline-none' placeholder='Search Keyword' />
+                      <label htmlFor="name" className='text-sm mb-2'>State</label>
+                      <select name="" id="" className='outline-none'>
+                        <option value="">Select State</option>
+                        <option value="">Yangon</option>
+                        <option value="">Mandalay</option>
+                        <option value="">House</option>
+                      </select>
+                      {/* <input type="text" name="name" className='text-black outline-none' placeholder='Search Keyword' /> */}
                     </div>
                     <div className='flex flex-col border-r px-4'>
-                      <label htmlFor="" className='text-sm mb-2'>Location</label>
-                      <input type="text" className='text-black outline-none' placeholder='Search Keyword' />
+                      <label htmlFor="" className='text-sm mb-2'>City</label>
+                      <select name="" id="" className='outline-none'>
+                        <option value="">Select City</option>
+                        <option value="">san chaung</option>
+                        <option value="">Studio</option>
+                        <option value="">House</option>
+                      </select>
                     </div>
                     <div className='flex flex-col border-r px-4'>
                       <label htmlFor="" className='text-sm mb-2'>Type</label>
@@ -64,8 +77,9 @@ const Home: React.FC = () => {
             </main>
           </div>
 
-          <div className="h-[2000px]  left-0 right-0 w-full max-w-[1600px] bg-white">
-            I want to full width
+          <div className="h-[2000px]  left-0 right-0 w-full max-w-[1600px] bg-white text-black">
+            
+            <HomeGroup/>
           </div>
         </div>
       </div>
