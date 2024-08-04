@@ -4,8 +4,13 @@ import "../style/priceRange.css";
 import PriceRangeSlider from "../components/PriceRangeSlider";
 import CheckboxGroup from "../components/CheckboxGroup";
 import HomeCard from "../components/HomeCard";
+import { useLocation } from "react-router";
 
 const FilterHome = () => {
+  const location = useLocation();
+  const { state, city, propertyType } = location.state || {};
+  console.log(state,city,propertyType);
+  
   const [minPrice, setMinPrice] = useState(0); // Initial minimum price
   const [maxPrice, setMaxPrice] = useState(1000); // Initial maximum price
   const [formData, setFormData] = useState({

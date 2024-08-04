@@ -8,17 +8,20 @@ const HomeGroup = () => {
     <div className="px-10 py-10">
       <div>
         <ul className="text-black flex items-center justify-center gap-5 mb-5">
-          <li className=" px-6 py-2 text-[16px] bg-primary text-white  rounded-md">
-            For Rent
+          <li className=" px-6 py-2 text-[16px] cursor-pointer bg-primary text-white  rounded-md">
+            View All
           </li>
-          <li className=" px-6 py-2 text-[16px] bg-primary text-white  rounded-md">
-            For Rent
+          <li className=" px-6 py-2 text-[16px] cursor-pointer bg-gray-100  text-black  rounded-md">
+            Apartment
           </li>
-          <li className=" px-6 py-2 text-[16px] bg-primary text-white  rounded-md">
-            For Rent
+          <li className=" px-6 py-2 text-[16px] cursor-pointer bg-gray-100 text-black  rounded-md">
+            Studio
           </li>
-          <li className=" px-6 py-2 text-[16px] bg-primary text-white  rounded-md">
-            For Rent
+          <li className=" px-6 py-2 text-[16px] cursor-pointer bg-gray-100 text-black  rounded-md">
+            Condo
+          </li>
+          <li className=" px-6 py-2 text-[16px] cursor-pointer bg-gray-100 text-black  rounded-md">
+            Office
           </li>
         </ul>
       </div>
