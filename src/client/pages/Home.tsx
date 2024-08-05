@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../layouts/Navbar";
 import HomeGroup from "../components/HomeGroup";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { Property } from "../Model/Property";
 
 const Home: React.FC = () => {
   const [states, setStates] = useState([]);
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<Property[]>([]);
   const [cities, setCities] = useState([]);
-  const [propertyTypes, setPropertyTypes] = useState([
+  const [propertyTypes, setPropertyTypes] = useState<string[]>([
     "All",
     "Condo",
     "Apartment",
@@ -23,10 +23,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     fetchStates();
-    setPropertyTypes(propertyTypes);
     fetchProperties();
-
-    // fetchPropertyTypes();
   }, []);
 
   useEffect(() => {
@@ -35,7 +32,6 @@ const Home: React.FC = () => {
     } else {
       setCities([]);
     }
-    console.log(selectedPropertyType);
   }, [selectedState, selectedPropertyType]);
 
   const fetchProperties = async () => {
@@ -52,8 +48,6 @@ const Home: React.FC = () => {
   const fetchStates = async () => {
     try {
       const { data } = await axios.get("http://localhost:3000/states");
-      console.log(data);
-
       setStates(data);
     } catch (error) {
       console.error("Error fetching states:", error);
@@ -61,8 +55,6 @@ const Home: React.FC = () => {
   };
 
   const fetchCities = async (selectedState) => {
-    console.log(selectedState);
-
     try {
       const response = await axios.get(
         `http://localhost:3000/cities?state_id=${selectedState}`
@@ -201,7 +193,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="h-[2000px] left-0 right-0 w-full max-w-[1600px] bg-white text-black">
-            <HomeGroup />
+          <HomeGroup properties={properties} propertyTypes={propertyTypes} />
           </div>
         </div>
       </div>
