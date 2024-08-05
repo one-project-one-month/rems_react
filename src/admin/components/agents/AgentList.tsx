@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
+import agentApi, {
+	useAgentIndexQuery,
+} from "../../../features/agents/api/agentApi";
 
 interface DataType {
 	key: string;
@@ -83,6 +86,17 @@ const data: DataType[] = [
 	},
 ];
 
-const AgentList: React.FC = () => <Table columns={columns} dataSource={data} />;
+const AgentList: React.FC = () => {
+	const agents = useAgentIndexQuery();
+	console.log(agents);
+
+	useEffect(() => {
+		fetch("http://65.18.112.78:44010/rems/api/v1/clients").then((data) =>
+			console.log(data)
+		);
+	}, []);
+
+	return <Table columns={columns} dataSource={data} />;
+};
 
 export default AgentList;
