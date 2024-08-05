@@ -1,197 +1,340 @@
-import React from 'react';
-import { Table, Tag } from 'antd';
+import React, { useState } from 'react';
+import { Button, Input, message, Popconfirm, Select, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { SearchOutlined, CloseOutlined, CheckOutlined, ClearOutlined } from '@ant-design/icons';
 
 interface DataType {
-    transaction_id: number,
-    property_id: number,
-    client_id: number,
-    agent_id: number,
-    transaction_date: Date,
-    sale_price: number,
-    commission: number,
-    status: string
+  transaction_id: number;
+  property_name: string;
+  client_name: string;
+  agent_name: string;
+  transaction_date: Date;
+  sale_price: number;
+  commission: number;
+  status: string;
 }
 
-const renderStatus = (status: any) => {
-    let color;
+const renderStatus = (status: string) => {
+  let color;
 
+  switch (status) {
+    case 'PENDING':
+      color = 'orange';
+      break;
+    case 'COMPLETED':
+      color = 'green';
+      break;
+    case 'CANCELLED':
+      color = 'red';
+      break;
+    default:
+      break;
+  }
+  return <Tag color={color}>{status}</Tag>;
+};
+
+const App: React.FC = () => {
+  const [transactions, setTransactions] = useState<DataType[]>([
+    {
+      transaction_id: 1,
+      property_name: 'Alice',
+      client_name: 'Bob',
+      agent_name: 'Chris',
+      transaction_date: new Date('2023-01-01T12:00:00'),
+      sale_price: 250000.0,
+      commission: 12500.0,
+      status: 'COMPLETED',
+    },
+    {
+      transaction_id: 2,
+      property_name: 'David',
+      client_name: 'Eric',
+      agent_name: 'Frank',
+      transaction_date: new Date('2023-01-05T14:30:00'),
+      sale_price: 300000.0,
+      commission: 15000.0,
+      status: 'PENDING',
+    },
+    {
+      transaction_id: 3,
+      property_name: 'Gorge',
+      client_name: 'Helen',
+      agent_name: 'Iris',
+      transaction_date: new Date('2023-01-10T10:15:00'),
+      sale_price: 400000.0,
+      commission: 20000.0,
+      status: 'CANCELLED',
+    },
+    {
+      transaction_id: 4,
+      property_name: 'John',
+      client_name: 'Kelvin',
+      agent_name: 'Linda',
+      transaction_date: new Date('2023-01-15T09:00:00'),
+      sale_price: 500000.0,
+      commission: 25000.0,
+      status: 'COMPLETED',
+    },
+    {
+      transaction_id: 5,
+      property_name: 'Marsha',
+      client_name: 'Ophen',
+      agent_name: 'Pelee',
+      transaction_date: new Date('2023-01-20T16:45:00'),
+      sale_price: 600000.0,
+      commission: 30000.0,
+      status: 'PENDING',
+    },
+    {
+      transaction_id: 6,
+      property_name: 'Quavo',
+      client_name: 'Richard',
+      agent_name: 'Steve',
+      transaction_date: new Date('2023-01-25T11:30:00'),
+      sale_price: 700000.0,
+      commission: 35000.0,
+      status: 'COMPLETED',
+    },
+    {
+      transaction_id: 7,
+      property_name: 'Tom',
+      client_name: 'Uggue',
+      agent_name: 'Vale',
+      transaction_date: new Date('2023-01-30T13:00:00'),
+      sale_price: 800000.0,
+      commission: 40000.0,
+      status: 'CANCELLED',
+    },
+    {
+      transaction_id: 8,
+      property_name: 'Wakada',
+      client_name: 'Xin Xaung',
+      agent_name: 'Ying',
+      transaction_date: new Date('2023-02-01T14:00:00'),
+      sale_price: 900000.0,
+      commission: 45000.0,
+      status: 'PENDING',
+    },
+    {
+      transaction_id: 9,
+      property_name: 'Zaka',
+      client_name: 'Alex',
+      agent_name: 'Binladin',
+      transaction_date: new Date('2023-02-05T10:00:00'),
+      sale_price: 1000000.0,
+      commission: 50000.0,
+      status: 'COMPLETED',
+    },
+    {
+      transaction_id: 10,
+      property_name: 'Colon',
+      client_name: 'Docker',
+      agent_name: 'Eleven',
+      transaction_date: new Date('2023-02-10T15:00:00'),
+      sale_price: 1100000.0,
+      commission: 55000.0,
+      status: 'PENDING',
+    },
+    {
+      transaction_id: 11,
+      property_name: 'Frank',
+      client_name: 'Ginger',
+      agent_name: 'Hooger',
+      transaction_date: new Date('2023-02-10T15:00:00'),
+      sale_price: 1400000.0,
+      commission: 4000.0,
+      status: 'PENDING',
+    },
+  ]);
+  const [searchText, setSearchText] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
+
+  const handleSearch = (value: string) => {
+    setSearchText(value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchText('');
+    // setFilterStatus('');
+  };
+
+  const handleStatusChange = (value: string) => {
+    setFilterStatus(value);
+  };
+
+  const confirmTransaction = (id: number) => {
+    const newTransactions = transactions.map((transaction) => {
+      if (transaction.transaction_id === id) {
+        return { ...transaction, status: 'COMPLETED' };
+      }
+      return transaction;
+    });
+    setTransactions(newTransactions);
+    message.success('Transaction confirmed');
+  };
+
+  const cancelTransaction = (id: number) => {
+    const newTransactions = transactions.map((transaction) => {
+      if (transaction.transaction_id === id) {
+        return { ...transaction, status: 'CANCELLED' };
+      }
+      return transaction;
+    });
+    setTransactions(newTransactions);
+    message.success('Transaction cancelled');
+  };
+
+  const checkStatus = (status: string, id: number) => {
     switch (status) {
-        case "PENDING":
-            color = 'orange';
-            break;
-        case "COMPLETED":
-            color = 'green';
-            break;
-        case "CANCELLED":
-            color = 'red';
-            break;
-        default: 
-            break;
+      case 'CANCELLED':
+        return (
+            <Popconfirm
+              title="Confirm Transaction"
+              description="Are you sure you want to confirm this transaction?"
+              onConfirm={() => confirmTransaction(id)}
+              onCancel={() => message.error('Confirmation aborted')}
+              okText="Yes"
+              cancelText="No"
+            >
+                <Button type='primary' className='bg-blue-500 text-white'>
+                    Confirm
+                </Button>  
+            </Popconfirm>
+        );
+      case 'COMPLETED':
+        return (
+            <Popconfirm
+              title="Cancel Transaction"
+              description="Are you sure you want to cancel this transaction?"
+              onConfirm={() => cancelTransaction(id)}
+              onCancel={() => message.error('Cancellation aborted')}
+              okText="Yes"
+              cancelText="No"
+            >
+                <Button type='primary' danger>
+                    Cancel
+                </Button>
+            </Popconfirm>
+        );
+      default:
+        return (
+          <Space size={"middle"}>
+            <Popconfirm
+              title="Confirm Transaction"
+              description="Are you sure you want to confirm this transaction?"
+              onConfirm={() => confirmTransaction(id)}
+              onCancel={() => message.error('Confirmation aborted')}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button className='text-blue-500 border-blue-500'
+                icon={<CheckOutlined />}
+              />
+            </Popconfirm>
+            <Popconfirm
+              title="Cancel Transaction"
+              description="Are you sure you want to cancel this transaction?"
+              onConfirm={() => cancelTransaction(id)}
+              onCancel={() => message.error('Cancellation aborted')}
+              okText="Yes"
+              cancelText="No"
+            >
+            <Button
+                icon={<CloseOutlined />}
+                danger
+            />
+            </Popconfirm>
+          </Space>
+        );
     }
-    return <Tag color={color}>{status}</Tag>
-}
+  };
 
-const columns: TableProps<DataType>['columns'] = [
+  const columns: TableProps<DataType>['columns'] = [
     {
-        title: 'Transaction ID',
-        dataIndex: 'transaction_id',
-        key: 'transaction_id',
-        align: 'center'
+      title: 'Property Name',
+      dataIndex: 'property_name',
+      key: 'property',
     },
     {
-        title: 'Property ID',
-        dataIndex: 'property_id',
-        key: 'property',
+      title: 'Client Name',
+      dataIndex: 'client_name',
+      key: 'client',
     },
     {
-        title: 'Client ID',
-        dataIndex: 'client_id',
-        key: 'client'
+      title: 'Agent Name',
+      dataIndex: 'agent_name',
+      key: 'agent',
     },
     {
-        title: 'Agent ID',
-        dataIndex: 'agent_id',
-        key: 'agent'
+      title: 'Transaction Date',
+      dataIndex: 'transaction_date',
+      key: 'date',
+      render: (transaction_date: Date) => dayjs(transaction_date).format('YYYY-MM-DD HH:mm A'),
     },
     {
-        title: 'Transaction Date',
-        dataIndex: 'transaction_date',
-        key: 'date',
-        render: (transaction_date: Date) => dayjs(transaction_date).format('YYYY-MM-DD HH:mm A')    
+      title: 'Sale Price',
+      dataIndex: 'sale_price',
+      key: 'sale',
     },
     {
-        title: 'Sale Price',
-        dataIndex: 'sale_price',
-        key: 'sale'
+      title: 'Commission',
+      dataIndex: 'commission',
+      key: 'commission',
     },
     {
-        title: 'Commission',
-        dataIndex: 'commission',
-        key: 'commission'
+      title: 'Status',
+      key: 'status',
+      dataIndex: 'status',
+      render: (status) => renderStatus(status),
     },
     {
-        title: 'Status',
-        key: 'status',
-        dataIndex: 'status',
-        render: (status) => renderStatus(status)
-    }
-];
+      title: 'Action',
+      key: 'action',
+      render: (record: DataType) => checkStatus(record.status, record.transaction_id),
+    },
+  ];
 
-const transactions: DataType[] = [
-    {
-        transaction_id: 1,
-        property_id: 101,
-        client_id: 201,
-        agent_id: 301,
-        transaction_date: new Date("2023-01-01T12:00:00"),
-        sale_price: 250000.00,
-        commission: 12500.00,
-        status: "COMPLETED"
-    },
-    {
-        transaction_id: 2,
-        property_id: 102,
-        client_id: 202,
-        agent_id: 302,
-        transaction_date: new Date("2023-01-05T14:30:00"),
-        sale_price: 300000.00,
-        commission: 15000.00,
-        status: "PENDING"
-    },
-    {
-        transaction_id: 3,
-        property_id: 103,
-        client_id: 203,
-        agent_id: 303,
-        transaction_date: new Date("2023-01-10T10:15:00"),
-        sale_price: 400000.00,
-        commission: 20000.00,
-        status: "CANCELLED"
-    },
-    {
-        transaction_id: 4,
-        property_id: 104,
-        client_id: 204,
-        agent_id: 304,
-        transaction_date: new Date("2023-01-15T09:00:00"),
-        sale_price: 500000.00,
-        commission: 25000.00,
-        status: "COMPLETED"
-    },
-    {
-        transaction_id: 5,
-        property_id: 105,
-        client_id: 205,
-        agent_id: 305,
-        transaction_date: new Date("2023-01-20T16:45:00"),
-        sale_price: 600000.00,
-        commission: 30000.00,
-        status: "PENDING"
-    },
-    {
-        transaction_id: 6,
-        property_id: 106,
-        client_id: 206,
-        agent_id: 306,
-        transaction_date: new Date("2023-01-25T11:30:00"),
-        sale_price: 700000.00,
-        commission: 35000.00,
-        status: "COMPLETED"
-    },
-    {
-        transaction_id: 7,
-        property_id: 107,
-        client_id: 207,
-        agent_id: 307,
-        transaction_date: new Date("2023-01-30T13:00:00"),
-        sale_price: 800000.00,
-        commission: 40000.00,
-        status: "CANCELLED"
-    },
-    {
-        transaction_id: 8,
-        property_id: 108,
-        client_id: 208,
-        agent_id: 308,
-        transaction_date: new Date("2023-02-01T14:00:00"),
-        sale_price: 900000.00,
-        commission: 45000.00,
-        status: "PENDING"
-    },
-    {
-        transaction_id: 9,
-        property_id: 109,
-        client_id: 209,
-        agent_id: 309,
-        transaction_date: new Date("2023-02-05T10:00:00"),
-        sale_price: 1000000.00,
-        commission: 50000.00,
-        status: "COMPLETED"
-    },
-    {
-        transaction_id: 10,
-        property_id: 110,
-        client_id: 210,
-        agent_id: 310,
-        transaction_date: new Date("2023-02-10T15:00:00"),
-        sale_price: 1100000.00,
-        commission: 55000.00,
-        status: "PENDING"
-    },
-    {
-        transaction_id: 11,
-        property_id: 111,
-        client_id: 211,
-        agent_id: 311,
-        transaction_date: new Date("2023-02-10T15:00:00"),
-        sale_price: 1400000.00,
-        commission: 4000.00,
-        status: "PENDING"
-    }
-];
+  const filteredData = transactions.filter(
+    (item) => {
+        const matchedSearchText = item.property_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.client_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.agent_name.toLowerCase().includes(searchText.toLowerCase());
 
-const App: React.FC = () => <Table columns={columns} dataSource={transactions} />;
+        const matchesStatus = filterStatus ? item.status === filterStatus : true;
+
+        return matchedSearchText && matchesStatus;
+    });
+
+  return (
+    <div className="p-5">
+        <div className="flex items-center justify-between">
+            <div className="">
+                <Input
+                    prefix={<SearchOutlined />}
+                    placeholder="Search by name"
+                    className="w-64 md:w-80"
+                    value={searchText}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    allowClear
+                />
+                <Button className="mx-3 bg-blue-500 text-white" icon={<ClearOutlined />} onClick={handleClearSearch} />
+                    
+            </div>
+            <Select
+                placeholder="Filter by status"
+                style={{ width: 200 }}
+                onChange={handleStatusChange}
+                allowClear
+            >
+            <Select.Option value="COMPLETED">COMPLETED</Select.Option>
+            <Select.Option value="CANCELLED">CANCELLED</Select.Option>
+            <Select.Option value="PENDING">PENDING</Select.Option>
+            </Select>
+        </div>
+      <Table columns={columns} dataSource={filteredData} className='mt-8'/>
+    </div>
+  );
+};
 
 export default App;
