@@ -3,13 +3,16 @@ import { CiLocationOn } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 import { Property } from "../Model/Property";
+import { PiBathtubThin } from "react-icons/pi";
+import { MdOutlineBedroomChild } from "react-icons/md";
+import { LiaRulerCombinedSolid } from "react-icons/lia";
 
 
 interface HomeCardProps {
   property: Property;
 }
 
-const HomeCard: React.FC<HomeCardProps> = ({ property }) => {
+const PropertyCard: React.FC<HomeCardProps> = ({ property }) => {
   return (
     <div className="border rounded-xl overflow-hidden">
       <div className="relative">
@@ -37,14 +40,14 @@ const HomeCard: React.FC<HomeCardProps> = ({ property }) => {
           {property.city_id}, {property.state_id} {/* Adjust as necessary */}
         </p>
         <div className="flex items-center gap-7 font-semibold">
-          <p className="flex items-center gap-1">
-            <CiLocationOn /> {property.numberOfBedrooms}
+          <p className="flex items-center gap-2">
+          <MdOutlineBedroomChild />{property.numberOfBedrooms}
           </p>
-          <p className="flex items-center gap-1">
-            <CiLocationOn /> {property.numberOfBathrooms}
+          <p className="flex items-center gap-2">
+          <PiBathtubThin />  {property.numberOfBathrooms}
           </p>
-          <p className="flex items-center gap-1">
-            <CiLocationOn /> {property.size} SqFt
+          <p className="flex items-center gap-2">
+          <LiaRulerCombinedSolid /> {property.size} SqFt
           </p>
         </div>
       </div>
@@ -65,4 +68,4 @@ const HomeCard: React.FC<HomeCardProps> = ({ property }) => {
   );
 };
 
-export default HomeCard;
+export default PropertyCard;

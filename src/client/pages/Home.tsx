@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
-import HomeGroup from "../components/HomeGroup";
+import React, { useEffect, useState, ChangeEvent, MouseEvent } from "react";
+import HomeGroup from "../components/PropertyGroup";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { Property } from "../Model/Property";
+import { Agent } from "../Model/Agent";
+import { City } from "../Model/City";
+import { State } from "../Model/State";
+import PropertyGroup from "../components/PropertyGroup";
 
 const Home: React.FC = () => {
-  const [states, setStates] = useState([]);
+  const [states, setStates] = useState<State[]>([]);
   const [properties, setProperties] = useState<Property[]>([]);
-  const [cities, setCities] = useState([]);
+  const [cities, setCities] = useState<City[]>([]);
+  const [agents, setAgents] = useState<Agent[]>([]);
   const [propertyTypes, setPropertyTypes] = useState<string[]>([
     "All",
     "Condo",
@@ -15,15 +20,17 @@ const Home: React.FC = () => {
     "House",
     "Office",
   ]);
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedPropertyType, setSelectedPropertyType] = useState("");
+  const [selectedState, setSelectedState] = useState<number | ''>('');
+  const [selectedCity, setSelectedCity] = useState<number | ''>('');
+  const [selectedPropertyType, setSelectedPropertyType] = useState<number | ''>('');
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     fetchStates();
     fetchProperties();
+    fetchAgents();
   }, []);
 
   useEffect(() => {
@@ -32,52 +39,82 @@ const Home: React.FC = () => {
     } else {
       setCities([]);
     }
-  }, [selectedState, selectedPropertyType]);
+  }, [selectedState]);
+
+  // Function to check if all fields are selected
+  const checkButtonDisabled = () => {
+    setButtonDisabled(!(selectedState && selectedCity && selectedPropertyType));
+  };
+
+  // Use effect to check button state when any selection changes
+  useEffect(() => {
+    checkButtonDisabled();
+  }, [selectedState, selectedCity, selectedPropertyType]);
 
   const fetchProperties = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/properties");
-      console.log(data);
-
+      const { data } = await axios.get<Property[]>("http://localhost:3000/properties");
       setProperties(data);
     } catch (error) {
-      console.error("Error fetching states:", error);
+      console.error("Error fetching properties:", error);
+    }
+  };
+
+  const fetchAgents = async () => {
+    try {
+      const { data } = await axios.get<Agent[]>("http://localhost:3000/agents");
+      setAgents(data);
+    } catch (error) {
+      console.error("Error fetching agents:", error);
     }
   };
 
   const fetchStates = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/states");
+      const { data } = await axios.get<State[]>("http://localhost:3000/states");
       setStates(data);
     } catch (error) {
       console.error("Error fetching states:", error);
     }
   };
 
-  const fetchCities = async (selectedState) => {
+  const fetchCities = async (stateId: number | '') => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/cities?state_id=${selectedState}`
+      const { data } = await axios.get<City[]>(
+        `http://localhost:3000/cities?state_id=${stateId}`
       );
-      setCities(response.data);
+      setCities(data);
     } catch (error) {
       console.error("Error fetching cities:", error);
     }
   };
 
-  const handleState = (e) => {
-    setSelectedState(e.target.value);
+  const handleStateChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedState(Number(e.target.value));
+    setSelectedCity(''); // Reset city selection when state changes
+    setSelectedPropertyType(''); // Reset property type selection when state changes
   };
 
-  const handleFilter = () => {
+  const handleCityChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCity(Number(e.target.value));
+  };
+
+  const handlePropertyTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPropertyType(Number(e.target.value));
+  };
+
+  const handleFilter = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
+  
     navigate("/user/filter", {
       state: {
-        state: selectedState,
-        city: selectedCity,
-        propertyType: selectedPropertyType,
+        state: selectedState !== '' ? states.find(s => s.id === selectedState)?.name : '',
+        city: selectedCity !== '' ? cities.find(c => c.id === selectedCity)?.name : '',
+        propertyType: selectedPropertyType !== '' ? propertyTypes[selectedPropertyType] : '',
       },
     });
   };
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-orange-50">
       {/* Fixed Background Image */}
@@ -128,7 +165,7 @@ const Home: React.FC = () => {
                       <select
                         id="state"
                         value={selectedState}
-                        onChange={handleState}
+                        onChange={handleStateChange}
                         className="outline-none"
                       >
                         <option value="">Select State</option>
@@ -146,14 +183,15 @@ const Home: React.FC = () => {
                       <select
                         id="city"
                         value={selectedCity}
-                        onChange={(e) => setSelectedCity(e.target.value)}
+                        onChange={handleCityChange}
                         className="outline-none"
+                        disabled={!selectedState}
                       >
                         <option value="">Select City</option>
                         {cities
                           .filter(
                             (city) => city.state_id === Number(selectedState)
-                          ) // Convert selectedState to number
+                          )
                           .map((city) => (
                             <option key={city.id} value={city.id}>
                               {city.name}
@@ -168,14 +206,13 @@ const Home: React.FC = () => {
                       <select
                         id="type"
                         value={selectedPropertyType}
-                        onChange={(e) =>
-                          setSelectedPropertyType(e.target.value)
-                        }
+                        onChange={handlePropertyTypeChange}
                         className="outline-none"
+                        disabled={!selectedCity}
                       >
-                        {propertyTypes.map((el, index) => (
+                        {propertyTypes.map((type, index) => (
                           <option key={index} value={index}>
-                            {el}
+                            {type}
                           </option>
                         ))}
                       </select>
@@ -184,6 +221,7 @@ const Home: React.FC = () => {
                 </form>
                 <button
                   onClick={handleFilter}
+                  disabled={buttonDisabled}
                   className="bg-orange-600 font-semibold col-span-2 text-white py-6 h-24 rounded-e-md"
                 >
                   Find Properties
@@ -192,8 +230,8 @@ const Home: React.FC = () => {
             </main>
           </div>
 
-          <div className="h-[2000px] left-0 right-0 w-full max-w-[1600px] bg-white text-black">
-          <HomeGroup properties={properties} propertyTypes={propertyTypes} />
+          <div className=" left-0 right-0 w-full max-w-[1600px] bg-white text-black">
+            <PropertyGroup agents={agents} properties={properties} propertyTypes={propertyTypes} />
           </div>
         </div>
       </div>

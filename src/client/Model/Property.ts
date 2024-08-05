@@ -1,3 +1,5 @@
+import { Agent } from "./Agent";
+
 // types.ts
 export interface PropertyImage {
     url: string;
@@ -8,8 +10,8 @@ export interface PropertyImage {
     id: string;
     agent_id: number;
     address: string;
-    city_id: number;
-    state_id: number;
+    city_id: string;
+    state_id: string;
     zipCode: string;
     propertyType: string;
     price: number;
@@ -26,5 +28,6 @@ export interface PropertyImage {
   export interface HomeGroupProps {
     properties: Property[];
     propertyTypes: string[];
+    agents:Agent[]
   }
   
