@@ -1,7 +1,7 @@
 
 import { Button, Flex, Space, Typography } from "antd"
 import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons"
-import { TAppointmentHistory } from "../../services/apis/appointmentApi"
+import { TAppointmentHistory } from "../../../services/apis/appoinement/appointmentApi"
 
 const AppointHistoty = ({ data, isHistory }: { data: TAppointmentHistory[] | undefined, isHistory?: boolean }) => {
     return (

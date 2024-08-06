@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../store/hooks/appointmentHook";
+import { useAppSelector } from "../../../store/hooks/appointmentHook";
 import appointmentSteps from "./appointmentSteps";
 import { Space, Typography } from "antd";
 

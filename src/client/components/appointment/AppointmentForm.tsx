@@ -1,9 +1,9 @@
 import { Button, Flex, Form, Input, Space, Typography } from "antd";
 import type { FormProps } from "antd";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks/appointmentHook";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks/appointmentHook";
 import { ClockCircleOutlined, CalendarOutlined } from "@ant-design/icons";
-import { prev } from "../../store/slices/currentPageSlice";
+import { prev } from "../../../store/slices/currentPageSlice";
 
 
 const { Title } = Typography;
@@ -28,7 +28,7 @@ const AppointmentForm: React.FC = () => {
       <Space direction="vertical">
         <Title level={4}>Confirm your appointment</Title>
         <Flex justify="space-between" align="center">
-          <Typography>
+          <Typography className="mr-5">
             <Space>
               <CalendarOutlined />
               {new Date(pickedDate).toLocaleDateString()}

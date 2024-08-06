@@ -2,8 +2,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "../client/pages/Home";
 import Navbar from "../client/layouts/Navbar";
-import AppointmentHistoryList from "../client/components/AppointmentHistoryList";
-import Appointment from "../client/components/Appointment";
+import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
+import Appointment from "../client/components/appointment/Appointment";
 
 
 const Router = () => {
@@ -18,12 +18,18 @@ const Router = () => {
 				},
 				{
 					path: "appointment",
+					children: [
+						{
+							index: true,
 					element: <Appointment />
-				},
-				{
-					path: "history",
+						},
+						{
+							path: "history",
 					element: <AppointmentHistoryList />
-				}
+						}
+					]
+				},
+				
 			]
 		}
 

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import currentPageSlice from "./slices/currentPageSlice";
-import { appointmentApi } from "../services/apis/appointmentApi";
+import { appointmentApi } from "../services/apis/appoinement/appointmentApi";
 import appointmentSlice from "./slices/appointmentSlice";
 
 // Configure the store with the appointment reducer

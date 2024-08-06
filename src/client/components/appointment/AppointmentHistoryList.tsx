@@ -1,6 +1,6 @@
 
 import { Tabs } from "antd"
-import { useGetAppointmentHistoryQuery } from "../../services/apis/appointmentApi"
+import { useGetAppointmentHistoryQuery } from "../../../services/apis/appoinement/appointmentApi"
 import AppointHistoty from "./AppointHistoty"
 
 

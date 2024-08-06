@@ -2,9 +2,9 @@ import { Button, Space, TimePicker, TimePickerProps, Typography } from "antd";
 import {
   useAppDispatch,
   useAppSelector,
-} from "../../store/hooks/appointmentHook";
-import { addAppointmentTime } from "../../store/slices/appointmentSlice";
-import { next, prev } from "../../store/slices/currentPageSlice";
+} from "../../../store/hooks/appointmentHook";
+import { addAppointmentTime } from "../../../store/slices/appointmentSlice";
+import { next, prev } from "../../../store/slices/currentPageSlice";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 import { ClockCircleOutlined } from "@ant-design/icons";
