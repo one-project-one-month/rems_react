@@ -1,9 +1,6 @@
 import { Layout, Menu, Typography } from "antd";
 import {
-  SwapOutlined,
-  UserOutlined,
-  UserSwitchOutlined,
-  FundViewOutlined,
+
   CalendarOutlined,
 } from "@ant-design/icons";
 
@@ -26,26 +23,6 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
   };
 
   const navItems = [
-    {
-      key: "clients",
-      icon: <UserOutlined />,
-      label: "Clients",
-    },
-    {
-      key: "agents",
-      icon: <UserSwitchOutlined />,
-      label: "Agents",
-    },
-    {
-      key: "transactions",
-      icon: <SwapOutlined />,
-      label: "Transactions",
-    },
-    {
-      key: "review",
-      icon: <FundViewOutlined />,
-      label: "Review",
-    },
     {
       key: "appointments",
       icon: <CalendarOutlined />,
