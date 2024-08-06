@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react";
-// import { TiDelete } from "react-icons/ti";
 import "../style/priceRange.css";
 import PriceRangeSlider from "../components/PriceRangeSlider";
 // import CheckboxGroup from "../components/CheckboxGroup";
@@ -7,6 +6,7 @@ import HomeCard from "../components/PropertyCard";
 import { useLocation } from "react-router";
 import { Property } from "../Model/Property";
 import axios from "axios";
+import { TiDelete } from "react-icons/ti";
 
 const FilterHome = () => {
   const location = useLocation();
@@ -17,84 +17,29 @@ const FilterHome = () => {
   const [bathrooms, setBathrooms] = useState<number[]>([]);
   const [sizes, setSizes] = useState<number[]>([]);
 
-  const [selectedBedrooms, setSelectedBedrooms] = useState(new Set());
-  const [selectedBathrooms, setSelectedBathrooms] = useState(new Set());
-  const [selectedSizes, setSelectedSizes] = useState(new Set());
+  const [selectedBedrooms, setSelectedBedrooms] = useState<number[]>([]);
+  const [selectedBathrooms, setSelectedBathrooms] = useState<number[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
 
   // Extract the filter criteria from location state
   const { state: filterCriteria } = location;
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const { data } = await axios.get<Property[]>(
-          "http://localhost:3000/properties"
-        );
-        setProperties(data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
-    };
+  // fetch properties
+  const fetchProperties = async () => {
+    try {
+      const { data } = await axios.get<Property[]>(
+        "http://localhost:3000/properties"
+      );
+      
+      setProperties(data);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchProperties();
   }, []);
-
-  const handleBedroomChange = (e) => {
-    console.log(e.target.value);
-    
-    const value = e.target.id.split("-")[1];
-    console.log(value);
-    // setSelectedBedrooms(value)
-    
-    setSelectedBedrooms((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(value)) {
-        newSet.delete(value);
-      } else {
-        newSet.add(value);
-      }
-      return newSet;
-    });
-  };
-
-  const handleBathroomChange = (e) => {
-    const value = e.target.id.split('-')[1];
-    setSelectedBathrooms(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(value)) {
-        newSet.delete(value);
-      } else {
-        newSet.add(value);
-      }
-      return newSet;
-    });
-  };
-
- 
-
-  const handleSizeChange = (e) => {
-    const value = e.target.id.split('-')[1];
-    setSelectedSizes(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(value)) {
-        newSet.delete(value);
-      } else {
-        newSet.add(value);
-      }
-      return newSet;
-    });
-  };
-
-  const applyFilters = (properties) => {
-    return properties.filter(property => {
-      const matchesBedrooms = selectedBedrooms.size === 0 || selectedBedrooms.has(property.numberOfBedrooms.toString());
-      const matchesBathrooms = selectedBathrooms.size === 0 || selectedBathrooms.has(property.numberOfBathrooms.toString());
-      const matchesSizes = selectedSizes.size === 0 || selectedSizes.has(property.size.toString());
-      return matchesBedrooms && matchesBathrooms && matchesSizes;
-    });
-    
-    
-  };
 
   useEffect(() => {
     if (properties.length > 0) {
@@ -106,12 +51,7 @@ const FilterHome = () => {
           (city ? property.city_id === city : true) &&
           (propertyType ? property.propertyType === propertyType : true)
       );
-
-      console.log(applyFilters(initialFilteredProperties));
-      
-
-      setFilteredProperties(applyFilters(initialFilteredProperties));
-      console.log(filteredProperties);
+      setFilteredProperties(initialFilteredProperties);
       const bedrooms = [
         ...new Set(filteredProperties.map((el) => el.numberOfBedrooms)),
       ];
@@ -123,7 +63,64 @@ const FilterHome = () => {
       setBathrooms(bathrooms);
       setSizes(sizes);
     }
+    
   }, [properties, filterCriteria]);
+
+  useEffect(() => {
+    
+    const finalFilteredProperties = filteredProperties.filter(
+      (property) =>{
+        console.log(selectedBathrooms);
+        console.log(selectedBedrooms);
+        console.log(selectedSizes);
+    
+        const selectedBedroom = 
+          selectedBedrooms.length === 0 || selectedBedrooms.includes(property.numberOfBedrooms);
+        const selectedBathroom = 
+          selectedBathrooms.length === 0 || selectedBathrooms.includes(property.numberOfBathrooms);
+        const selectedSize = 
+          selectedSizes.length === 0 || selectedSizes.includes(property.size);
+    
+        return selectedBedroom && selectedBathroom && selectedSize;
+      }
+       
+    );
+    console.log(finalFilteredProperties);
+    
+    setFilteredProperties(finalFilteredProperties);
+  }, [selectedBedrooms, selectedBathrooms, selectedSizes]);
+
+  const handleDeleteClick = (value: number, type: string) => {
+    if (type === 'bedroom') {
+      setSelectedBedrooms((prev) => prev.filter((item) => item !== value));
+      setFilteredProperties(filteredProperties)
+    } else if (type === 'bathroom') {
+      setSelectedBathrooms((prev) => prev.filter((item) => item !== value));
+    } else if (type === 'size') {
+      setSelectedSizes((prev) => prev.filter((item) => item !== value));
+    }
+  };
+
+  // const handleBedroomChange = (e) => {
+  //   const value = e.target.id.split("-")[1];
+  //   setSelectedBedrooms((prev) => {
+  //     const numericValue = Number(value);
+  //     if (prev.includes(numericValue)) {
+  //       return prev.filter((item) => item !== numericValue);
+  //     } else {
+  //       return [...prev, numericValue]; // Otherwise, add the new value to the array
+  //     }
+  //   });
+  // };
+
+  const handleChange = (setter: React.Dispatch<React.SetStateAction<number[]>>, value: number) => {
+    setter((prev) => prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]);
+  };
+
+  const handleBedroomChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedBedrooms, Number(e.target.value));
+  const handleBathroomChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedBathrooms, Number(e.target.value));
+  const handleSizeChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedSizes, Number(e.target.value));
+
 
   const [minPrice, setMinPrice] = useState<number>(0); // Initial minimum price
   const [maxPrice, setMaxPrice] = useState<number>(1000); // Initial maximum price
@@ -135,9 +132,6 @@ const FilterHome = () => {
   const handleMaximumPriceChange = (price: number) => {
     setMaxPrice(price);
   };
-
-
- 
 
   return (
     <div className="container mx-auto text-sm">
@@ -152,32 +146,50 @@ const FilterHome = () => {
                     Clear All
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                {Array.from(selectedBedrooms).map((bedroom, index) => (
-                    <button key={index} className="border border-primary rounded-full px-2 py-1 flex items-center gap-2">
+                <div className="flex items-center flex-wrap gap-2">
+                  {selectedBedrooms.map((bedroom, index) => (
+                    <button
+                      key={index}
+                      className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
+                    >
                       Bedroom {bedroom}
+                      <TiDelete onClick={() => handleDeleteClick(bedroom, 'bedroom')}  />
                     </button>
                   ))}
-                  {Array.from(selectedBathrooms).map((bathroom, index) => (
-                    <button key={index} className="border border-primary rounded-full px-2 py-1 flex items-center gap-2">
-                      Bathroom {bathroom}
+                  {selectedBathrooms.map((bathroom, index) => (
+                    <button
+                      key={index}
+                      className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
+                    >
+                      Bedroom {bathroom}
+                      <TiDelete onClick={() => handleDeleteClick(bathroom, 'bathroom')} />
                     </button>
                   ))}
-                  {Array.from(selectedSizes).map((size, index) => (
-                    <button key={index} className="border border-primary rounded-full px-2 py-1 flex items-center gap-2">
+
+                  {selectedSizes.map((size, index) => (
+                    <button
+                      key={index}
+                      className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
+                    >
                       {size} SqFt
+                      <TiDelete onClick={() => handleDeleteClick(size, 'size')} />
                     </button>
                   ))}
-                 
                 </div>
               </div>
               <div className="py-5 border-b border-primary">
                 <div>
                   <p className="mb-4 text-[16px] font-medium">Bedroom</p>
                   <div className="grid grid-cols-2 gap-3">
-                  {bedrooms.map((bedroom, index) => (
+                    {bedrooms.map((bedroom, index) => (
                       <div key={index} className="flex items-center gap-2">
-                        <input type="checkbox" value={bedroom} onChange={handleBedroomChange} id={`bedroom-${bedroom}`} />
+                        <input
+                          type="checkbox"
+                          value={bedroom}
+                          onChange={handleBedroomChange}
+                          id={`bedroom-${bedroom}`}
+                          checked={selectedBedrooms.includes(bedroom)}
+                        />
                         <label
                           htmlFor={`bedroom-${bedroom}`}
                           className="text-gray-700"
@@ -196,7 +208,13 @@ const FilterHome = () => {
                   <div className="grid grid-cols-2 gap-3">
                     {bathrooms.map((bathroom, index) => (
                       <div key={index} className="flex items-center gap-2">
-                        <input type="checkbox" id={`bathroom-${bathroom}`} value={bathroom} onChange={handleBathroomChange} />
+                        <input
+                          type="checkbox"
+                          id={`bathroom-${bathroom}`}
+                          value={bathroom}
+                          onChange={handleBathroomChange}
+                          checked={selectedBathrooms.includes(bathroom)}
+                        />
                         <label
                           htmlFor={`bathroom-${bathroom}`}
                           className="text-gray-700"
@@ -215,7 +233,13 @@ const FilterHome = () => {
                   <div className="grid grid-cols-2 gap-3">
                     {sizes.map((size, index) => (
                       <div key={index} className="flex items-center gap-2">
-                        <input type="checkbox" id={`size-${size}`} value={size} onChange={handleSizeChange} />
+                        <input
+                          type="checkbox"
+                          id={`size-${size}`}
+                          value={size}
+                          onChange={handleSizeChange}
+                          checked={selectedSizes.includes(size)}
+                        />
                         <label
                           htmlFor={`size-${size}`}
                           className="text-gray-700"
@@ -268,15 +292,15 @@ const FilterHome = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-5 p-6">
-              {filteredProperties.length > 0 ? (
-                filteredProperties.map((property) => (
-                  <HomeCard key={property.id} property={property} />
-                ))
-              ) : (
-                <div className="col-span-4 text-center">No Properties Found</div>
-              )}
-            </div>
+          <div className="grid grid-cols-3 gap-5 p-6">
+            {filteredProperties.length > 0 ? (
+              filteredProperties.map((property) => (
+                <HomeCard key={property.id} property={property} />
+              ))
+            ) : (
+              <div className="col-span-4 text-center">No Properties Found</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
