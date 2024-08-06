@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import UserDrawer from "./ClientDrawer";
+import { useGetAllClientsQuery } from "../../../features/clients/api/clientApi";
 
 export interface DataType {
   key: string;
@@ -25,6 +26,10 @@ const ClientList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
   const [filteredData, setFilteredData] = useState<DataType[]>([]);
+
+  const { data: clients } = useGetAllClientsQuery();
+
+  console.log(clients);
 
   const handleOk = () => {
     setIsModalOpen(false);
