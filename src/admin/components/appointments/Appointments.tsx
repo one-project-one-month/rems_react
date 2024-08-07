@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Space, Table, Tag, message, Popconfirm, Alert } from "antd";
+import { Table, Tag } from "antd";
 import dayjs from "dayjs";
 
 interface DataType {
@@ -20,43 +20,6 @@ const getStatusTag = (status: string) => {
     CANCELLED: "red",
   };
   return <Tag color={statusColors[status] || "default"}>{status}</Tag>;
-};
-
-// Popconfirm box messages
-const confirm = () => {
-  message.success("Appointment cancelled");
-};
-
-const cancel = () => {
-  message.error("Cancellation aborted");
-};
-
-// Check the status for button
-const checkStatus = (status: string) => {
-  switch (status) {
-    case "CANCELLED":
-      return <Alert message="Cancelled Appointment" type="error" />;
-    case "COMPLETED":
-      return <Alert message="Completed Appointment" type="success" />;
-    default:
-      return (
-        <Space>
-          <Button type="primary">Confirm</Button>
-          <Popconfirm
-            title="Cancel Appointment"
-            description="Are you sure you want to cancel this appointment?"
-            onConfirm={confirm}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" danger>
-              Cancel
-            </Button>
-          </Popconfirm>
-        </Space>
-      );
-  }
 };
 
 // Columns for the table
@@ -98,17 +61,12 @@ const columns = [
     dataIndex: "status",
     key: "status",
     render: (status: string) => getStatusTag(status),
+    sorter: (a: DataType, b: DataType) => a.status.localeCompare(b.status),
   },
   {
     title: "Note",
     dataIndex: "note",
     key: "note",
-  },
-  {
-    title: "Action",
-    dataIndex: "status",
-    key: "action",
-    render: (status: string) => checkStatus(status),
   },
 ];
 
