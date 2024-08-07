@@ -2,9 +2,10 @@ import DashboardLayout from "../admin/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
-import TransactionsList from "../admin/components/transactions/TransactionsList";
+import TransactionsList from "../admin/components/transactions/TransactionList";
 import Review from "../admin/components/All Review/Review";
 import Appointments from "../admin/components/appointments/Appointments";
+import PropertyList from "../admin/components/properties/PropertyList";
 
 const Router = () => {
   const config = createBrowserRouter([
@@ -32,6 +33,10 @@ const Router = () => {
           path: "/appointments",
           element: <Appointments />,
         },
+        {
+          path: "/properties",
+          element: <PropertyList/>
+        }
       ],
     },
   ]);

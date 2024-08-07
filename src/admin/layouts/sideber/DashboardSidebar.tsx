@@ -5,6 +5,7 @@ import {
   UserSwitchOutlined,
   FundViewOutlined,
   CalendarOutlined,
+  ProductOutlined
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
@@ -51,6 +52,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
       icon: <CalendarOutlined />,
       label: "Appointments",
     },
+    {
+      key: "properties",
+      icon: <ProductOutlined/>,
+      label: "Properties"
+    }
   ];
 
   return (
