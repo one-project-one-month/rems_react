@@ -8,7 +8,8 @@ export default function App() {
         token: {
           colorBgLayout: "#f5f5f5",
         },
-      }}>
+      }}
+    >
       <Router />
     </ConfigProvider>
   );

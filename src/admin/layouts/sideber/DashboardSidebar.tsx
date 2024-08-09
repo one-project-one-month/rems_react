@@ -5,6 +5,7 @@ import {
   UserSwitchOutlined,
   FundViewOutlined,
   CalendarOutlined,
+  ClusterOutlined,
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
@@ -51,6 +52,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
       icon: <CalendarOutlined />,
       label: "Appointments",
     },
+    {
+      key: "properties",
+      icon: <ClusterOutlined />,
+      label: "Properties",
+    },
   ];
 
   return (
@@ -66,7 +72,8 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
         top: 0,
         bottom: 0,
         backgroundColor: "#fdfdfd",
-      }}>
+      }}
+    >
       <div className={`logo-container ${collapsed ? "collapsed" : ""}`}>
         {!collapsed && (
           <Title level={5} className="sidebar-title">
