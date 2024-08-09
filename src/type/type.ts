@@ -6,6 +6,14 @@ export interface Property {
     price: number
 }
 
+
+export interface Review {
+    property_id: number;
+    rating: number;
+    comments: string;
+    
+  }
+
 export interface Client {
     first_name: string,
     last_name: string,
