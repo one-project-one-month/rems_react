@@ -1,0 +1,134 @@
+{
+  "appointments": [
+    {
+      "id": "100",
+      "agentId": 1,
+      "clientName": "John Doe",
+      "property": "123 Elm St",
+      "appointmentDate": "2024-07-21T00:00:00.000Z",
+      "appointmentTime": "2024-07-21T11:30:00.000Z",
+      "status": "COMPLETED",
+      "note": "An appointment has been made to sell the apartment"
+    },
+    {
+      "id": "101",
+      "agentId": 1,
+      "clientName": "Jane Smith",
+      "property": "456 Oak St",
+      "appointmentDate": "2024-07-22T00:00:00.000Z",
+      "appointmentTime": "2024-07-22T09:00:00.000Z",
+      "status": "COMPLETED",
+      "note": "Initial consultation for property appraisal"
+    },
+    {
+      "id": "102",
+      "agentId": 1,
+      "clientName": "Robert Brown",
+      "property": "789 Pine St",
+      "appointmentDate": "2024-07-23T00:00:00.000Z",
+      "appointmentTime": "2024-07-23T14:00:00.000Z",
+      "status": "CANCELLED",
+      "note": "Client cancelled the appointment"
+    },
+    {
+      "id": "103",
+      "agentId": 1,
+      "clientName": "Emily Johnson",
+      "property": "321 Maple St",
+      "appointmentDate": "2024-07-24T00:00:00.000Z",
+      "appointmentTime": "2024-07-24T16:00:00.000Z",
+      "status": "CANCELLED",
+      "note": "Follow-up meeting to discuss property details"
+    },
+    {
+      "id": "104",
+      "agentId": 1,
+      "clientName": "Michael Lee",
+      "property": "654 Birch St",
+      "appointmentDate": "2024-07-25T00:00:00.000Z",
+      "appointmentTime": "2024-07-25T10:30:00.000Z",
+      "status": "COMPLETED",
+      "note": "Rescheduled from 2024-07-24"
+    },
+    {
+      "id": "105",
+      "agentId": 1,
+      "clientName": "Alice Green",
+      "property": "987 Cedar St",
+      "appointmentDate": "2024-07-26T00:00:00.000Z",
+      "appointmentTime": "2024-07-26T13:00:00.000Z",
+      "status": "PENDING",
+      "note": "Final walk-through of the property"
+    },
+    {
+      "id": "106",
+      "agentId": 1,
+      "clientName": "David Wilson",
+      "property": "234 Willow St",
+      "appointmentDate": "2024-07-27T00:00:00.000Z",
+      "appointmentTime": "2024-07-27T15:00:00.000Z",
+      "status": "PENDING",
+      "note": "Discuss new property listings"
+    },
+    {
+      "id": "107",
+      "agentId": 1,
+      "clientName": "Sarah Adams",
+      "property": "345 Oakwood St",
+      "appointmentDate": "2024-07-28T00:00:00.000Z",
+      "appointmentTime": "2024-07-28T11:00:00.000Z",
+      "status": "PENDING",
+      "note": "Review offer details"
+    },
+    {
+      "id": "108",
+      "agentId": 1,
+      "clientName": "Paul White",
+      "property": "456 Maplewood St",
+      "appointmentDate": "2024-07-29T00:00:00.000Z",
+      "appointmentTime": "2024-07-29T12:00:00.000Z",
+      "status": "CANCELLED",
+      "note": "Client cancelled due to schedule conflict"
+    },
+    {
+      "id": "109",
+      "agentId": 1,
+      "clientName": "Laura Black",
+      "property": "567 Birchwood St",
+      "appointmentDate": "2024-07-30T00:00:00.000Z",
+      "appointmentTime": "2024-07-30T14:00:00.000Z",
+      "status": "PENDING",
+      "note": "Rescheduled to accommodate client request"
+    },
+    {
+      "id": "110",
+      "agentId": 1,
+      "clientName": "James Taylor",
+      "property": "678 Elmwood St",
+      "appointmentDate": "2024-07-31T00:00:00.000Z",
+      "appointmentTime": "2024-07-31T16:00:00.000Z",
+      "status": "COMPLETED",
+      "note": "Property inspection PENDING successfully"
+    },
+    {
+      "id": "111",
+      "agentId": 1,
+      "clientName": "Nina Martinez",
+      "property": "789 Cedarwood St",
+      "appointmentDate": "2024-08-01T00:00:00.000Z",
+      "appointmentTime": "2024-08-01T09:00:00.000Z",
+      "status": "PENDING",
+      "note": "Initial meeting to discuss home buying process"
+    },
+    {
+      "id": "112",
+      "agentId": 1,
+      "clientName": "Chris Robinson",
+      "property": "890 Pinewood St",
+      "appointmentDate": "2024-08-02T00:00:00.000Z",
+      "appointmentTime": "2024-08-02T10:30:00.000Z",
+      "status": "CONFIRMED",
+      "note": "Review potential new properties"
+    }
+  ]
+}

@@ -1,7 +1,9 @@
 import DashboardLayout from "../components/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import UserList from "../components/users/UserList";
-import AgentList from "../components/agents/AgentList";
+import PropertyList from "../components/agents/all listing/PropertyList";
+import DetailPage from "../components/agents/all listing/DetailPage";
+import Appointment from "../components/agents/appointments/Appointment";
+import Transactions from "../components/agents/transactions/Transactions";
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -10,13 +12,27 @@ const Router = () => {
 			element: <DashboardLayout />,
 			children: [
 				{
-					path: "/users",
-					element: <UserList />,
+					path: "/",
+					element: <PropertyList />,
 				},
 				{
-					path: "/agents",
-					element: <AgentList />,
+					path: "/listing",
+					element: <PropertyList/>,
+					children: [
+						{
+							path: "/listing/:id",
+							element: <DetailPage />
+						}
+					]
 				},
+				{
+					path: "/appointments",
+					element: <Appointment />
+				},
+				{
+					path: "/transactions",
+					element: <Transactions />
+				}
 			],
 		},
 	]);
