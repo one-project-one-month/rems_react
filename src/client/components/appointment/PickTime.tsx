@@ -13,15 +13,24 @@ dayjs.extend(customParseFormat);
 
 const PickTime = () => {
   const dispatch = useAppDispatch();
-  const pickedTime = useAppSelector(
-    (state) => state.appointment.appointmentTime,
+  const {appointmentDate,appointmentTime,rawAppointmentTime} = useAppSelector(
+    (state) => state.appointment,
   );
-  const pickedDate = useAppSelector(
-    (state) => state.appointment.appointmentDate,
-  );
+ 
+  console.log(rawAppointmentTime)
 
-  const onTimeChange: TimePickerProps["onChange"] = (_, timeString) => {
-    dispatch(addAppointmentTime(timeString));
+  const onTimeChange: TimePickerProps["onChange"] = (time, timeString) => {
+   
+    
+    const rawTime = time ? dayjs(time) : null;
+
+ 
+  const timeOnly = rawTime ? rawTime.format('HH:mm:ss') : null;
+    dispatch(addAppointmentTime({
+      appointmentTime: timeString,
+      rawAppointmentTime: timeOnly
+    }));
+
     dispatch(next());
   };
   return (
@@ -31,7 +40,7 @@ const PickTime = () => {
           <Typography>
             <Space>
               <ClockCircleOutlined />
-              {new Date(pickedDate).toDateString()}
+              {new Date(appointmentDate).toDateString()}
             </Space>
           </Typography>
           <Button
@@ -46,11 +55,7 @@ const PickTime = () => {
           use12Hours
           format="h:mm a"
           onChange={onTimeChange}
-          value={
-            pickedTime.length > 1
-              ? dayjs(pickedTime, "h:mm a")
-              : null
-          }
+         value={appointmentTime.length >1 ? dayjs(appointmentTime,"h:mm a") : null}
         />
       </Space>
 

@@ -17,7 +17,7 @@ export interface TCreatePostRequest{
   clientId : number,
   propertyId: number,
   appointmentDate: string,
-  appointmentTime:string,
+  appointmentTime:Date | null,
   status: string,
   notes: string
 }
@@ -34,7 +34,7 @@ export const appointmentApi = createApi({
     postAppointment: builder.mutation<TAppointmentHistory,TCreatePostRequest>({
       
       query:(newAppointment)=>({
-        url:"appointments",
+        url:"appointment",
         method:"POST",
         body:newAppointment
       })

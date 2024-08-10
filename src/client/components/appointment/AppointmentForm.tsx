@@ -1,4 +1,4 @@
-import { Button, Flex, Form, Input, Space, Typography } from "antd";
+import {  message,Button, Flex, Form, Input, Space, Typography } from "antd";
 import type { FormProps } from "antd";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks/appointmentHook";
@@ -19,30 +19,27 @@ type FieldType = {
 const AppointmentForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const [postAppointment] = usePostAppointmentMutation()
-  const {appointmentTime,appointmentDate} = useAppSelector(
+  const {appointmentTime,appointmentDate,rawAppointmentTime} = useAppSelector(
     (state) => state.appointment,
   );
+ 
 
-  console.log(appointmentTime)
-  // const pickedDate = useAppSelector(
-  //   (state) => state.appointment.appointmentDate,
-  // );
+
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
       await postAppointment({
         clientId: 3,
-        propertyId: 1,
-        appointmentDate: "2024-07-11T16:12:19.885Z",
-        appointmentTime:"12:00",
-        status: "Approved",
-        notes: "Call me back"
+        propertyId: 2,
+        appointmentDate: appointmentDate,
+        appointmentTime:rawAppointmentTime,
+        status: "Pending",
+        notes: "I am busy"
       }).unwrap()
-      .then(()=> {
-        console.log("Success")
-      })
+      .then(()=> message.success("Your appointment have been recorded")
+      )
       
     } catch (error) {
-      console.log(error)
+      message.error("Something went wrong , Please try again")
     }
     
 
@@ -89,6 +86,7 @@ const AppointmentForm: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
+      
     </>
   );
 };

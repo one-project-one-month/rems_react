@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface TAppointment {
   appointmentDate: string;
   appointmentTime: string;
+  rawAppointmentTime: Date | null,
   status: "pending" | "done";
   notes?: string;
 }
@@ -12,6 +13,7 @@ export interface TAppointment {
 const initialAppointmentSlice: TAppointment = {
   appointmentDate: "",
   appointmentTime: "",
+  rawAppointmentTime: null,
   status: "pending",
   notes: "",
 };
@@ -22,10 +24,11 @@ export const appointmentSlice = createSlice({
   initialState: initialAppointmentSlice,
   reducers: {
     addAppointmentDate: (state, action) => {
-      state.appointmentDate = action.payload;
+     state.appointmentDate = action.payload
     },
     addAppointmentTime: (state, action) => {
-      state.appointmentTime = action.payload;
+      state.appointmentTime = action.payload.appointmentTime;
+      state.rawAppointmentTime = action.payload.rawAppointmentTime;
     },
     updateStatus: (state, action) => {
       state.status = action.payload;
