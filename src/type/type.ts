@@ -21,14 +21,22 @@ export interface Agent {
 }
 
 export interface Transaction {
-    transaction_id: number,
-    transaction_date: Date,
-    sale_price: number,
+    transactionId: number,
+    transactionDate: Date,
+    salePrice: number,
     commission: number,
     status: string,
-    property: Property,
-    client: Client,
-    agent: Agent
+    property: number,
+    buyerId: Client,
+    sellerId: null,
+    agentId: null,
+}
+
+export interface transactionResponse {
+    isSuccess: string,
+    isError: string,
+    data: Object
+    message: string
 }
 
 export interface Properties {
