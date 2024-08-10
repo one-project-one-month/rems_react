@@ -4,6 +4,10 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks/appointmentHook";
 import { ClockCircleOutlined, CalendarOutlined } from "@ant-design/icons";
 import { prev } from "../../../store/slices/currentPageSlice";
+import { usePostAppointmentMutation } from "../../../services/apis/appoinement/appointmentApi";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 
 const { Title } = Typography;
@@ -14,14 +18,34 @@ type FieldType = {
 
 const AppointmentForm: React.FC = () => {
   const dispatch = useAppDispatch()
-  const pickedTime = useAppSelector(
-    (state) => state.appointment.appointmentTime,
+  const [postAppointment] = usePostAppointmentMutation()
+  const {appointmentTime,appointmentDate} = useAppSelector(
+    (state) => state.appointment,
   );
-  const pickedDate = useAppSelector(
-    (state) => state.appointment.appointmentDate,
-  );
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+
+  console.log(appointmentTime)
+  // const pickedDate = useAppSelector(
+  //   (state) => state.appointment.appointmentDate,
+  // );
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    try {
+      await postAppointment({
+        clientId: 3,
+        propertyId: 1,
+        appointmentDate: "2024-07-11T16:12:19.885Z",
+        appointmentTime:"12:00",
+        status: "Approved",
+        notes: "Call me back"
+      }).unwrap()
+      .then(()=> {
+        console.log("Success")
+      })
+      
+    } catch (error) {
+      console.log(error)
+    }
+    
+
   };
   return (
     <>
@@ -31,13 +55,13 @@ const AppointmentForm: React.FC = () => {
           <Typography className="mr-5">
             <Space>
               <CalendarOutlined />
-              {new Date(pickedDate).toLocaleDateString()}
+              {new Date(appointmentDate).toLocaleDateString()}
             </Space>
           </Typography>
           <Typography>
             <Space>
               <ClockCircleOutlined />
-              {pickedTime}
+              {appointmentTime}
             </Space>
           </Typography>
           <Button
