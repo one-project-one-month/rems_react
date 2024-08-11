@@ -5,6 +5,7 @@ import AgentList from "../admin/components/agents/AgentList";
 import TransactionList from "../admin/components/transactions/TransactionList";
 import Appointments from "../admin/components/appointments/Appointments";
 import PropertyList from "../admin/components/properties/PropertyList";
+import Review from "../admin/components/properties/PropertyList"
 
 const Router = () => {
 	const config = createBrowserRouter([
