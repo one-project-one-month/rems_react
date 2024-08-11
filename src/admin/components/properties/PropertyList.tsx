@@ -1,8 +1,10 @@
 import type { TableProps } from 'antd';
-import { Col, Row, Table, Tag } from 'antd';
-import dayjs from 'dayjs';
+import { Table, Tag, Typography } from 'antd';
 import React from 'react';
-import { Properties } from '../../../type/type';
+import { Properties,Review } from '../../../type/type';
+import { useGetAllReviewsQuery } from "../../../features/review/api/reviewApi";
+import { useGetAllPropertiesQuery } from "../../../features/properties/api/propertiesApi";
+import { Link } from 'react-router-dom';
 
 const renderStatus = (status: any) => {
     let color;
@@ -17,25 +19,17 @@ const renderStatus = (status: any) => {
         default:
             break;
     }
-    return <Tag color={color}>{status}</Tag>
+    return <Tag color={color}>{status}</Tag>;
 }
 
 const columns: TableProps<Properties>['columns'] = [
     {
         title: 'Property ID',
-        dataIndex: 'property_id',
-        key: 'property_id',
-        align: 'center'
-    },
-    {
-        title: 'Agent Info',
-        dataIndex: 'agentInfo',
-        key: 'agent',
-        render: (_, record) => (
-            <div>
-                <span>{record.agent.agency_name}</span> <br />
-                <span style={{ color: "#096DD9" }}>{record.agent.phone}</span>
-            </div>
+        dataIndex: 'propertyId',
+        key: 'propertyId',
+        align: 'center',
+        render: (_,record) => (
+            <span>{record?.property.propertyId}</span>
         )
     },
     {
@@ -44,7 +38,7 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'address',
         render: (_, record) => (
             <div>
-                <span>{`${record.address},(${record.city},${record.state})`}</span> <br />
+                <span>{`${record.property.address}, (${record.property.city}, ${record.property.state})`}</span> <br />
             </div>
         )
     },
@@ -54,8 +48,8 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'property_type',
         render: (_, record) => (
             <div>
-                <span>{record.property_type}</span> <br />
-                <Tag color="#2db7f5" style={{marginRight: 0}}>{record.availability_type}</Tag>
+                <span>{record.property.propertyType}</span> <br />
+                <Tag color="#2db7f5" style={{ marginRight: 0 }}>{record.property.availiablityType}</Tag>
             </div>
         ),
         align: 'center'
@@ -72,151 +66,112 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'features',
         render: (_, record) => (
             <div>
-                <span>{`${record.size} sq ft, ${record.number_of_bedrooms} bed, ${record.number_of_bathrooms} bath`}</span> <br />
-                <span>{`Built in ${record.year_built}`}</span>
+                <span>{`${record.property.size} sq ft, ${record.property.numberOfBedrooms} bed, ${record.property.numberOfBathrooms} bath`}</span> <br />
+                <span>{`Built in ${record.property.yearBuilt}`}</span>
             </div>
         )
     },
     {
         title: 'Minimum Rental Period',
-        dataIndex: 'min_rental_period',
-        key: 'min_rental_period',
-        render: (period) => <span>{period} {period > 1 ? 'Months' : 'Month'} </span>,
+        dataIndex: 'minrentalPeriod',
+        key: 'minrentalPeriod',
+        render: (_,record) => <span>{record.property.minrentalPeriod} {record.property.minrentalPeriod > 1 ? 'Months' : 'Month'} </span>,
         width: 150
     },
     {
         title: 'Status',
         key: 'status',
         dataIndex: 'status',
-        render: (status) => renderStatus(status)
+        render: (_,record) => renderStatus(record.property.status)
+    },
+    {
+        title: 'Action',
+        dataIndex: 'action',
+        key: 'action',
+        render: (_,record) => (
+            <Link to='/properties/detail' 
+            state={{properties: record }}
+            >
+                <Typography.Link>Detail</Typography.Link>
+            </Link>
+        )
     }
-]
+];
 
 const properties: Properties[] = [
     {
-        "property_id": 1,
-        "agent": {
-            "agency_name": "Top Realty",
-            "license_number": "A1234567",
-            "phone": "555-9999",
-            "email": "top.realty@example.com"
-        },
-        "address": "123 Maple St",
-        "city": "Springfield",
-        "state": "IL",
-        "zip_code": "62704",
-        "property_type": "House",
-        "price": 250000.00,
-        "size": 1500.00,
-        "number_of_bedrooms": 3,
-        "number_of_bathrooms": 2,
-        "year_built": 1990,
-        "description": "Beautiful 3 bedroom house with garden",
-        "status": "AVAILABLE",
-        "availability_type": "FOR SALE",
-        "min_rental_period": 3,
-        "approved_by": "John Doe",
-        "add_date": new Date("2023-01-01T12:00:00"),
-        "edit_date": new Date("2023-01-01T12:00:00")
+    "property": {
+      "propertyId": 1,
+      "agentId": 1,
+      "address": "123 Maple Street Update",
+      "city": "Springfield",
+      "state": "IL",
+      "zipCode": "62704",
+      "propertyType": "Single Family Home",
+      "price": 350000,
+      "size": 2400.75,
+      "numberOfBedrooms": 4,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 1998,
+      "description": "Beautiful 4-bedroom home with spacious backyard and modern amenities.",
+      "status": "Canceled",
+      "availiablityType": "Immediate",
+      "minrentalPeriod": 12,
+      "approvedby": "string",
+      "adddate": new Date("2024-07-31T23:56:30.093"),
+      "editdate": new Date("2024-08-01T14:59:32.383")
     },
-    {
-        "property_id": 2,
-        "agent": {
-            "agency_name": "City Brokers",
-            "license_number": "B2345678",
-            "phone": "555-1234",
-            "email": "info@citybrokers.com"
-        },
-        "address": "456 Oak Ave",
-        "city": "Metropolis",
-        "state": "NY",
-        "zip_code": "10001",
-        "property_type": "Apartment",
-        "price": 1500.00,
-        "size": 800.00,
-        "number_of_bedrooms": 2,
-        "number_of_bathrooms": 1,
-        "year_built": 2010,
-        "description": "Cozy 2 bedroom apartment in downtown",
-        "status": "AVAILABLE",
-        "availability_type": "FOR RENT",
-        "min_rental_period": 6,
-        "approved_by": "Jane Smith",
-        "add_date": new Date("2023-02-15T09:30:00"),
-        "edit_date": new Date("2023-02-15T09:30:00")
-    },
-    {
-        "property_id": 3,
-        "agent": {
-            "agency_name": "Luxury Estates",
-            "license_number": "C3456789",
-            "phone": "555-5678",
-            "email": "contact@luxuryestates.com"
-        },
-        "address": "789 Pine Dr",
-        "city": "Gotham",
-        "state": "CA",
-        "zip_code": "90210",
-        "property_type": "Condo",
-        "price": 350000.00,
-        "size": 1200.00,
-        "number_of_bedrooms": 2,
-        "number_of_bathrooms": 2,
-        "year_built": 2005,
-        "description": "Modern condo with a great view",
-        "status": "SOLD",
-        "availability_type": "FOR SALE",
-        "min_rental_period": 3,
-        "approved_by": "Alice Johnson",
-        "add_date": new Date("2023-03-10T11:45:00"),
-        "edit_date": new Date("2023-03-10T11:45:00")
-    },
-    {
-        "property_id": 4,
-        "agent": {
-            "agency_name": "Family Homes",
-            "license_number": "D4567890",
-            "phone": "555-9876",
-            "email": "sales@familyhomes.com"
-        },
-        "address": "321 Elm St",
-        "city": "Star City",
-        "state": "TX",
-        "zip_code": "73301",
-        "property_type": "Townhouse",
-        "price": 180000.00,
-        "size": 1100.00,
-        "number_of_bedrooms": 3,
-        "number_of_bathrooms": 1.5,
-        "year_built": 1985,
-        "description": "Spacious townhouse with a large backyard",
-        "status": "AVAILABLE",
-        "availability_type": "FOR SALE",
-        "min_rental_period": 6,
-        "approved_by": "Robert Brown",
-        "add_date": new Date("2023-04-05T10:20:00"),
-        "edit_date": new Date("2023-04-05T10:20:00")
-    }
+    "images": [
+      {
+        "imageId": 7,
+        "propertyId": 1,
+        "imageUrl": "D:\\rems_image\\9ba01f4b-22b1-418e-b835-1ab4bc164856.png",
+        "description": "Backyard with garden",
+        "dateUploaded": "2024-08-01T14:59:32.397"
+      }
+    ],
+    "reviews": [
+      {
+        "reviewId": 1,
+        "userId": 3,
+        "propertyId": 1,
+        "rating": 5,
+        "comments": "Amazing house, great location!",
+        "dateCreated": new Date("2024-07-31T23:56:30.367")
+      },
+      {
+        "reviewId": 4,
+        "userId": 1,
+        "propertyId": 1,
+        "rating": 3,
+        "comments": "Good",
+        "dateCreated": new Date("2024-08-11T17:23:29.823")
+      }
+    ]
+  }
 ]
-    ;
+;
 
-const PropertyList: React.FC = () => <Table columns={columns} dataSource={properties} rowKey="property_id" expandable={{
-    expandedRowRender: (record) => (
-        <Row>
-            <Col span={8}>
-                <div className='text-gray-600 font-semibold'>Approved By</div>
-                <div className='text-gray-800'>{`${record.approved_by}`}</div>
-            </Col>
-            <Col span={8}>
-                <div className='text-gray-600 font-semibold'>Added Date&Edited Date</div>
-                <div className='text-gray-800'>{`${dayjs(record.add_date).format('YYYY-MM-DD HH:mm A')},${dayjs(record.edit_date).format('YYYY-MM-DD HH:mm A')}`}</div>
-            </Col>
-            <Col span={8}>
-                <div className='text-gray-600 font-semibold'>Description</div>
-                <div className='text-gray-800'>{record.description}</div>
-            </Col>
-        </Row>
-    )
-}} />
+const PropertyList: React.FC = () => {
+    // const { data: properties, isLoading: propertiesLoading } = useGetAllPropertiesQuery();
+    // const { data: review, isLoading: reviewsLoading } = useGetAllReviewsQuery();
 
-export default PropertyList
+    
+    // if (propertiesLoading || reviewsLoading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (!properties) {
+    //     return <div>No properties available.</div>;
+    // }
+
+    return (
+        <Table
+            columns={columns}
+            dataSource={properties}
+            rowKey="propertyId"
+        />
+    );
+};
+
+export default PropertyList;

@@ -5,7 +5,7 @@ import AgentList from "../admin/components/agents/AgentList";
 import TransactionList from "../admin/components/transactions/TransactionList";
 import Appointments from "../admin/components/appointments/Appointments";
 import PropertyList from "../admin/components/properties/PropertyList";
-import Review from "../admin/components/properties/PropertyList"
+import PropertyDetail from "../admin/components/properties/PropertyDetail";
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -21,10 +21,10 @@ const Router = () => {
 					path: "/agents",
 					element: <AgentList />,
 				},
-				{
-					path: "/review",
-					element: <Review />,
-				},
+				// {
+				// 	path: "/review",
+				// 	element: <Review />,
+				// },
 				{
 					path: "/transactions",
 					element: <TransactionList />,
@@ -37,6 +37,10 @@ const Router = () => {
 					path: "/properties",
 					element: <PropertyList />,
 				},
+				{
+					path: "/properties/detail",
+					element: <PropertyDetail />
+				}
 			],
 		},
 	]);

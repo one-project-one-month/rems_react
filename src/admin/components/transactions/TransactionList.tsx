@@ -1,9 +1,9 @@
 import type { TableProps } from 'antd';
-import { Table, Tag } from 'antd';
+import { Col, Row, Table, Tag } from 'antd';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { useGetAllTransactionsQuery } from '../../../features/transactions/api/transactions';
-import { Transaction } from '../../../type/type';
+import { Transactions } from '../../../type/type';
 
 const renderStatus = (status: any) => {
     let color;
@@ -37,41 +37,33 @@ interface TransApiResponse {
         isError: boolean;
         data: {
             pageSetting: PageSetting;
-            lstTransaction: Transaction[];
+            lstTransaction: Transactions[];
         };
     }
 }
 
-const columns: TableProps<Transaction>['columns'] = [
+const columns: TableProps<Transactions>['columns'] = [
     {
         title: 'Transaction ID',
         dataIndex: 'transactionId',
         key: 'transactionId',
-        align: 'center'
+        align: 'center',
+        render: (_,record) => (
+            <span>{record?.transaction?.transactionId}</span>
+        )
     },
     {
         title: 'Client Info',
-        dataIndex: 'buyerId',
-        key: 'buyerId',
+        dataIndex: 'clientId',
+        key: 'clientId',
         align: 'center',
-        // render: (_, record) => (
-        //     <div>
-        //         <span>{`${record.buyerId.first_name}${record.buyerId.last_name}`}</span> <br />
-        //         <span style={{ color: "#096DD9" }}>{record.buyerId.phone}</span>
-        //     </div>
-        // )
+        render: (_, record) => (
+            <div>
+                <span>{`${record.client?.firstName}${record.client.lastName}`}</span> <br />
+                <span style={{ color: "#096DD9" }}>{record.client.phone}</span>
+            </div>
+        )
     },
-    // {
-    //     title: 'Agent Info',
-    //     dataIndex: 'agentInfo',
-    //     key: 'agent',
-    //     render: (_, record) => (
-    //         <div>
-    //             <span>{record.agent.agency_name}</span> <br />
-    //             <span style={{ color: "#096DD9" }}>{record.agent.phone}</span>
-    //         </div>
-    //     )
-    // },
     {
         title: 'Transaction Date',
         dataIndex: 'transactionDate',
@@ -82,77 +74,36 @@ const columns: TableProps<Transaction>['columns'] = [
         title: 'Sale Price',
         dataIndex: 'salePrice',
         key: 'sale',
-        align: 'center'
+        align: 'center',
+        render: (_,record) => (
+            <span>{record.transaction.salePrice}</span>
+        )
+    },
+    {
+        title: 'Property Price',
+        dataIndex: 'propertyPrice',
+        key: 'propertyPrice',
+        align: 'center',
+        render: (_,record) => (
+            <span>{record.property.price}</span>
+        )
     },
     {
         title: 'Commission',
         dataIndex: 'commission',
         key: 'commission',
-        align: 'center'
+        align: 'center',
+        render: (_,record) => (
+            <span>{record.transaction.commission}</span>
+        )
     },
     {
         title: 'Status',
         key: 'status',
         dataIndex: 'status',
-        render: (status) => renderStatus(status)
+        render: (_,record) => renderStatus(record.transaction.status)
     }
 ];
-
-// const transactions: Transaction[] = [
-//     {
-//         "transaction_id": 1,
-//         "property": {
-//             "address": "123 Maple St",
-//             "city": "Springfield",
-//             "state": "IL",
-//             "zip_code": "62701",
-//             "price": 250000.00
-//         },
-//         "client": {
-//             "first_name": "Alice",
-//             "last_name": "Johnson",
-//             "phone": "555-8765",
-//             "email": "alice.johnson@example.com"
-//         },
-//         "agent": {
-//             "agency_name": "Top Realty",
-//             "license_number": "A1234567",
-//             "phone": "555-9999",
-//             "email": "top.realty@example.com"
-//         },
-//         "transaction_date": new Date("2024-07-01T00:00:00"),
-//         "sale_price": 240000.00,
-//         "commission": 12000.00,
-//         "status": "COMPLETED",
-
-//     },
-//     {
-//         "transaction_id": 2,
-//         "property": {
-//             "address": "456 Oak Ave",
-//             "city": "Lincoln",
-//             "state": "NE",
-//             "zip_code": "68508",
-//             "price": 300000.00
-//         },
-//         "client": {
-//             "first_name": "Bob",
-//             "last_name": "Brown",
-//             "phone": "555-4321",
-//             "email": "bob.brown@example.com"
-//         },
-//         "agent": {
-//             "agency_name": "Elite Properties",
-//             "license_number": "B7654321",
-//             "phone": "555-8888",
-//             "email": "elite.properties@example.com"
-//         },
-//         "transaction_date": new Date("2024-07-15T00:00:00"),
-//         "sale_price": 290000.00,
-//         "commission": 14500.00,
-//         "status": "PENDING",
-//     }
-// ]
 
 const TransactionList: React.FC = () => {
     const [page,setPage] = useState({ pageNumber: 1, pageSize: 2 })
@@ -160,7 +111,7 @@ const TransactionList: React.FC = () => {
     const { isFetching,data } = useGetAllTransactionsQuery<TransApiResponse>(page);    
 
     const pageSetting = data?.data?.pageSetting;
-    const lstTransaction: Transaction[] = data?.data?.lstTransaction ?? [];
+    const lstTransaction: Transactions[] = data?.data?.lstTransaction ?? [];
 
     const handlePagination = (pageNumber:number, pageSize:number) => {
         setPage({
@@ -176,24 +127,28 @@ const TransactionList: React.FC = () => {
             current: page?.pageNumber,
             onChange: handlePagination
         }}
-        // expandable={{
-        //     expandedRowRender: (record) => (
-        //         <Row>
-        //             <Col span={8}>
-        //                 <div className='text-gray-600 font-semibold'>Property Address</div>
-        //                 <div className='text-gray-800'>{`${record.property.address}, ${record.property.city}`}</div>
-        //             </Col>
-        //             <Col span={8}>
-        //                 <div className='text-gray-600 font-semibold'>Location Details</div>
-        //                 <div className='text-gray-800'>{`${record.property.state} ${record.property.zip_code}`}</div>
-        //             </Col>
-        //             <Col span={8}>
-        //                 <div className='text-gray-600 font-semibold'>Property Price</div>
-        //                 <div className='text-gray-800'>{record.property.price}</div>
-        //             </Col>
-        //         </Row>
-        //     )
-        // }}  
+        expandable={{
+            expandedRowRender: (record) => (
+                <Row gutter={16}>
+                    <Col span={6}>
+                        <div className='text-gray-600 font-semibold'>Property Address</div>
+                        <div className='text-gray-800'>{`${record.property.address}, ${record.property.city}, ${record.property.state}, ${record.property.zipCode}`}</div>
+                    </Col>                    
+                    <Col span={6}>
+                        <div className='text-gray-600 font-semibold'>Property Features</div>
+                        <div className='text-gray-800'>{`${record.property.size} sq ft, ${record.property.numberOfBedrooms} bed, ${record.property.numberOfBathrooms} bath, Built in ${record.property.yearBuilt}`}</div>
+                    </Col>
+                    <Col span={6}>
+                        <div className='text-gray-600 font-semibold'>Minimum Rental Period</div>
+                        <div className='text-gray-800'>{`${record.property.minrentalPeriod}`}</div>
+                    </Col>
+                    <Col span={6}>
+                        <div className='text-gray-600 font-semibold'>Available Type</div>
+                        <div className='text-gray-800'>{`${record.property.availiablityType}`}</div>
+                    </Col>
+                </Row>
+            )
+        }}  
         />
     )
 };
