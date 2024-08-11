@@ -123,7 +123,7 @@ const PropertyList: React.FC = () => {
 
     return (
         <Table
-            //columns=columns}
+            // columns={columns}
             dataSource={properties}
             rowKey="property_id"
             expandable={{

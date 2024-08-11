@@ -2,7 +2,7 @@ import DashboardLayout from "../admin/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
-import TransactionsList from "../admin/components/transactions/TransactionsList";
+import TransactionList from "../admin/components/transactions/TransactionList";
 import Appointments from "../admin/components/appointments/Appointments";
 import PropertyList from "../admin/components/properties/PropertyList";
 
@@ -20,10 +20,13 @@ const Router = () => {
 					path: "/agents",
 					element: <AgentList />,
 				},
-
+				{
+					path: "/review",
+					element: <Review />,
+				},
 				{
 					path: "/transactions",
-					element: <TransactionsList />,
+					element: <TransactionList />,
 				},
 				{
 					path: "/appointments",
