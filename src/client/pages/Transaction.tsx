@@ -69,9 +69,9 @@ const Transaction = () => {
     ];
 
     return (
-        <div>
+        <div className='mt-10'>
             {isSummaryShow && <TransactionSummary setIsShow={setIsSummaryShow} />}
-            <div className='px-4 md:px-8 lg:px-12 py-12 w-[390px] sm:w-[650px] md:w-[980px] lg:w-full overflow-x-scroll no-scrollbar'>
+            <div className='px-2 md:px-8 lg:px-12 py-12 w-[390px] sm:w-[650px] md:w-[980px] lg:w-full overflow-x-scroll no-scrollbar'>
                 <Table
                     dataSource={clientData}
                     columns={columns}

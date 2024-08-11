@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  padding:0;
+  margin:0
+}
 
 @layer utilities {
     @variants responsive {
