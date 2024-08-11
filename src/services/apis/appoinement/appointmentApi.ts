@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import dayjs from "dayjs";
+
 
 
 
@@ -13,6 +13,19 @@ export interface TAppointmentHistory {
   notes?: string;
 }
 
+export interface TAppointmentHistoryResponse{
+  isSuccess: boolean,
+  isError:boolean,
+  data: {
+    pageSetting: {
+      totalCount: number,
+      pageSize:number,
+      isEndOfPage:boolean
+    },
+    lstAppointment: TAppointmentHistory[]
+  }
+}
+
 export interface TCreatePostRequest{
   clientId : number,
   propertyId: number,
@@ -24,17 +37,16 @@ export interface TCreatePostRequest{
 
 export const appointmentApi = createApi({
   reducerPath: "appointmentHistory",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://65.18.112.78:44010/rems/api/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
   tagTypes: ["appointments"],
   endpoints: (builder) => ({
-    getAppointmentHistory: builder.query<TAppointmentHistory[], void>({
-      query: () => "appointments",
+    getAppointmentHistory: builder.query<TAppointmentHistoryResponse,any>({
+      query: (idArray) =>  `appointments/${idArray.join('/')}`,
       providesTags: ["appointments"],
     }),
     postAppointment: builder.mutation<TAppointmentHistory,TCreatePostRequest>({
-      
       query:(newAppointment)=>({
-        url:"appointment",
+        url:"appointments",
         method:"POST",
         body:newAppointment
       })

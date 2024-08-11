@@ -1,4 +1,4 @@
-import {  message,Button, Flex, Form, Input, Space, Typography } from "antd";
+import {  message,Button, Flex, Form, Input, Space, Typography, Spin } from "antd";
 import type { FormProps } from "antd";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks/appointmentHook";
@@ -8,6 +8,7 @@ import { usePostAppointmentMutation } from "../../../services/apis/appoinement/a
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
+import { useNavigate } from "react-router";
 
 
 const { Title } = Typography;
@@ -18,14 +19,19 @@ type FieldType = {
 
 const AppointmentForm: React.FC = () => {
   const dispatch = useAppDispatch()
-  const [postAppointment] = usePostAppointmentMutation()
+  const [postAppointment,{isSuccess}] = usePostAppointmentMutation()
   const {appointmentTime,appointmentDate,rawAppointmentTime} = useAppSelector(
     (state) => state.appointment,
   );
+  const navigate = useNavigate()
+ 
+  if(isSuccess){
+    return <Spin/>
+  }
  
 
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+  const onFinish: FormProps<FieldType>["onFinish"] = async () => {
     try {
       await postAppointment({
         clientId: 3,
@@ -35,15 +41,16 @@ const AppointmentForm: React.FC = () => {
         status: "Pending",
         notes: "I am busy"
       }).unwrap()
-      .then(()=> message.success("Your appointment have been recorded")
+      .then(()=> 
+        message.success("Your appointment have been recorded")
       )
       
+      navigate("history")
     } catch (error) {
       message.error("Something went wrong , Please try again")
     }
-    
-
   };
+
   return (
     <>
       <Space direction="vertical">

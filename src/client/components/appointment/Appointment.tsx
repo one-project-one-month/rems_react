@@ -11,8 +11,6 @@ const Appointment = () => {
     <Space
       direction="vertical"
       className="px-8 py-4 w-full"
-
-
     >
       <Typography>
         Step {currentPage + 1} of {steps.length}
@@ -20,9 +18,6 @@ const Appointment = () => {
 
       <div>{steps[currentPage].content}</div>
     </Space>
-
-
-
   );
 };
 

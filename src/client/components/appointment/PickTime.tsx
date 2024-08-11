@@ -13,11 +13,10 @@ dayjs.extend(customParseFormat);
 
 const PickTime = () => {
   const dispatch = useAppDispatch();
-  const {appointmentDate,appointmentTime,rawAppointmentTime} = useAppSelector(
+  const {appointmentDate,appointmentTime} = useAppSelector(
     (state) => state.appointment,
   );
  
-  console.log(rawAppointmentTime)
 
   const onTimeChange: TimePickerProps["onChange"] = (time, timeString) => {
    
