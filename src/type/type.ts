@@ -1,16 +1,18 @@
-export interface Property {
-    address: string,
-    city: string,
-    state: string,
-    zip_code: string,
-    price: number
-}
+export interface Review {
+    reviewId: number;
+    userId: number;
+    propertyId: number;
+    rating: number;
+    comments: string;
+    dateCreated: Date;
+  }
 
 export interface Client {
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     phone: string,
-    email: string
+    email: string,
+    address: string,
 }
 
 export interface Agent {
@@ -20,16 +22,18 @@ export interface Agent {
     email: string
 }
 
-export interface Transaction {
+export interface Transaction{
     transactionId: number,
     transactionDate: Date,
     salePrice: number,
     commission: number,
     status: string,
-    property: number,
-    buyerId: Client,
-    sellerId: null,
-    agentId: null,
+}
+
+export interface Transactions {
+    transaction: Transaction,
+    property: Property,
+    client: Client,
 }
 
 export interface transactionResponse {
@@ -38,25 +42,38 @@ export interface transactionResponse {
     data: Object
     message: string
 }
+interface Images {
+    imageId: number,
+    propertyId: number,
+    imageUrl: string,
+    description: string,
+    dateUploaded: string
+}
+export interface Properties{
+    property: Property,
+    images: Images[],
+    reviews: Review[]
+}
 
-export interface Properties {
-    property_id: number,
-    agent: Agent,
+export interface Property {
+    propertyId: number,
+    agent?: Agent,
+    agentId?: number,
     address: string,
     city: string,
     state: string,
-    zip_code: string,
-    property_type: string,
+    zipCode: string,
+    propertyType: string,
     price: number,
     size: number,
-    number_of_bedrooms: number,
-    number_of_bathrooms: number,
-    year_built: number,
+    numberOfBedrooms: number,
+    numberOfBathrooms: number,
+    yearBuilt: number,
     description: string,
     status: string,
-    availability_type: string,
-    min_rental_period: number,
-    approved_by: string,
-    add_date: Date,
-    edit_date: Date
+    availiablityType: string,
+    minrentalPeriod: number,
+    approvedby: string,
+    adddate: Date,
+    editdate: Date
 }
