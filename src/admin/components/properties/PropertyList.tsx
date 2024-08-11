@@ -1,10 +1,10 @@
 import type { TableProps } from 'antd';
-import { Col, Row, Table, Tag } from 'antd';
-import dayjs from 'dayjs';
+import { Table, Tag, Typography } from 'antd';
 import React from 'react';
 import { Properties,Review } from '../../../type/type';
 import { useGetAllReviewsQuery } from "../../../features/review/api/reviewApi";
 import { useGetAllPropertiesQuery } from "../../../features/properties/api/propertiesApi";
+import { Link } from 'react-router-dom';
 
 const renderStatus = (status: any) => {
     let color;
@@ -25,19 +25,11 @@ const renderStatus = (status: any) => {
 const columns: TableProps<Properties>['columns'] = [
     {
         title: 'Property ID',
-        dataIndex: 'property_id',
-        key: 'property_id',
-        align: 'center'
-    },
-    {
-        title: 'Agent Info',
-        dataIndex: 'agentInfo',
-        key: 'agent',
-        render: (_, record) => (
-            <div>
-                <span>{record.agent.agency_name}</span> <br />
-                <span style={{ color: "#096DD9" }}>{record.agent.phone}</span>
-            </div>
+        dataIndex: 'propertyId',
+        key: 'propertyId',
+        align: 'center',
+        render: (_,record) => (
+            <span>{record?.property.propertyId}</span>
         )
     },
     {
@@ -46,7 +38,7 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'address',
         render: (_, record) => (
             <div>
-                <span>{`${record.address}, (${record.city}, ${record.state})`}</span> <br />
+                <span>{`${record.property.address}, (${record.property.city}, ${record.property.state})`}</span> <br />
             </div>
         )
     },
@@ -56,8 +48,8 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'property_type',
         render: (_, record) => (
             <div>
-                <span>{record.property_type}</span> <br />
-                <Tag color="#2db7f5" style={{ marginRight: 0 }}>{record.availability_type}</Tag>
+                <span>{record.property.propertyType}</span> <br />
+                <Tag color="#2db7f5" style={{ marginRight: 0 }}>{record.property.availiablityType}</Tag>
             </div>
         ),
         align: 'center'
@@ -74,79 +66,110 @@ const columns: TableProps<Properties>['columns'] = [
         key: 'features',
         render: (_, record) => (
             <div>
-                <span>{`${record.size} sq ft, ${record.number_of_bedrooms} bed, ${record.number_of_bathrooms} bath`}</span> <br />
-                <span>{`Built in ${record.year_built}`}</span>
+                <span>{`${record.property.size} sq ft, ${record.property.numberOfBedrooms} bed, ${record.property.numberOfBathrooms} bath`}</span> <br />
+                <span>{`Built in ${record.property.yearBuilt}`}</span>
             </div>
         )
     },
     {
         title: 'Minimum Rental Period',
-        dataIndex: 'min_rental_period',
-        key: 'min_rental_period',
-        render: (period) => <span>{period} {period > 1 ? 'Months' : 'Month'} </span>,
+        dataIndex: 'minrentalPeriod',
+        key: 'minrentalPeriod',
+        render: (_,record) => <span>{record.property.minrentalPeriod} {record.property.minrentalPeriod > 1 ? 'Months' : 'Month'} </span>,
         width: 150
     },
     {
         title: 'Status',
         key: 'status',
         dataIndex: 'status',
-        render: (status) => renderStatus(status)
+        render: (_,record) => renderStatus(record.property.status)
     },
     {
-        title: 'Rating',
-        dataIndex: 'rating',
-        key: 'rating',
-        align: 'center',
-        render: (rating) => <span>{rating ? `${rating} ⭐` : 'N/A'}</span>
-    },
-    {
-        title: 'Comments',
-        dataIndex: 'comments',
-        key: 'comments',
-        render: (comments) => <span>{comments || 'No comments'}</span>
+        title: 'Action',
+        dataIndex: 'action',
+        key: 'action',
+        render: (_,record) => (
+            <Link to='/properties/detail' 
+            state={{properties: record }}
+            >
+                <Typography.Link>Detail</Typography.Link>
+            </Link>
+        )
     }
 ];
 
+const properties: Properties[] = [
+    {
+    "property": {
+      "propertyId": 1,
+      "agentId": 1,
+      "address": "123 Maple Street Update",
+      "city": "Springfield",
+      "state": "IL",
+      "zipCode": "62704",
+      "propertyType": "Single Family Home",
+      "price": 350000,
+      "size": 2400.75,
+      "numberOfBedrooms": 4,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 1998,
+      "description": "Beautiful 4-bedroom home with spacious backyard and modern amenities.",
+      "status": "Canceled",
+      "availiablityType": "Immediate",
+      "minrentalPeriod": 12,
+      "approvedby": "string",
+      "adddate": new Date("2024-07-31T23:56:30.093"),
+      "editdate": new Date("2024-08-01T14:59:32.383")
+    },
+    "images": [
+      {
+        "imageId": 7,
+        "propertyId": 1,
+        "imageUrl": "D:\\rems_image\\9ba01f4b-22b1-418e-b835-1ab4bc164856.png",
+        "description": "Backyard with garden",
+        "dateUploaded": "2024-08-01T14:59:32.397"
+      }
+    ],
+    "reviews": [
+      {
+        "reviewId": 1,
+        "userId": 3,
+        "propertyId": 1,
+        "rating": 5,
+        "comments": "Amazing house, great location!",
+        "dateCreated": new Date("2024-07-31T23:56:30.367")
+      },
+      {
+        "reviewId": 4,
+        "userId": 1,
+        "propertyId": 1,
+        "rating": 3,
+        "comments": "Good",
+        "dateCreated": new Date("2024-08-11T17:23:29.823")
+      }
+    ]
+  }
+]
+;
 
 const PropertyList: React.FC = () => {
-    const { data: properties, isLoading: propertiesLoading } = useGetAllPropertiesQuery();
-    const { data: review, isLoading: reviewsLoading } = useGetAllReviewsQuery();
+    // const { data: properties, isLoading: propertiesLoading } = useGetAllPropertiesQuery();
+    // const { data: review, isLoading: reviewsLoading } = useGetAllReviewsQuery();
 
     
-    if (propertiesLoading || reviewsLoading) {
-        return <div>Loading...</div>;
-    }
+    // if (propertiesLoading || reviewsLoading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (!properties) {
-        return <div>No properties available.</div>;
-    }
+    // if (!properties) {
+    //     return <div>No properties available.</div>;
+    // }
 
     return (
         <Table
-            //columns=columns}
+            columns={columns}
             dataSource={properties}
-            rowKey="property_id"
-            expandable={{
-                expandedRowRender: (record) => (
-                    <Row>
-                        <Col span={8}>
-                            <div className='text-gray-600 font-semibold'>Approved By</div>
-                            <div className='text-gray-800'>{record.approved_by}</div>
-                        </Col>
-                        <Col span={8}>
-                            <div className='text-gray-600 font-semibold'>Added Date & Edited Date</div>
-                            <div className='text-gray-800'>
-                                {`${dayjs(record.add_date).format('YYYY-MM-DD HH:mm A')}, ${dayjs(record.edit_date).format('YYYY-MM-DD HH:mm A')}`}
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className='text-gray-600 font-semibold'>Description</div>
-                            <div className='text-gray-800'>{record.description}</div>
-                        </Col>
-                    </Row>
-                ),
-                rowExpandable: (record) => record.description !== undefined
-            }}
+            rowKey="propertyId"
         />
     );
 };
