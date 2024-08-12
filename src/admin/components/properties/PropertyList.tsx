@@ -95,7 +95,19 @@ const columns: TableProps<Properties>['columns'] = [
                 <Typography.Link>Detail</Typography.Link>
             </Link>
         )
-    }
+    },
+    // {
+    //     title: 'Rating',
+    //     dataIndex: 'rating',
+    //     key: 'rating',
+    //     render: (rating) => <span>{rating}</span>
+    // },
+    // {
+    //     title: 'Comment',
+    //     dataIndex: 'comment',
+    //     key: 'comment',
+    //     render: (rating) => <span>{rating} </span>
+    // },
 ];
 
 const properties: Properties[] = [
