@@ -1,15 +1,16 @@
 import { Drawer } from "antd";
 import UserForm from "./ClientForm";
-import { DataType } from "./ClientList";
 import "./styles.css";
+import { Client } from "../../../type/type";
 
 interface Props {
   onClose: () => void;
   open: boolean;
-  records: DataType | null;
+  records: Client | null;
+  refetch: () => void;
 }
 
-const ClientDrawer = ({ onClose, open, records }: Props) => {
+const ClientDrawer = ({ onClose, open, records, refetch }: Props) => {
   return (
     <>
       <Drawer
@@ -22,7 +23,7 @@ const ClientDrawer = ({ onClose, open, records }: Props) => {
             paddingBottom: 80,
           },
         }}>
-        <UserForm onClose={onClose} initialValues={records} />
+        <UserForm onClose={onClose} initialValues={records} refetch={refetch} />
       </Drawer>
     </>
   );

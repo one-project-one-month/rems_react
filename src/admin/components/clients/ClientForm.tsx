@@ -1,18 +1,25 @@
-import { Button, ConfigProvider, Form, Input, Select, Space } from "antd";
+import { Button, ConfigProvider, Form, Input, Space } from "antd";
 import { RuleObject } from "antd/lib/form";
 import { StoreValue } from "rc-field-form/lib/interface";
 import { useEffect } from "react";
-import { DataType } from "./ClientList";
+import { Client } from "../../../type/type";
+import {
+  useCreateClientMutation,
+  useUpdateClientByIdMutation,
+} from "../../../features/clients/api/clientApi";
 
 interface Props {
   onClose: () => void;
-  initialValues: DataType | null;
+  initialValues: Client | null;
+  refetch: () => void;
 }
 
-const ClientForm = ({ onClose, initialValues }: Props) => {
+const ClientForm = ({ onClose, initialValues, refetch }: Props) => {
+  const [createClient, { isLoading: isCreating }] = useCreateClientMutation();
+  const [updateClient, { isLoading: isUpdating }] =
+    useUpdateClientByIdMutation();
   const [form] = Form.useForm();
 
-  const { Option } = Select;
   const { TextArea } = Input;
 
   useEffect(() => {
@@ -23,9 +30,30 @@ const ClientForm = ({ onClose, initialValues }: Props) => {
     }
   }, [initialValues, form]);
 
-  const onFinish = () => {
-    console.log("form", form.getFieldsValue());
-    onClose();
+  const onFinish = async () => {
+    const values = form.getFieldsValue();
+    const passwordWithValue = { ...values, password: "password123" };
+    console.log("passwordWithValue", passwordWithValue);
+
+    try {
+      if (initialValues && initialValues.clientId) {
+        // Update client if initialValues is provided
+        await updateClient({
+          data: passwordWithValue,
+          id: initialValues.clientId,
+        });
+        refetch();
+        onClose();
+      } else {
+        // Create new client if no initialValues
+        await createClient(passwordWithValue);
+        refetch();
+        onClose();
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   const validatePhoneNumber = (_: RuleObject, value: StoreValue) => {
@@ -90,15 +118,7 @@ const ClientForm = ({ onClose, initialValues }: Props) => {
             placeholder="Please enter your phone number"
           />
         </Form.Item>
-        <Form.Item
-          name="roles"
-          label="Roles"
-          rules={[{ required: true, message: "Please select your role" }]}>
-          <Select>
-            <Option value="Agent">Agent</Option>
-            <Option value="User">User</Option>
-          </Select>
-        </Form.Item>
+
         <Form.Item name="address" label="Address">
           <TextArea />
         </Form.Item>
