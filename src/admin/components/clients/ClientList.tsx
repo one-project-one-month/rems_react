@@ -1,4 +1,4 @@
-import { Button, Empty, Input, Modal, Space, Table, Tag } from "antd";
+import { Button, Empty, Input, Modal, Space, Table, Tag, Row, Col } from "antd";
 import type { TableProps } from "antd";
 import {
   DeleteOutlined,
@@ -12,6 +12,7 @@ import {
   useGetAllClientsQuery,
 } from "../../../features/clients/api/clientApi";
 import { Client } from "../../../type/type";
+import { toast } from "sonner";
 
 const ClientList = () => {
   const [open, setOpen] = useState(false);
@@ -49,6 +50,7 @@ const ClientList = () => {
     if (clientToDelete) {
       await deleteClient(clientToDelete.clientId);
       await refetch();
+      toast.success(`Client delete successfully`);
     }
     setIsModalOpen(false);
   };
@@ -117,16 +119,19 @@ const ClientList = () => {
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.length - b.email.length,
+      responsive: ["md"],
     },
     {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
+      responsive: ["lg"],
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      responsive: ["xl"],
     },
     {
       title: "Roles",
@@ -159,17 +164,21 @@ const ClientList = () => {
 
   return (
     <div className="p-5">
-      <div className="flex justify-between items-center mb-5">
-        <Input
-          prefix={<SearchOutlined />}
-          placeholder="Search by name"
-          onChange={handleSearch}
-          className="w-64 md:w-80"
-        />
-        <Button type="primary" onClick={handleCreate}>
-          Create Clients
-        </Button>
-      </div>
+      <Row gutter={[16, 16]} className="mb-5">
+        <Col xs={24} sm={16} md={18} lg={20}>
+          <Input
+            prefix={<SearchOutlined />}
+            placeholder="Search by name"
+            onChange={handleSearch}
+            className="w-full"
+          />
+        </Col>
+        <Col xs={24} sm={8} md={6} lg={4}>
+          <Button type="primary" onClick={handleCreate} className="w-full">
+            Create Clients
+          </Button>
+        </Col>
+      </Row>
       <Table
         columns={columns}
         dataSource={isSearched ? filteredData : dataSource}
@@ -180,6 +189,11 @@ const ClientList = () => {
               description="No data found"
             />
           ),
+        }}
+        scroll={{ x: "max-content" }}
+        pagination={{
+          responsive: true,
+          position: ["bottomLeft"],
         }}
       />
       <UserDrawer

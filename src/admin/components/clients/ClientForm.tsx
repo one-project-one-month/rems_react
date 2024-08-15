@@ -7,6 +7,7 @@ import {
   useCreateClientMutation,
   useUpdateClientByIdMutation,
 } from "../../../features/clients/api/clientApi";
+import { toast } from "sonner";
 
 interface Props {
   onClose: () => void;
@@ -15,9 +16,8 @@ interface Props {
 }
 
 const ClientForm = ({ onClose, initialValues, refetch }: Props) => {
-  const [createClient, { isLoading: isCreating }] = useCreateClientMutation();
-  const [updateClient, { isLoading: isUpdating }] =
-    useUpdateClientByIdMutation();
+  const [createClient] = useCreateClientMutation();
+  const [updateClient] = useUpdateClientByIdMutation();
   const [form] = Form.useForm();
 
   const { TextArea } = Input;
@@ -43,16 +43,19 @@ const ClientForm = ({ onClose, initialValues, refetch }: Props) => {
           id: initialValues.clientId,
         });
         refetch();
+        toast.success("Client update successfully");
         onClose();
       } else {
         // Create new client if no initialValues
         await createClient(passwordWithValue);
         refetch();
+        toast.success("Client create successfully");
         onClose();
       }
       onClose();
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Error submitting form");
     }
   };
 
