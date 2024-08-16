@@ -1,10 +1,17 @@
-import { Button, Col, Divider, Flex, Row, Typography } from 'antd';
+import { Button, Col, Divider, Row, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router';
+import { useAgentIndexQuery } from "../../../features/agents/api/agentApi";
+import { Agent } from '../../../type/type'; 
 
 const PropertyDetail = () => {
     const location = useLocation();
-    const properties = location.state.properties;
+    const properties = location.state?.properties;
+
+    const { data: agentData, isSuccess, isError } = useAgentIndexQuery();
+
+    const agents: Agent[] = agentData?.data ?? [];
+    const agent = agents[0]; 
 
     return (
         <Row gutter={[24, 24]}>
@@ -16,24 +23,24 @@ const PropertyDetail = () => {
                 <Row gutter={[16, 16]}>
                     <Col span={8}>
                         <div className='text-gray-600 font-semibold'>Approved By</div>
-                        <div className='text-gray-800'>{properties.property.approvedby}</div>
+                        <div className='text-gray-800'>{properties?.property?.approvedby}</div>
                     </Col>
                     <Col span={8}>
                         <div className='text-gray-600 font-semibold'>Added Date & Edited Date</div>
                         <div className='text-gray-800'>
-                            {`${dayjs(properties.property.addDate).format('YYYY-MM-DD HH:mm A')}, ${dayjs(properties.property.editDate).format('YYYY-MM-DD HH:mm A')}`}
+                            {`${dayjs(properties?.property?.addDate).format('YYYY-MM-DD HH:mm A')}, ${dayjs(properties?.property?.editDate).format('YYYY-MM-DD HH:mm A')}`}
                         </div>
                     </Col>
                     <Col span={8}>
                         <div className='text-gray-600 font-semibold'>Description</div>
-                        <div className='text-gray-800'>{properties.property.description}</div>
+                        <div className='text-gray-800'>{properties?.property?.description}</div>
                     </Col>
                 </Row>
             </Col>
             <Divider orientation='left' style={{ marginBlock: 0 }}>Client Reviews</Divider>
             <Col span={24}>
                 {
-                    properties.reviews.map((review: any) => (
+                    properties?.reviews.map((review: any) => (
                         <Row key={review.id} style={{ marginBottom: 10 }}>
                             <Col span={8}>
                                 <div className='text-gray-600 font-semibold'>User Name</div>
@@ -45,8 +52,7 @@ const PropertyDetail = () => {
                             </Col>
                             <Col span={8}>
                                 <div className='text-gray-600 font-semibold'>Comments</div>
-                                <div className='text-gray-800'>{review.comments || 'No comments'}
-                                </div>
+                                <div className='text-gray-800'>{review.comments || 'No comments'}</div>
                             </Col>
                         </Row>
                     ))
@@ -54,17 +60,23 @@ const PropertyDetail = () => {
             </Col>
             <Divider orientation='left' style={{ marginBlock: 0 }}>Agent Info</Divider>
             <Col span={24}>
-                {/* <span>{agent.agency_name}</span> <br />
-                <span style={{ color: "#096DD9" }}>{agent.phone}</span> */}
+                {isSuccess && agent ? (
+                    <span>Agent: {agent.agency_name}</span> 
+                    
+                ) : (
+                    isError ? <span>Error loading agent info</span> : <span>Loading...</span>
+                )}
             </Col>
             <Col span={24}>
-                <Flex gap="small" justify='right'>
-                    <Button type='primary'>Approve</Button>
-                    <Button type='primary' danger>Reject</Button>
-                </Flex>
+                <Row justify='end'>
+                    <Col>
+                        <Button type='primary' style={{ marginRight: 8 }}>Approve</Button>
+                        <Button type='primary' danger>Reject</Button>
+                    </Col>
+                </Row>
             </Col>
         </Row>
-    )
-}
+    );
+};
 
-export default PropertyDetail
+export default PropertyDetail;

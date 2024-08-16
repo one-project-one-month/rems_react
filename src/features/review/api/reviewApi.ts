@@ -1,11 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
+import{Review } from "../../../type/type";
 
-export interface Review {
-  id: number;
-  rating: number;
-  comment?: string; 
-}
 
 export const reviewApi = createApi({
   reducerPath: "reviewApi",
