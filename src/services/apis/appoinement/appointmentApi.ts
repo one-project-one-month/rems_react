@@ -4,12 +4,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 export interface TAppointmentHistory {
-  appointmentId: string;
   agentName: string;
-  propertyName: string;
+  clientName: string,
   appointmentDate: string;
   appointmentTime: string;
-  status: "Pending" | "Confirmed" | "Done";
+  status: "pending" | "confirmed" | "done";
   notes?: string;
 }
 
@@ -17,12 +16,10 @@ export interface TAppointmentHistoryResponse{
   isSuccess: boolean,
   isError:boolean,
   data: {
-    pageSetting: {
       totalCount: number,
       pageSize:number,
-      isEndOfPage:boolean
-    },
-    lstAppointment: TAppointmentHistory[]
+      isEndOfPage:boolean,
+      appointmentDetails: TAppointmentHistory[]
   }
 }
 
@@ -41,7 +38,7 @@ export const appointmentApi = createApi({
   tagTypes: ["appointments"],
   endpoints: (builder) => ({
     getAppointmentHistory: builder.query<TAppointmentHistoryResponse,any>({
-      query: (idArray) =>  `appointments/${idArray.join('/')}`,
+      query: (idArray) =>  `appointments/GetAppointmentByClientId/${idArray.join('/')}`,
       providesTags: ["appointments"],
     }),
     postAppointment: builder.mutation<TAppointmentHistory,TCreatePostRequest>({

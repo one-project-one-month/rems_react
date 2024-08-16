@@ -56,7 +56,7 @@ const AppointmentForm: React.FC = () => {
       <Space direction="vertical">
         <Title level={4}>Confirm your appointment</Title>
         <Flex justify="space-between" align="center">
-          <Typography className="mr-5">
+          <Typography className="mr-2">
             <Space>
               <CalendarOutlined />
               {new Date(appointmentDate).toLocaleDateString()}

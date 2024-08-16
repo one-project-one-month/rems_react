@@ -1,4 +1,4 @@
-import {  Flex, Pagination, Space, Typography } from "antd";
+import {   Flex, Space, Typography } from "antd";
 import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -37,11 +37,27 @@ const AppointHistoty = ({ data }: { data: TAppointmentHistory[] | undefined }) =
                                     </Space>
                                 </Typography>
                             </Space>
-                            <Space direction="vertical" className="ml-3">
-                                <Typography>Appointment with</Typography>
-                                <Typography className="text-primary font-semibold">{appointment.agentName}</Typography>                               
+                            <div className="ml-3 ">
+                            <Space direction="vertical" className="mb-2">
+                                <Typography className="text-xs">Appointment with <span className="text-primary font-semibold">{appointment.agentName}</span></Typography>
+                                {/* <Typography >Agent - 
+                                    <span className="text-primary font-semibold"> {appointment.agentName}</span>
+                                    </Typography>                                */}
                             </Space>
+                           
+                            <div className="flex justify-between items-center text-xs">
+                                <button className="bg-primary text-white px-3 py-1 rounded">Call</button>
+                                <p className={appointment.status === "done" ? "text-primary" : "text-green-800"}>{appointment.status}</p>
+                            </div>
+                            
+                                
+                            
+                            
+                            
+                            </div>
+                           
                         </Flex>
+                        
                     </div>
                 );
             })}
