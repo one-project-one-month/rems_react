@@ -1,17 +1,14 @@
 import { Button, Col, Divider, Row, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router';
-import { useAgentIndexQuery } from "../../../features/agents/api/agentApi";
-import { Agent } from '../../../type/type'; 
+import { useAgentIndexQuery } from "../../../features/agents/api/agentApiTest";
+import { AgentResponse } from '../../../type/type'; 
 
 const PropertyDetail = () => {
     const location = useLocation();
     const properties = location.state?.properties;
 
-    const { data: agentData, isSuccess, isError } = useAgentIndexQuery();
-
-    const agents: Agent[] = agentData?.data ?? [];
-    const agent = agents[0]; 
+    const { data, isLoading } = useAgentIndexQuery<AgentResponse>(properties?.property?.agentId);
 
     return (
         <Row gutter={[24, 24]}>
@@ -60,11 +57,11 @@ const PropertyDetail = () => {
             </Col>
             <Divider orientation='left' style={{ marginBlock: 0 }}>Agent Info</Divider>
             <Col span={24}>
-                {isSuccess && agent ? (
-                    <span>Agent: {agent.agency_name}</span> 
+                {data?.isSuccess && data?.data ? (
+                    <span>Agent: {data?.data?.agencyName}</span> 
                     
                 ) : (
-                    isError ? <span>Error loading agent info</span> : <span>Loading...</span>
+                    data?.isError ? <span>{data?.message}</span> : <span>Loading...</span>
                 )}
             </Col>
             <Col span={24}>

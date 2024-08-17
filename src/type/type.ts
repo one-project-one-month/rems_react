@@ -16,10 +16,11 @@ export interface Client {
 }
 
 export interface Agent {
-    agency_name: string,
-    license_number: string,
-    phone: string,
-    email: string
+    agencyName: string,
+    licenseNumber: string,
+    phoneNumber: string,
+    email: string,
+    address: string
 }
 
 export interface Transaction{
@@ -76,4 +77,21 @@ export interface Property {
     approvedby: string,
     adddate: Date,
     editdate: Date
+}
+
+export interface AgentResponse{
+    isLoading: boolean,
+    data: {
+        data: Agent,
+        isSuccess: boolean,
+        isError: boolean,
+        message: string,
+    }
+}
+
+export interface PropertyResponse{
+    isLoading: boolean,
+    data: {
+        data: Properties
+    }
 }
