@@ -85,16 +85,21 @@ const PropertyDetail = () => {
             <Divider orientation='left' style={{ marginBlock: 0 }}>Agent Info</Divider>
             <Col span={24}>
                 {data?.isSuccess && data?.data ? (
-                    <>
-                        <span className='font-bold'>Agent :</span> 
-                        <span>{data?.data?.agencyName}</span>
-                        <div>{data?.data?.email}</div>
-                        <div>{data?.data?.phoneNumber}</div>
-                        <div>{data?.data?.licenseNumber}</div>
+                    <Row>
+                      
+                       
+                        <Col span={8}>
+                        <div className='text-gray-600 font-semibold'>Agent </div>
+                        <div className='text-gray-800'>{data?.data?.agencyName}</div>
+                        </Col>
+
+                        <Col span={8}>
+                        <div className='text-gray-600 font-semibold'>License Number </div>
+                        <div className='text-gray-800'>{data?.data?.licenseNumber}</div>
+                        </Col>
 
 
-
-                    </>
+                    </Row>
                    
                 ) : (
                     data?.isError ? <span>{data?.message}</span> : <span>Loading...</span>
