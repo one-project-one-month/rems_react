@@ -1,0 +1,604 @@
+{
+  "properties": [
+    {
+      "id": 1,
+      "agent_id": 1,
+      "address": "No.5 ,New thar gi street,",
+      "city_id": "North Dagon",
+      "state_id": "Yangon",
+      "zipCode": "11421",
+      "propertyType": "Condo",
+      "price": 3500000,
+      "size": 1200,
+      "numberOfBedrooms": 4,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2020,
+      "description": "Located around an hour away from Paris, between the Perche and the Iton valley, in a beautiful wooded park bordered by a charming stream, this country property immediately seduces with its bucolic and soothing environment.",
+      "status": "Pending",
+      "dateListed": "2024-08-04T16:52:17.751Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+          "description": "Lakeview Haven, Lake Tahoe"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "agent_id": 2,
+      "address": "123 Main St",
+      "city_id": "Kamaryut",
+      "state_id": "Yangon",
+      "zipCode": "94105",
+      "propertyType": "Apartment",
+      "price": 2500000,
+      "size": 800,
+      "numberOfBedrooms": 2,
+      "numberOfBathrooms": 1,
+      "yearBuilt": 2015,
+      "description": "Modern apartment in the heart of the city with stunning views.",
+      "status": "Approved",
+      "dateListed": "2024-08-01T10:20:30.451Z",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Cityscape view"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "agent_id": 3,
+      "address": "456 Ocean Dr",
+      "city_id": "Cha Mya Thar Si",
+      "state_id": "Mandalay",
+      "zipCode": "33139",
+      "propertyType": "House",
+      "price": 5000000,
+      "size": 3500,
+      "numberOfBedrooms": 5,
+      "numberOfBathrooms": 4,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Sold",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1684508638760-72ad80c0055f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "agent_id": 4,
+      "address": "456 Ocean Dr",
+      "city_id": "Tarmwe",
+      "state_id": "Yangon",
+      "zipCode": "33139",
+      "propertyType": "House",
+      "price": 5000000,
+      "size": 3500,
+      "numberOfBedrooms": 7,
+      "numberOfBathrooms": 5,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Rented",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "agent_id": 5,
+      "address": "456 Ocean Dr",
+      "city_id": "Pyay",
+      "state_id": "Bago",
+      "zipCode": "33139",
+      "propertyType": "Office",
+      "price": 5000000,
+      "size": 3500,
+      "numberOfBedrooms": 3,
+      "numberOfBathrooms": 1,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Canceled",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1676321046449-5fc72b124490?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "agent_id": 6,
+      "address": "U Tun Linn Street,",
+      "city_id": "Kamaryut",
+      "state_id": "Yangon",
+      "zipCode": "11421",
+      "propertyType": "Apartment",
+      "price": 4000000,
+      "size": 1200,
+      "numberOfBedrooms": 3,
+      "numberOfBathrooms": 1,
+      "yearBuilt": 2015,
+      "description": "Located around an hour away from Paris, between the Perche and the Iton valley, in a beautiful wooded park bordered by a charming stream, this country property immediately seduces with its bucolic and soothing environment.",
+      "status": "Pending",
+      "dateListed": "2024-08-04T16:52:17.751Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+          "description": "Lakeview Haven, Lake Tahoe"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "agent_id": 7,
+      "address": "Thu ka main street",
+      "city_id": "Kyaukpadaung",
+      "state_id": "Mandalay",
+      "zipCode": "94105",
+      "propertyType": "House",
+      "price": 5000000,
+      "size": 2000,
+      "numberOfBedrooms": 6,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 2000,
+      "description": "Modern apartment in the heart of the city with stunning views.",
+      "status": "Approved",
+      "dateListed": "2024-08-01T10:20:30.451Z",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Cityscape view"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "agent_id": 8,
+      "address": "Hnin Si Street",
+      "city_id": "Bago",
+      "state_id": "Bago",
+      "zipCode": "12345",
+      "propertyType": "Office",
+      "price": 700000,
+      "size": 2000,
+      "numberOfBedrooms": 3,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Sold",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1684508638760-72ad80c0055f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "agent_id": 8,
+      "address": "Si thu street",
+      "city_id": "Tarmwe",
+      "state_id": "Yangon",
+      "zipCode": "45678",
+      "propertyType": "Condo",
+      "price": 700000,
+      "size": 3500,
+      "numberOfBedrooms": 7,
+      "numberOfBathrooms": 4,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Rented",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "agent_id": 10,
+      "address": "456 Ocean Dr",
+      "city_id": "Pyay",
+      "state_id": "Bago",
+      "zipCode": "33139",
+      "propertyType": "Office",
+      "price": 5000000,
+      "size": 3500,
+      "numberOfBedrooms": 6,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2018,
+      "description": "Luxurious beach house with private access to the ocean.",
+      "status": "Canceled",
+      "dateListed": "2024-07-25T14:45:00.251Z",
+      "images": [
+        {
+          "url": "https://plus.unsplash.com/premium_photo-1676321046449-5fc72b124490?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+          "description": "Beach view"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "agent_id": 11,
+      "address": "789 Sunset Blvd",
+      "city_id": "Tarmwe",
+      "state_id": "Yangon",
+      "zipCode": "12345",
+      "propertyType": "Condo",
+      "price": 4500000,
+      "size": 1600,
+      "numberOfBedrooms": 3,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2021,
+      "description": "Modern condo with panoramic city views and luxurious amenities.",
+      "status": "Pending",
+      "dateListed": "2024-08-01T12:00:00.000Z",
+      "images": [
+          {
+              "url": "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+              "description": "City view"
+          }
+      ]
+  },
+  {
+      "id": 12,
+      "agent_id": 12,
+      "address": "1010 Maple Ave",
+      "city_id": "Kamaryut",
+      "state_id": "Yangon",
+      "zipCode": "94105",
+      "propertyType": "House",
+      "price": 6200000,
+      "size": 3000,
+      "numberOfBedrooms": 5,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 2020,
+      "description": "Spacious family house with a large garden and modern facilities.",
+      "status": "Approved",
+      "dateListed": "2024-08-02T09:30:00.000Z",
+      "images": [
+          {
+              "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "Family house"
+          }
+      ]
+  },
+  {
+      "id": 13,
+      "agent_id": 13,
+      "address": "2020 River Rd",
+      "city_id": "North Dagon",
+      "state_id": "Yangon",
+      "zipCode": "11421",
+      "propertyType": "Apartment",
+      "price": 3500000,
+      "size": 1000,
+      "numberOfBedrooms": 2,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2017,
+      "description": "Charming apartment with river views and contemporary design.",
+      "status": "Sold",
+      "dateListed": "2024-08-03T14:15:00.000Z",
+      "images": [
+          {
+              "url": "https://plus.unsplash.com/premium_photo-1684508638760-72ad80c0055f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "River view"
+          }
+      ]
+  },
+  {
+      "id": 14,
+      "agent_id": 14,
+      "address": "3030 Palm St",
+      "city_id": "Cha Mya Thar Si",
+      "state_id": "Mandalay",
+      "zipCode": "33139",
+      "propertyType": "Office",
+      "price": 900000,
+      "size": 1800,
+      "numberOfBedrooms": 0,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 2019,
+      "description": "High-end office space with state-of-the-art facilities.",
+      "status": "Rented",
+      "dateListed": "2024-08-04T10:00:00.000Z",
+      "images": [
+          {
+              "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "Office space"
+          }
+      ]
+  },
+  {
+      "id": 15,
+      "agent_id": 15,
+      "address": "4040 Oak Lane",
+      "city_id": "Bago",
+      "state_id": "Bago",
+      "zipCode": "12345",
+      "propertyType": "House",
+      "price": 5500000,
+      "size": 2200,
+      "numberOfBedrooms": 4,
+      "numberOfBathrooms": 3,
+      "yearBuilt": 2021,
+      "description": "Elegant house with a spacious layout and luxury finishes.",
+      "status": "Canceled",
+      "dateListed": "2024-08-05T08:30:00.000Z",
+      "images": [
+          {
+              "url": "https://plus.unsplash.com/premium_photo-1676321046449-5fc72b124490?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+              "description": "Elegant house"
+          }
+      ]
+  },
+  {
+      "id": 16,
+      "agent_id": 16,
+      "address": "5050 Cedar St",
+      "city_id": "Pyay",
+      "state_id": "Bago",
+      "zipCode": "33139",
+      "propertyType": "Condo",
+      "price": 3200000,
+      "size": 1400,
+      "numberOfBedrooms": 3,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2018,
+      "description": "Modern condo with high ceilings and luxury amenities.",
+      "status": "Pending",
+      "dateListed": "2024-08-02T16:00:00.000Z",
+      "images": [
+          {
+              "url": "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG9tZXxlbnwwfHwwfHx8MA%3D%3D",
+              "description": "Modern condo"
+          }
+      ]
+  },
+  {
+      "id": 17,
+      "agent_id": 17,
+      "address": "6060 Elm St",
+      "city_id": "Tarmwe",
+      "state_id": "Yangon",
+      "zipCode": "45678",
+      "propertyType": "Apartment",
+      "price": 3700000,
+      "size": 1100,
+      "numberOfBedrooms": 2,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2019,
+      "description": "Stylish apartment with a great city view and modern finishes.",
+      "status": "Approved",
+      "dateListed": "2024-08-01T11:00:00.000Z",
+      "images": [
+          {
+              "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "Stylish apartment"
+          }
+      ]
+  },
+  {
+      "id": 18,
+      "agent_id": 18,
+      "address": "7070 Pine Ave",
+      "city_id": "North Dagon",
+      "state_id": "Yangon",
+      "zipCode": "11421",
+      "propertyType": "Office",
+      "price": 800000,
+      "size": 1600,
+      "numberOfBedrooms": 0,
+      "numberOfBathrooms": 2,
+      "yearBuilt": 2022,
+      "description": "Prime office space with excellent facilities and location.",
+      "status": "Rented",
+      "dateListed": "2024-08-05T10:00:00.000Z",
+      "images": [
+          {
+              "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "Prime office space"
+          }
+      ]
+  },
+  {
+      "id": 19,
+      "agent_id": 19,
+      "address": "8080 Birch St",
+      "city_id": "Kamaryut",
+      "state_id": "Yangon",
+      "zipCode": "94105",
+      "propertyType": "House",
+      "price": 4500000,
+      "size": 2500,
+      "numberOfBedrooms": 5,
+      "numberOfBathrooms": 4,
+      "yearBuilt": 2020,
+      "description": "Spacious house with a beautiful garden and modern amenities.",
+      "status": "Sold",
+      "dateListed": "2024-08-03T15:00:00.000Z",
+      "images": [
+          {
+              "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+              "description": "Spacious house"
+          }
+      ]
+  },
+  {
+    "id": 20,
+    "agent_id": 20,
+    "address": "8080 Birch St",
+    "city_id": "Kamaryut",
+    "state_id": "Yangon",
+    "zipCode": "94105",
+    "propertyType": "Apartment",
+    "price": 200000,
+    "size": 1200,
+    "numberOfBedrooms": 6,
+    "numberOfBathrooms": 2,
+    "yearBuilt": 2015,
+    "description": "Spacious house with a beautiful garden and modern amenities.",
+    "status": "Sold",
+    "dateListed": "2024-08-03T15:00:00.000Z",
+    "images": [
+        {
+            "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+            "description": "Spacious house"
+        }
+    ]
+},
+{
+  "id": 22,
+  "agent_id": 22,
+  "address": "8080 Birch St",
+  "city_id": "Kamaryut",
+  "state_id": "Yangon",
+  "zipCode": "94105",
+  "propertyType": "Apartment",
+  "price": 10000000,
+  "size": 2000,
+  "numberOfBedrooms": 8,
+  "numberOfBathrooms": 2,
+  "yearBuilt": 2017,
+  "description": "Spacious house with a beautiful garden and modern amenities.",
+  "status": "Sold",
+  "dateListed": "2024-08-03T15:00:00.000Z",
+  "images": [
+      {
+          "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Spacious house"
+      }
+  ]
+},
+{
+  "id": 23,
+  "agent_id": 23,
+  "address": "8080 Birch St",
+  "city_id": "Kamaryut",
+  "state_id": "Yangon",
+  "zipCode": "94105",
+  "propertyType": "Apartment",
+  "price": 850000,
+  "size": 2500,
+  "numberOfBedrooms": 5,
+  "numberOfBathrooms": 4,
+  "yearBuilt": 2021,
+  "description": "Spacious house with a beautiful garden and modern amenities.",
+  "status": "Sold",
+  "dateListed": "2024-08-03T15:00:00.000Z",
+  "images": [
+      {
+          "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Spacious house"
+      }
+  ]
+}, 
+{
+  "id": 24,
+  "agent_id": 24,
+  "address": "8080 Birch St",
+  "city_id": "Kamaryut",
+  "state_id": "Yangon",
+  "zipCode": "94105",
+  "propertyType": "Apartment",
+  "price": 750000,
+  "size": 3000,
+  "numberOfBedrooms": 5,
+  "numberOfBathrooms": 1,
+  "yearBuilt": 2022,
+  "description": "Spacious house with a beautiful garden and modern amenities.",
+  "status": "Sold",
+  "dateListed": "2024-08-03T15:00:00.000Z",
+  "images": [
+      {
+          "url": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvbWV8ZW58MHx8MHx8fDA%3D",
+          "description": "Spacious house"
+      }
+  ]
+}
+  ],
+  "states": [
+    {
+      "id": 1,
+      "name": "Yangon"
+    },
+    {
+      "id": 2,
+      "name": "Mandalay"
+    },
+    {
+      "id": 3,
+      "name": "Bago"
+    }
+  ],
+  "cities": [
+    {
+      "id": 1,
+      "name": "North Dagon",
+      "state_id": 1
+    },
+    {
+      "id": 2,
+      "name": "Kamaryut",
+      "state_id": 1
+    },
+    {
+      "id": 3,
+      "name": "Tarmwe",
+      "state_id": 1
+    },
+    {
+      "id": 4,
+      "name": "Chan Mya Thar Si",
+      "state_id": 2
+    },
+    {
+      "id": 5,
+      "name": "Kyaukpadaung",
+      "state_id": 2
+    },
+    {
+      "id": 6,
+      "name": "Chauk",
+      "state_id": 2
+    },
+    {
+      "id": 7,
+      "name": "Bago",
+      "state_id": 3
+    },
+    {
+      "id": 8,
+      "name": "Pyay",
+      "state_id": 3
+    }
+  ],
+ 
+    "agents": [
+      { "agent_id": 1, "agentName": "Agent One" },
+      { "agent_id": 2, "agentName": "Agent Two" },
+      { "agent_id": 3, "agentName": "Agent Three" },
+      { "agent_id": 4, "agentName": "Agent Four" },
+      { "agent_id": 5, "agentName": "Agent Five" },
+      { "agent_id": 6, "agentName": "Agent Six" },
+      { "agent_id": 7, "agentName": "Agent Seven" },
+      { "agent_id": 8, "agentName": "Agent Eight" },
+      { "agent_id": 9, "agentName": "Agent Nine" },
+      { "agent_id": 10, "agentName": "Agent Ten" }
+    ]
+
+  
+}
