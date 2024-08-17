@@ -13,7 +13,7 @@ export const store = configureStore({
     [reviewApi.reducerPath] : reviewApi.reducer,
     [propertiesApi.reducerPath] : propertiesApi.reducer,
 
-    [transactionsApi.reducerPath]: transactionsApi.reducer
+    [transactionsApi.reducerPath]: transactionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([agentApi.middleware, clientApi.middleware,reviewApi.middleware ,propertiesApi.middleware,transactionsApi.middleware]),

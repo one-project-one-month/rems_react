@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import {Properties} from "../../../type/type";
+import {Properties,ChangeStatus} from "../../../type/type";
 
 
 export const propertiesApi = createApi({
@@ -19,11 +19,24 @@ export const propertiesApi = createApi({
         method: "DELETE",
       }),
     }),
+    ChangeStatus : builder.mutation<void ,ChangeStatus>({
+
+      query : (changeStatus) =>({
+        url : `properties/ChangeStatus`,
+        method : "PUT",
+         headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(changeStatus), 
+      })
+
+    })
+
   }),
 });
 
 // Export the hooks
-export const { useGetAllPropertiesQuery, useDeletePropertyMutation } = propertiesApi; 
+export const { useGetAllPropertiesQuery, useDeletePropertyMutation ,useChangeStatusMutation} = propertiesApi; 
 
 
 export default propertiesApi;

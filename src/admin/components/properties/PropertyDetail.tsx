@@ -2,7 +2,8 @@ import { Button, Col, Divider, Row, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router';
 import { useAgentIndexQuery } from "../../../features/agents/api/agentApiTest";
-import { AgentResponse } from '../../../type/type'; 
+import { AgentResponse, ChangeStatus} from '../../../type/type'; 
+import { useChangeStatusMutation } from "../../../features/properties/api/propertiesApi";
 
 const PropertyDetail = () => {
     const location = useLocation();
@@ -10,12 +11,38 @@ const PropertyDetail = () => {
 
     const { data, isLoading } = useAgentIndexQuery<AgentResponse>(properties?.property?.agentId);
 
+    const [changeStatus] = useChangeStatusMutation();
+
+    const handleApprove = async () => {
+        try {
+            await changeStatus({ 
+                propertyId: properties?.property?.propertyId, 
+                propertyStatus: 'Approved', 
+                approvedBy: 'admin'
+            }).unwrap();
+        } catch (error) {
+            console.log("error is happening",error)
+        }
+    };
+
+    const handleReject = async () => {
+        try {
+            await changeStatus({ 
+                propertyId: properties?.property?.propertyId, 
+                propertyStatus: ' Canceled', 
+                approvedBy: 'admin' 
+            }).unwrap();
+        } catch (error) {
+            console.log("error is is happening",error)
+        }
+    };
+
     return (
         <Row gutter={[24, 24]}>
             <Col span={24}>
                 <Typography.Title level={3}>Property Detail</Typography.Title>
             </Col>
-            <Col span={24}>Images</Col>
+            {/* <Col span={24}>Images</Col> */}
             <Col span={24}>
                 <Row gutter={[16, 16]}>
                     <Col span={8}>
@@ -58,8 +85,17 @@ const PropertyDetail = () => {
             <Divider orientation='left' style={{ marginBlock: 0 }}>Agent Info</Divider>
             <Col span={24}>
                 {data?.isSuccess && data?.data ? (
-                    <span>Agent: {data?.data?.agencyName}</span> 
-                    
+                    <>
+                        <span className='font-bold'>Agent :</span> 
+                        <span>{data?.data?.agencyName}</span>
+                        <div>{data?.data?.email}</div>
+                        <div>{data?.data?.phoneNumber}</div>
+                        <div>{data?.data?.licenseNumber}</div>
+
+
+
+                    </>
+                   
                 ) : (
                     data?.isError ? <span>{data?.message}</span> : <span>Loading...</span>
                 )}
@@ -67,8 +103,8 @@ const PropertyDetail = () => {
             <Col span={24}>
                 <Row justify='end'>
                     <Col>
-                        <Button type='primary' style={{ marginRight: 8 }}>Approve</Button>
-                        <Button type='primary' danger>Reject</Button>
+                        <Button type='primary' style={{ marginRight: 8 }} onClick={handleApprove}>Approved</Button>
+                        <Button type='primary' danger onClick={handleReject}>Canceled</Button>
                     </Col>
                 </Row>
             </Col>

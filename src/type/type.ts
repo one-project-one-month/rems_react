@@ -95,3 +95,10 @@ export interface PropertyResponse{
         data: Properties
     }
 }
+
+export interface ChangeStatus {
+    propertyId: number,
+    propertyStatus: string,
+    approvedBy: string
+}
+
