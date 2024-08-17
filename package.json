@@ -11,6 +11,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.6",
+    "@mui/material": "^5.16.6",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
@@ -20,9 +25,11 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
+    "react-images-uploading": "^3.1.7",
     "react-redux": "^9.1.2",
     "react-router": "^6.24.1",
-    "react-router-dom": "^6.24.1"
+    "react-router-dom": "^6.24.1",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

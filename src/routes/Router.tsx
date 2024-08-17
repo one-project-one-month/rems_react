@@ -1,4 +1,4 @@
-import DashboardLayout from "../components/layouts/DashboardLayout";
+import DashboardLayout from "../admin/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PropertyList from "../components/agents/all listing/PropertyList";
 import DetailPage from "../components/agents/all listing/DetailPage";
