@@ -1,22 +1,11 @@
-import { configureStore } from "@reduxjs/toolkit";
-import currentPageSlice from "./slices/currentPageSlice";
-import { appointmentApi } from "../services/apis/appointmentApi";
-import appointmentSlice from "./slices/appointmentSlice";
+import { configureStore } from '@reduxjs/toolkit'
+import { api } from './slices/appointmentaApiSlice'
 
-// Configure the store with the appointment reducer
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    appointment: appointmentSlice,
-    currentPage: currentPageSlice,
-    [appointmentApi.reducerPath]: appointmentApi.reducer,
+    [api.reducerPath]: api.reducer,
   },
+  // adding the api middleware enables caching, invalidation, polling and other features of `rtk-query`
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(appointmentApi.middleware),
-});
-
-// Infer the RootState and AppDispatch types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {appointment: AppointmentState}
-export type AppDispatch = typeof store.dispatch;
-
-export default store;
+    getDefaultMiddleware().concat(api.middleware),
+})
