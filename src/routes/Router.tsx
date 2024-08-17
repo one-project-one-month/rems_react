@@ -1,15 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
+import TransactionsList from "../admin/components/transactions/TransactionsList";
+import Review from "../admin/components/All Review/Review";
 import Appointments from "../admin/components/appointments/Appointments";
-import Transaction from "../client/pages/Transaction";
-import Navbar from "../client/layouts/Navbar";
 
 const Router = () => {
   const config = createBrowserRouter([
     {
       path: "/",
-      element: <Navbar />,
+      element: <DashboardLayout />,
       children: [
         {
           path: "/clients",
@@ -20,8 +20,12 @@ const Router = () => {
           element: <AgentList />,
         },
         {
+          path: "/review",
+          element: <Review />,
+        },
+        {
           path: "/transactions",
-          element: <Transaction />,
+          element: <TransactionsList />,
         },
         {
           path: "/appointments",
