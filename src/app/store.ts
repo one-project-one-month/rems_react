@@ -5,19 +5,19 @@ import { clientApi } from "../services/admin/api/clientApi";
 import transactionsApi from "../services/admin/api/transactions";
 
 export const store = configureStore({
-	reducer: {
-		[agentApi.reducerPath]: agentApi.reducer,
-		[clientApi.reducerPath]: clientApi.reducer,
-		// [propertiesApi.reducerPath]: propertiesApi.reducer,
-		[transactionsApi.reducerPath]: transactionsApi.reducer,
-	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat([
-			agentApi.middleware,
-			clientApi.middleware,
-			// propertiesApi.middleware,
-			transactionsApi.middleware,
-		]),
+  reducer: {
+    [agentApi.reducerPath]: agentApi.reducer,
+    [clientApi.reducerPath]: clientApi.reducer,
+    // [propertiesApi.reducerPath]: propertiesApi.reducer,
+    [transactionsApi.reducerPath]: transactionsApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([
+      agentApi.middleware,
+      clientApi.middleware,
+      // propertiesApi.middleware,
+      transactionsApi.middleware,
+    ]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
