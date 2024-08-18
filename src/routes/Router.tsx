@@ -11,55 +11,44 @@ import Home from "../client/pages/Home";
 import Error from "../error/Error";
 
 const Router = () => {
-	const config = createBrowserRouter([
-		{
-			path: "/",
-			element: <DashboardLayout />,
-			children: [
-				{
-					path: "/clients",
-					element: <ClientList />,
-				},
-				{
-					path: "/agents",
-					element: <AgentList />,
-				},
-				{
-					path: "/transactions",
-					element: <TransactionsList />,
-				},
-				{
-					path: "/appointments",
-					element: <Appointments />,
-				},
-				{
-					path: "/properties",
-					element: <PropertyList />,
-				},
-			],
-		},
-		{
-			path: "/web/clients",
-			element: (
-				<Navbar>
-					<Home />
-				</Navbar>
-			),
-		},
-		// {
-		// 	path: "/web/‌agent",
-		// 	element: (
-		// 		<Navbar>
-		// 			<Home />
-		// 		</Navbar>
-		// 	), // ဒီပုံစံမျိုး ဆက်သုံးပေးပါ
-		// },
-		{
-			path: "*",
-			element: <Error />,
-		},
-	]);
-	return <RouterProvider router={config} />;
+  const config = createBrowserRouter([
+    {
+      path: "/",
+      element: <DashboardLayout />,
+      children: [
+        {
+          path: "/clients",
+          element: <ClientList />,
+        },
+        {
+          path: "/agents",
+          element: <AgentList />,
+        },
+        {
+          path: "/transactions",
+          element: <TransactionsList />,
+        },
+        {
+          path: "/appointments",
+          element: <Appointments />,
+        },
+        {
+          path: "/properties",
+          element: <PropertyList />,
+        },
+      ],
+    },
+    {
+      path: "/web",
+      element: <Navbar />,
+      children: [{ path: "clients", index: true, element: <Home /> }],
+    },
+    {
+      path: "*",
+      element: <Error />,
+    },
+  ]);
+  return <RouterProvider router={config} />;
 };
 
 export default Router;
