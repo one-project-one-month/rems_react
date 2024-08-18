@@ -1,8 +1,8 @@
 import AppointmentForm from "./AppointmentForm";
-import Calendar from "./Calendar";
+import Calendar from "./PickDate";
 import PickTime from "./PickTime";
 
-const appointmentSteps = () => [
+const AppointmentSteps = () => [
   {
     title: "First",
     content: <Calendar />,
@@ -17,4 +17,4 @@ const appointmentSteps = () => [
   },
 ];
 
-export default appointmentSteps;
+export default AppointmentSteps;
