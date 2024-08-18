@@ -11,6 +11,8 @@ import Home from "../client/components/property/Home";
 import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
+import TransactionSummary from "../client/components/transaction/TransactionSummary";
+import Transaction from "../client/components/transaction/Transaction";
 
 const Router = () => {
   const config = createBrowserRouter([
@@ -58,6 +60,15 @@ const Router = () => {
             {
               path: "history",
               element: <AppointmentHistoryList />,
+            },
+          ],
+        },
+        {
+          path: "transaction",
+          children: [
+            {
+              index: true,
+              element: <Transaction />,
             },
           ],
         },

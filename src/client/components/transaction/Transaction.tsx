@@ -2,7 +2,7 @@ import { Table } from "antd";
 import dayjs from "dayjs";
 import { dataSource } from "../../db/data";
 import { useEffect, useState } from "react";
-import TransactionSummary from "../TransactionSummary";
+import TransactionSummary from "../transaction/TransactionSummary";
 
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
