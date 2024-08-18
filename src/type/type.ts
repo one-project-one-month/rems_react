@@ -7,6 +7,12 @@ export interface Review {
 	dateCreated: Date;
 }
 
+export interface ClientData {
+	data: {
+		dataLst: Client[];
+	};
+}
+
 export interface Client {
 	userId: number;
 	clientId: number;
@@ -16,6 +22,10 @@ export interface Client {
 	phone: string;
 	address: string;
 	role: string;
+}
+
+export interface AgentData {
+	data: Agent[];
 }
 
 export interface Agent {
