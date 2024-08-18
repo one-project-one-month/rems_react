@@ -1,3 +1,6 @@
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store";
+
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const url = "http://65.18.112.78:44010/rems/api/v1/";
 
@@ -21,5 +24,9 @@ const baseUrl = fetchBaseQuery({
     );
   },
 });
+
+// Hooks for global state
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default baseUrl;

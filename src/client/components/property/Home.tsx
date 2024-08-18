@@ -1,19 +1,15 @@
 import React, { useEffect, useState, ChangeEvent, MouseEvent } from "react";
-import HomeGroup from "../components/PropertyGroup";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Property } from "../Model/Property";
-import { Agent } from "../Model/Agent";
-import { City } from "../Model/City";
-import { State } from "../Model/State";
-import PropertyGroup from "../components/PropertyGroup";
+import { Property, Agent, City, State } from "../../../type/type";
+import PropertyGroup from "./PropertyGroup";
 
 const Home: React.FC = () => {
 	const [states, setStates] = useState<State[]>([]);
 	const [properties, setProperties] = useState<Property[]>([]);
 	const [cities, setCities] = useState<City[]>([]);
 	const [agents, setAgents] = useState<Agent[]>([]);
-	const [propertyTypes, setPropertyTypes] = useState<string[]>([
+	const [propertyTypes] = useState<string[]>([
 		"All",
 		"Condo",
 		"Apartment",
@@ -163,131 +159,13 @@ const Home: React.FC = () => {
 							</p>
 						</header>
 
-						<main>
-							<div>
-								<ul className='text-black flex items-center justify-center gap-5 mb-5'>
-									<li className='bg-white px-6 py-4 text-xl font-semibold rounded-md'>
-										For Rent
-									</li>
-									<li className='bg-white px-6 py-4 text-xl font-semibold rounded-md'>
-										For Sale
-									</li>
-								</ul>
-							</div>
-							<div className='grid grid-cols-12'>
-								<form
-									action=''
-									className='bg-white col-span-10 text-black rounded-s-md h-24 py-6'
-								>
-									<div className='grid grid-cols-3'>
-										<div className='flex flex-col border-r px-4'>
-											<label
-												htmlFor='state'
-												className='text-sm mb-2'
-											>
-												State
-											</label>
-											<select
-												id='state'
-												value={selectedState}
-												onChange={handleStateChange}
-												className='outline-none'
-											>
-												<option value=''>
-													Select State
-												</option>
-												{states.map((state) => (
-													<option
-														key={state.id}
-														value={state.id}
-													>
-														{state.name}
-													</option>
-												))}
-											</select>
-										</div>
-										<div className='flex flex-col border-r px-4'>
-											<label
-												htmlFor='city'
-												className='text-sm mb-2'
-											>
-												City
-											</label>
-											<select
-												id='city'
-												value={selectedCity}
-												onChange={handleCityChange}
-												className='outline-none'
-												disabled={!selectedState}
-											>
-												<option value=''>
-													Select City
-												</option>
-												{cities
-													.filter(
-														(city) =>
-															city.state_id ===
-															Number(
-																selectedState
-															)
-													)
-													.map((city) => (
-														<option
-															key={city.id}
-															value={city.id}
-														>
-															{city.name}
-														</option>
-													))}
-											</select>
-										</div>
-										<div className='flex flex-col border-r px-4'>
-											<label
-												htmlFor='type'
-												className='text-sm mb-2'
-											>
-												Type
-											</label>
-											<select
-												id='type'
-												value={selectedPropertyType}
-												onChange={
-													handlePropertyTypeChange
-												}
-												className='outline-none'
-												disabled={!selectedCity}
-											>
-												{propertyTypes.map(
-													(type, index) => (
-														<option
-															key={index}
-															value={index}
-														>
-															{type}
-														</option>
-													)
-												)}
-											</select>
-										</div>
-									</div>
-								</form>
-								<button
-									onClick={handleFilter}
-									disabled={buttonDisabled}
-									className='bg-orange-600 font-semibold col-span-2 text-white py-6 h-24 rounded-e-md'
-								>
-									Find Properties
-								</button>
-							</div>
-						</main>
-					</div>
-
-					<div className=' left-0 right-0 w-full max-w-[1600px] bg-white text-black'>
-						<PropertyGroup
-							agents={agents}
-							properties={properties}
-							propertyTypes={propertyTypes}
-						/>
+						<div className='left-0 right-0 w-full max-w-[1600px] bg-white text-black'>
+							<PropertyGroup
+								agents={agents}
+								properties={properties}
+								propertyTypes={propertyTypes}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

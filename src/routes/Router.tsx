@@ -7,8 +7,10 @@ import PropertyList from "../admin/components/properties/PropertyList";
 import Appointments from "../admin/components/appointments/Appointments";
 // import Transaction from "../client/pages/Transaction";
 import Navbar from "../client/layouts/Navbar";
-import Home from "../client/pages/Home";
+import Home from "../client/components/property/Home";
 import Error from "../error/Error";
+import Appointment from "../client/components/appointment/Appointment";
+import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -39,9 +41,27 @@ const Router = () => {
 			],
 		},
 		{
-			path: "/web",
+			path: "/client",
 			element: <Navbar />,
-			children: [{ path: "clients", index: true, element: <Home /> }],
+			children: [
+				{
+					index: true,
+					element: <Home />,
+				},
+				{
+					path: "appointment",
+					children: [
+						{
+							index: true,
+							element: <Appointment />,
+						},
+						{
+							path: "history",
+							element: <AppointmentHistoryList />,
+						},
+					],
+				},
+			],
 		},
 		{
 			path: "*",
