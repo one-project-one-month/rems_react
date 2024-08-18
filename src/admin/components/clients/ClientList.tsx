@@ -48,8 +48,8 @@ const ClientList = () => {
 
   const handleOk = async () => {
     if (clientToDelete) {
-      await deleteClient(clientToDelete.clientId);
-      await refetch();
+      await deleteClient(clientToDelete.clientId).unwrap();
+      refetch();
       toast.success(`Client delete successfully`);
     }
     setIsModalOpen(false);

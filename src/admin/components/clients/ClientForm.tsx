@@ -40,13 +40,13 @@ const ClientForm = ({ onClose, initialValues, refetch }: Props) => {
         await updateClient({
           data: passwordWithValue,
           id: initialValues.clientId,
-        });
+        }).unwrap();
         refetch();
         toast.success("Client update successfully");
         onClose();
       } else {
         // Create new client if no initialValues
-        await createClient(passwordWithValue);
+        await createClient(passwordWithValue).unwrap();
         refetch();
         toast.success("Client create successfully");
         onClose();

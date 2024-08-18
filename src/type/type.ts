@@ -24,6 +24,10 @@ export interface Client {
   role: string;
 }
 
+export interface AgentData {
+  data: Agent[];
+}
+
 export interface Agent {
   agentId: number;
   userId: number;
