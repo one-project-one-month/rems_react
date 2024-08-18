@@ -1,41 +1,63 @@
-import { Button, Empty, Input, Modal, Space, Table, Tag } from "antd";
+import { Button, Empty, Input, Modal, Space, Table, Tag, Row, Col } from "antd";
 import type { TableProps } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UserDrawer from "./ClientDrawer";
-import { useGetAllClientsQuery } from "../../../features/clients/api/clientApi";
-
-export interface DataType {
-  key: string;
-  client_id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  roles: string;
-  address: string;
-}
+import {
+  useDeleteClientMutation,
+  useGetAllClientsQuery,
+} from "../../../features/clients/api/clientApi";
+import { Client } from "../../../type/type";
+import { toast } from "sonner";
 
 const ClientList = () => {
   const [open, setOpen] = useState(false);
-  const [currentRecords, setCurrentRecords] = useState<DataType | null>(null);
+  const [currentRecords, setCurrentRecords] = useState<Client | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
-  const [filteredData, setFilteredData] = useState<DataType[]>([]);
+  const [filteredData, setFilteredData] = useState<Client[] | undefined>([]);
+  const [dataSource, setDataSource] = useState<Client[] | undefined>([]);
+  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
 
-  const { data: clients } = useGetAllClientsQuery();
+  const { data: clients, refetch } = useGetAllClientsQuery();
+  const [deleteClient] = useDeleteClientMutation();
 
-  console.log(clients);
+  const fetchAndUpdateData = useCallback(async () => {
+    try {
+      if (clients?.data.dataLst) {
+        const dataWithKeys = clients.data.dataLst.map(
+          (item: Client, index: number) => ({
+            ...item,
+            key: (index + 1).toString(),
+          })
+        );
+        setDataSource(dataWithKeys);
+      }
+    } catch (err) {
+      console.log("ERROR ===> ", err);
+    }
+  }, [clients?.data?.dataLst]);
 
-  const handleOk = () => {
+  useEffect(() => {
+    fetchAndUpdateData();
+  }, [fetchAndUpdateData]);
+
+  const handleOk = async () => {
+    if (clientToDelete) {
+      await deleteClient(clientToDelete.clientId);
+      await refetch();
+      toast.success(`Client delete successfully`);
+    }
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
+    setClientToDelete(null);
+
     setIsModalOpen(false);
   };
 
@@ -45,7 +67,7 @@ const ClientList = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const filtered = data.filter(
+    const filtered = clients?.data?.dataLst.filter(
       (item) =>
         item.firstName.toLowerCase().includes(value.toLowerCase()) ||
         item.lastName.toLowerCase().includes(value.toLowerCase())
@@ -60,31 +82,28 @@ const ClientList = () => {
     setOpen(true);
   };
 
-  const handleEdit = (record: DataType) => {
-    console.log("Edit", record);
+  const handleEdit = (record: Client) => {
     setCurrentRecords(record);
     setOpen(true);
   };
 
-  const handleDelete = (record: DataType) => {
-    console.log("Delete", record);
+  const handleDelete = (record: Client) => {
+    setClientToDelete(record);
     setIsModalOpen(true);
   };
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<Client>["columns"] = [
     {
       title: "Client Id",
-      dataIndex: "client_id",
-      key: "client_id",
-      // defaultSortOrder: "descend",
-      sorter: (a, b) => a.client_id - b.client_id,
+      dataIndex: "clientId",
+      key: "clientId",
+      sorter: (a, b) => a.clientId - b.clientId,
       render: (text) => <a>{text}</a>,
     },
     {
       title: "Full name",
       dataIndex: "fullname",
       key: "fullname",
-      // defaultSortOrder: "descend",
       sorter: (a, b) =>
         `${a.firstName} ${a.lastName}`.localeCompare(
           `${b.firstName} ${b.lastName}`
@@ -99,31 +118,30 @@ const ClientList = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      // defaultSortOrder: "descend",
       sorter: (a, b) => a.email.length - b.email.length,
+      responsive: ["md"],
     },
     {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
+      responsive: ["lg"],
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      responsive: ["xl"],
     },
     {
       title: "Roles",
       key: "roles",
-      dataIndex: "roles",
-      // defaultSortOrder: "descend",
-      sorter: (a, b) => a.roles.length - b.roles.length,
-      render: (roles) => {
+      render: (_, record) => {
         let color;
-        roles === "Agent" ? (color = "red") : (color = "green");
+        record.role === "Agent" ? (color = "red") : (color = "green");
         return (
-          <Tag color={color} key={roles}>
-            {roles.toUpperCase()}
+          <Tag color={color} key={record.role}>
+            {record.role}
           </Tag>
         );
       },
@@ -144,55 +162,26 @@ const ClientList = () => {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: "1",
-      client_id: 1,
-      firstName: "John",
-      lastName: "Brown",
-      phone: "0977777777",
-      email: "test01@gmail.com",
-      roles: "Agent",
-      address: "New York No. 1 Lake Park",
-    },
-    {
-      key: "2",
-      client_id: 2,
-      firstName: "Jim",
-      lastName: "Green",
-      phone: "0977777777",
-      email: "test02@gmail.com",
-      roles: "User",
-      address: "New York No. 1 Lake Park",
-    },
-    {
-      key: "3",
-      client_id: 3,
-      firstName: "Joe",
-      lastName: "Black",
-      phone: "0977777777",
-      email: "test03@gmail.com",
-      roles: "User",
-      address: "New York No. 1 Lake Park",
-    },
-  ];
-
   return (
     <div className="p-5">
-      <div className="flex justify-between items-center mb-5">
-        <Input
-          prefix={<SearchOutlined />}
-          placeholder="Search by name"
-          onChange={handleSearch}
-          className="w-64 md:w-80"
-        />
-        <Button type="primary" onClick={handleCreate}>
-          Create Clients
-        </Button>
-      </div>
+      <Row gutter={[16, 16]} className="mb-5">
+        <Col xs={24} sm={16} md={18} lg={20}>
+          <Input
+            prefix={<SearchOutlined />}
+            placeholder="Search by name"
+            onChange={handleSearch}
+            className="w-full"
+          />
+        </Col>
+        <Col xs={24} sm={8} md={6} lg={4}>
+          <Button type="primary" onClick={handleCreate} className="w-full">
+            Create Clients
+          </Button>
+        </Col>
+      </Row>
       <Table
         columns={columns}
-        dataSource={isSearched ? filteredData : data}
+        dataSource={isSearched ? filteredData : dataSource}
         locale={{
           emptyText: (
             <Empty
@@ -201,8 +190,18 @@ const ClientList = () => {
             />
           ),
         }}
+        scroll={{ x: "max-content" }}
+        pagination={{
+          responsive: true,
+          position: ["bottomLeft"],
+        }}
       />
-      <UserDrawer onClose={onClose} open={open} records={currentRecords} />
+      <UserDrawer
+        onClose={onClose}
+        open={open}
+        records={currentRecords}
+        refetch={refetch}
+      />
       <Modal
         title="Deleting User"
         open={isModalOpen}
