@@ -18,10 +18,14 @@ export interface Client {
 }
 
 export interface Agent {
-  agency_name: string;
-  license_number: string;
-  phone: string;
+  agentId: number;
+  userId: number;
+  agencyName: string;
+  licenseNumber: string;
   email: string;
+  phoneNumber: string;
+  address: string;
+  role: string;
 }
 
 export interface Transaction {

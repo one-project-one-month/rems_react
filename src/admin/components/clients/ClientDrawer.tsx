@@ -14,7 +14,7 @@ const ClientDrawer = ({ onClose, open, records, refetch }: Props) => {
   return (
     <>
       <Drawer
-        title={records ? "Update User" : "Create User"}
+        title={records ? "Update Client" : "Create Client"}
         width={540}
         onClose={onClose}
         open={open}

@@ -1,61 +1,61 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
+import { Agent } from "../../../type/type";
 
-// Define the Agent interface
-export interface Agent {
-	id: number;
-	name: string;
+// Define the Client type
+export interface AgentData {
+  data: {
+    agentList: Agent[];
+  };
 }
 
-// Create the API slice
 export const agentApi = createApi({
-	reducerPath: "agentApi",
-	baseQuery: baseUrl,
-	tagTypes: ["Agent"],
-	endpoints: (builder) => ({
-		agentIndex: builder.query<Agent[], void>({
-			query: () => ({
-				url: "clients",
-				method: "GET",
-			}),
-			providesTags: ["Agent"],
-		}),
-		//     userShow: builder.query({
-		// 		query: (id) => ({
-		// 			url: `user/${id}`,
-		// 			method: "GET",
-		// 		}),
-		// 		providesTags: ["userList"],
-		// 	}),
-		// 	userStore: builder.mutation({
-		// 		query: (data) => ({
-		// 			url: "user",
-		// 			method: "POST",
-		// 			body: data,
-		// 		}),
-		// 		invalidatesTags: ["userList"],
-		// 	}),
-		// 	userUpdate: builder.mutation({
-		// 		query: ({ data, id }) => ({
-		// 			url: `user/${id}`,
-		// 			method: "PATCH",
-		// 			body: data,
-		// 		}),
-		// 		invalidatesTags: ["userList"],
-		// 	}),
-		// 	userDelete: builder.mutation({
-		// 		query: (id) => ({
-		// 			url: `user/${id}`,
-		// 			method: "DELETE",
-		// 		}),
-		// 		invalidatesTags: ["userList"],
-		// 	}),
-		// }),
-	}),
+  reducerPath: "agentApi",
+  baseQuery: baseUrl,
+  endpoints: (builder) => ({
+    getAllAgent: builder.query<AgentData, void>({
+      query: () => ({
+        url: "agents/SearchAgentByNameAndLocation",
+        method: "GET",
+      }),
+    }),
+    createAgent: builder.mutation({
+      query: (data) => ({
+        url: "agents",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getAgentById: builder.query({
+      query: (id) => ({
+        url: `agents/${id}`,
+        method: "GET",
+      }),
+    }),
+    updateAgentById: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `agents/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+    }),
+    deleteAgent: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `agents/${id}`,
+        method: "DELETE",
+      }),
+    }),
+  }),
 });
 
-type UseAgentIndexQueryType = ReturnType<typeof agentApi.useAgentIndexQuery>;
+// Export the hooks
+export const {
+  useGetAllAgentQuery,
+  useCreateAgentMutation,
+  useGetAgentByIdQuery,
+  useUpdateAgentByIdMutation,
+  useDeleteAgentMutation,
+} = agentApi;
 
-export const { useAgentIndexQuery } = agentApi;
-
+// Export the entire API for use in the store
 export default agentApi;
