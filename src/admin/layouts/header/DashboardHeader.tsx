@@ -4,7 +4,7 @@ import {
 	MenuUnfoldOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
-import { collapseProp } from "../sideber/DashboardSidebar";
+import { collapseProp } from "../sidebar/DashboardSidebar";
 import type { MenuProps } from "antd";
 
 const { Header } = Layout;

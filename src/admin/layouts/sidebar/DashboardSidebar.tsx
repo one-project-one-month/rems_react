@@ -42,11 +42,11 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 			icon: <SwapOutlined />,
 			label: "Transactions",
 		},
-		{
-			key: "review",
-			icon: <FundViewOutlined />,
-			label: "Review",
-		},
+		// {
+		// 	key: "review",
+		// 	icon: <FundViewOutlined />,
+		// 	label: "Review",
+		// },
 		{
 			key: "appointments",
 			icon: <CalendarOutlined />,

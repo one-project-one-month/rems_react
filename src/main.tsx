@@ -4,7 +4,6 @@ import App from "./App.tsx";
 import "./index.css";
 import { store } from "./app/store.ts";
 import { Provider } from "react-redux";
-// import store from "./store/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
