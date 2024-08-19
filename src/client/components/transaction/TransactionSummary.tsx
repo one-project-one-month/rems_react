@@ -1,4 +1,3 @@
-import React from "react";
 import { transactionData } from "../../db/data";
 
 interface Props {

@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
 import { TResponse } from "../../../type/type";
 
-export interface TAppointmentHistory {
+export interface TTransactionHistory {
   appointmentId: number;
   agentName: string;
   clientName: string;
@@ -12,21 +12,21 @@ export interface TAppointmentHistory {
   notes?: string;
 }
 
-export interface TCreatePostRequest {
-  clientId: number;
-  propertyId: number;
-  appointmentDate: string;
-  appointmentTime: Date | null;
-  status: string;
-  notes: string;
-}
+// export interface TCreatePostRequest {
+//   clientId: number;
+//   propertyId: number;
+//   appointmentDate: string;
+//   appointmentTime: Date | null;
+//   status: string;
+//   notes: string;
+// }
 
-export const appointmentApi = createApi({
+export const transactionApi = createApi({
   reducerPath: "appointmentHistory",
   baseQuery: baseUrl,
   tagTypes: ["appointments"],
   endpoints: (builder) => ({
-    getAppointmentHistory: builder.query<
+    getTranscationHistory: builder.query<
       TResponse<TAppointmentHistory>,
       number[]
     >({
@@ -34,15 +34,7 @@ export const appointmentApi = createApi({
         `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
       providesTags: ["appointments"],
     }),
-    postAppointment: builder.mutation<TAppointmentHistory, TCreatePostRequest>({
-      query: (newAppointment) => ({
-        url: "appointments",
-        method: "POST",
-        body: newAppointment,
-      }),
-    }),
   }),
 });
 
-export const { useGetAppointmentHistoryQuery, usePostAppointmentMutation } =
-  appointmentApi;
+export const { useGetTranscationHistoryQuery } = transactionApi;

@@ -8,23 +8,23 @@ import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
 
 export const store = configureStore({
-  reducer: {
-    appointment: appointmentSlice,
-    currentPage: currentPageSlice,
-    [agentApi.reducerPath]: agentApi.reducer,
-    [clientApi.reducerPath]: clientApi.reducer,
-    // [propertiesApi.reducerPath]: propertiesApi.reducer,
-    [transactionsApi.reducerPath]: transactionsApi.reducer,
-    [appointmentApi.reducerPath]: appointmentApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      agentApi.middleware,
-      clientApi.middleware,
-      // propertiesApi.middleware,
-      transactionsApi.middleware,
-      appointmentApi.middleware,
-    ]),
+	reducer: {
+		appointment: appointmentSlice,
+		currentPage: currentPageSlice,
+		[agentApi.reducerPath]: agentApi.reducer,
+		[clientApi.reducerPath]: clientApi.reducer,
+		// [propertiesApi.reducerPath]: propertiesApi.reducer,
+		[transactionsApi.reducerPath]: transactionsApi.reducer,
+		[appointmentApi.reducerPath]: appointmentApi.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat([
+			agentApi.middleware,
+			clientApi.middleware,
+			// propertiesApi.middleware,
+			transactionsApi.middleware,
+			appointmentApi.middleware,
+		]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

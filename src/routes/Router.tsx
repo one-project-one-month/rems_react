@@ -11,8 +11,8 @@ import Home from "../client/components/property/Home";
 import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
-import TransactionSummary from "../client/components/transaction/TransactionSummary";
 import Transaction from "../client/components/transaction/Transaction";
+import TransactionCreateForm from "../client/components/transaction/TransactionCreateForm";
 
 const Router = () => {
   const config = createBrowserRouter([
@@ -69,6 +69,10 @@ const Router = () => {
             {
               index: true,
               element: <Transaction />,
+            },
+            {
+              path: "create",
+              element: <TransactionCreateForm />,
             },
           ],
         },

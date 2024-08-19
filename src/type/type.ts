@@ -141,3 +141,16 @@ export interface State {
   id: number;
   name: string;
 }
+
+export interface TResponse<T> {
+  isSuccess: boolean;
+  isError: boolean;
+  data: {
+    pageSetting: {
+      totalCount: number;
+      pageSize: number;
+      isEndOfPage: boolean;
+    };
+    appointmentDetails: T[];
+  };
+}
