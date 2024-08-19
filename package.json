@@ -22,6 +22,7 @@
 		"react-redux": "^9.1.2",
 		"react-router": "^6.24.1",
 		"react-router-dom": "^6.24.1",
+		"react-star-rating": "^1.4.2",
 		"sonner": "^1.5.0"
 	},
 	"devDependencies": {
