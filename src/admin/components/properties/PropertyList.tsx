@@ -1,9 +1,10 @@
 import type { TableProps } from "antd";
 import { Table, Tag, Typography } from "antd";
 import React from "react";
-import { Properties} from "../../../type/type";
-import { useGetAllPropertiesQuery } from "../../../services/admin/api/propertiesApi";
+import { Properties ,PropertyResponse} from "../../../type/type";
+import {  useGetAllPropertiesQuery } from "../../../services/admin/api/propertiesApi";
 import { Link } from "react-router-dom";
+
 
 const renderStatus = (status: any) => {
 	let color;
@@ -157,7 +158,7 @@ const columns: TableProps<Properties>["columns"] = [
 // ];
 const PropertyList: React.FC = () => {
 
-	const { data, isLoading: propertiesLoading } = useGetAllPropertiesQuery();
+	const { data, isLoading: propertiesLoading } = useGetAllPropertiesQuery<PropertyResponse>();
     
 	const properties = data?.data ?? [];
  

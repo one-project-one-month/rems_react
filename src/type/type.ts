@@ -152,10 +152,18 @@ export interface State {
 	name: string;
 }
 
-export interface PropertyResponse{
-	isSuccess: string;
-	isError: string;
-	data: Object;
-	message: string;
 
+
+
+export interface PropertyResponse{
+    isLoading: boolean,
+    data: {
+        data: Properties
+    }
+}
+
+export interface ChangeStatus {
+    propertyId: number,
+    propertyStatus: string,
+    approvedBy: string
 }
