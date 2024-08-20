@@ -151,3 +151,11 @@ export interface State {
 	id: number;
 	name: string;
 }
+
+export interface PropertyResponse{
+	isSuccess: string;
+	isError: string;
+	data: Object;
+	message: string;
+
+}

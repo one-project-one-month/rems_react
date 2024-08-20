@@ -2,6 +2,8 @@ import { Button, Col, Divider, Flex, Row, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router';
 
+
+
 const PropertyDetail = () => {
     const location = useLocation();
     const properties = location.state.properties;
