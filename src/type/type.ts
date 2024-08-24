@@ -68,6 +68,15 @@ interface Images {
 	dateUploaded: string;
 }
 
+export interface Appointment {
+	clientName: string;
+	agentName: string;
+	appointmentDate: string;
+	appointmentTime: string;
+	status: string;
+	notes: string | null;
+  }
+
 export interface Properties {
 	property: Property;
 	images: Images[];
@@ -151,3 +160,4 @@ export interface State {
 	id: number;
 	name: string;
 }
+

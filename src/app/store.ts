@@ -6,6 +6,7 @@ import transactionsApi from "../services/admin/api/transactions";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
+import {appointmentApi as AppointmentApiForAdminDashboard} from "../services/admin/api/appointmentApi";
 
 export const store = configureStore({
 	reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
 		// [propertiesApi.reducerPath]: propertiesApi.reducer,
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
+		[AppointmentApiForAdminDashboard.reducerPath]: AppointmentApiForAdminDashboard.reducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
@@ -24,6 +26,7 @@ export const store = configureStore({
 			// propertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
+			AppointmentApiForAdminDashboard.middleware
 		]),
 });
 
