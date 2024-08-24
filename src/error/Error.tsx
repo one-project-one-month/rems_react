@@ -7,7 +7,7 @@ const Error = () => {
 		navigate("/");
 	};
 	const goClient = () => {
-		navigate("/web/clients");
+		navigate("/client");
 	};
 
 	return (

@@ -13,62 +13,62 @@ import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 
 const Router = () => {
-  const config = createBrowserRouter([
-    {
-      path: "/",
-      element: <DashboardLayout />,
-      children: [
-        {
-          path: "/clients",
-          element: <ClientList />,
-        },
-        {
-          path: "/agents",
-          element: <AgentList />,
-        },
-        {
-          path: "/transactions",
-          element: <TransactionsList />,
-        },
-        {
-          path: "/appointments",
-          element: <Appointments />,
-        },
-        {
-          path: "/properties",
-          element: <PropertyList />,
-        },
-      ],
-    },
-    {
-      path: "/client",
-      element: <Navbar />,
-      children: [
-        {
-          index: true,
-          element: <Home />,
-        },
-        {
-          path: "appointment",
-          children: [
-            {
-              index: true,
-              element: <Appointment />,
-            },
-            {
-              path: "history",
-              element: <AppointmentHistoryList />,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      path: "*",
-      element: <Error />,
-    },
-  ]);
-  return <RouterProvider router={config} />;
+	const config = createBrowserRouter([
+		{
+			path: "/",
+			element: <DashboardLayout />,
+			children: [
+				{
+					path: "/clients",
+					element: <ClientList />,
+				},
+				{
+					path: "/agents",
+					element: <AgentList />,
+				},
+				{
+					path: "/transactions",
+					element: <TransactionsList />,
+				},
+				{
+					path: "/appointments",
+					element: <Appointments />,
+				},
+				{
+					path: "/properties",
+					element: <PropertyList />,
+				},
+			],
+		},
+		{
+			path: "/client",
+			element: <Navbar />,
+			children: [
+				{
+					index: true,
+					element: <Home />,
+				},
+				{
+					path: "appointment",
+					children: [
+						{
+							index: true,
+							element: <Appointment />,
+						},
+						{
+							path: "history",
+							element: <AppointmentHistoryList />,
+						},
+					],
+				},
+			],
+		},
+		{
+			path: "*",
+			element: <Error />,
+		},
+	]);
+	return <RouterProvider router={config} />;
 };
 
 export default Router;
