@@ -9,20 +9,17 @@ const renderStatus = (status: any) => {
     let color;
 
     switch (status) {
-        case "PENDING":
-            color = 'orange';
+        case "Rent":
+            color = "orange";
             break;
-        case "COMPLETED":
-            color = 'green';
-            break;
-        case "CANCELLED":
-            color = 'red';
+        case "Sell":
+            color = "green";
             break;
         default:
             break;
     }
-    return <Tag color={color}>{status}</Tag>
-}
+    return <Tag color={color}>{status}</Tag>;
+};
 
 interface PageSetting {
     totalCount: number,
@@ -48,7 +45,7 @@ const columns: TableProps<Transactions>['columns'] = [
         dataIndex: 'transactionId',
         key: 'transactionId',
         align: 'center',
-        render: (_,record) => (
+        render: (_, record) => (
             <span>{record?.transaction?.transactionId}</span>
         )
     },
@@ -75,7 +72,7 @@ const columns: TableProps<Transactions>['columns'] = [
         dataIndex: 'salePrice',
         key: 'sale',
         align: 'center',
-        render: (_,record) => (
+        render: (_, record) => (
             <span>{record.transaction.salePrice}</span>
         )
     },
@@ -84,7 +81,7 @@ const columns: TableProps<Transactions>['columns'] = [
         dataIndex: 'propertyPrice',
         key: 'propertyPrice',
         align: 'center',
-        render: (_,record) => (
+        render: (_, record) => (
             <span>{record.property.price}</span>
         )
     },
@@ -93,7 +90,7 @@ const columns: TableProps<Transactions>['columns'] = [
         dataIndex: 'commission',
         key: 'commission',
         align: 'center',
-        render: (_,record) => (
+        render: (_, record) => (
             <span>{record.transaction.commission}</span>
         )
     },
@@ -101,54 +98,56 @@ const columns: TableProps<Transactions>['columns'] = [
         title: 'Status',
         key: 'status',
         dataIndex: 'status',
-        render: (_,record) => renderStatus(record.transaction.status)
+        render: (_, record) => renderStatus(record.transaction.status)
     }
 ];
 
-const TransactionList: React.FC = () => {
-    const [page,setPage] = useState({ pageNumber: 1, pageSize: 2 })
 
-    const { isFetching,data } = useGetAllTransactionsQuery<TransApiResponse>(page);    
+
+const TransactionList: React.FC = () => {
+    const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
+
+    const { isFetching, data } = useGetAllTransactionsQuery<TransApiResponse>(page);
 
     const pageSetting = data?.data?.pageSetting;
     const lstTransaction: Transactions[] = data?.data?.lstTransaction ?? [];
 
-    const handlePagination = (pageNumber:number, pageSize:number) => {
+    const handlePagination = (pageNumber: number, pageSize: number) => {
         setPage({
             pageNumber,
-            pageSize
-        })
-    }
+            pageSize,
+        });
+    };
 
     return (
-        <Table columns={columns} dataSource={lstTransaction} rowKey="transactionId" loading={isFetching}
-        pagination={{
-            total: pageSetting?.totalCount,
-            current: page?.pageNumber,
-            onChange: handlePagination
-        }}
-        expandable={{
-            expandedRowRender: (record) => (
-                <Row gutter={16}>
-                    <Col span={6}>
-                        <div className='text-gray-600 font-semibold'>Property Address</div>
-                        <div className='text-gray-800'>{`${record.property.address}, ${record.property.city}, ${record.property.state}, ${record.property.zipCode}`}</div>
-                    </Col>                    
-                    <Col span={6}>
-                        <div className='text-gray-600 font-semibold'>Property Features</div>
-                        <div className='text-gray-800'>{`${record.property.size} sq ft, ${record.property.numberOfBedrooms} bed, ${record.property.numberOfBathrooms} bath, Built in ${record.property.yearBuilt}`}</div>
-                    </Col>
-                    <Col span={6}>
-                        <div className='text-gray-600 font-semibold'>Minimum Rental Period</div>
-                        <div className='text-gray-800'>{`${record.property.minrentalPeriod}`}</div>
-                    </Col>
-                    <Col span={6}>
-                        <div className='text-gray-600 font-semibold'>Available Type</div>
-                        <div className='text-gray-800'>{`${record.property.availiablityType}`}</div>
-                    </Col>
-                </Row>
-            )
-        }}  
+        <Table columns={columns} dataSource={lstTransaction} rowKey={(record) => record.transaction.transactionId} loading={isFetching}
+            pagination={{
+                total: pageSetting?.totalCount,
+                current: page?.pageNumber,
+                onChange: handlePagination
+            }}
+            expandable={{
+                expandedRowRender: (record) => (
+                    <Row gutter={16}>
+                        <Col span={6}>
+                            <div className='text-gray-600 font-semibold'>Property Address</div>
+                            <div className='text-gray-800'>{`${record.property.address}, ${record.property.city}, ${record.property.state}, ${record.property.zipCode}`}</div>
+                        </Col>
+                        <Col span={6}>
+                            <div className='text-gray-600 font-semibold'>Property Features</div>
+                            <div className='text-gray-800'>{`${record.property.size} sq ft, ${record.property.numberOfBedrooms} bed, ${record.property.numberOfBathrooms} bath, Built in ${record.property.yearBuilt}`}</div>
+                        </Col>
+                        <Col span={6}>
+                            <div className='text-gray-600 font-semibold'>Minimum Rental Period</div>
+                            <div className='text-gray-800'>{`${record.property.minrentalPeriod}`}</div>
+                        </Col>
+                        <Col span={6}>
+                            <div className='text-gray-600 font-semibold'>Available Type</div>
+                            <div className='text-gray-800'>{`${record.property.availiablityType}`}</div>
+                        </Col>
+                    </Row>
+                )
+            }}
         />
     )
 };
