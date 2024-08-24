@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout } from "antd";
-import DashboardSidebar from "./sideber/DashboardSidebar";
+import DashboardSidebar from "./sidebar/DashboardSidebar";
 import DashboardHeader from "./header/DashboardHeader";
 import DashboardContext from "./context/DashboardContext";
 

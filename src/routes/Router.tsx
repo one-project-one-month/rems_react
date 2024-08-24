@@ -6,6 +6,7 @@ import TransactionList from "../admin/components/transactions/TransactionList";
 import Appointments from "../admin/components/appointments/Appointments";
 import PropertyList from "../admin/components/properties/PropertyList";
 import PropertyDetail from "../admin/components/properties/PropertyDetail";
+import HomePage from "../admin/components/dashboard/HomePage";
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -13,6 +14,10 @@ const Router = () => {
 			path: "/",
 			element: <DashboardLayout />,
 			children: [
+				{
+					path: "/",
+					element: <HomePage />
+				},
 				{
 					path: "/clients",
 					element: <ClientList />,
