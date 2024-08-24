@@ -151,3 +151,19 @@ export interface State {
 	id: number;
 	name: string;
 }
+
+
+
+
+export interface PropertyResponse{
+    isLoading: boolean,
+    data: {
+        data: Properties
+    }
+}
+
+export interface ChangeStatus {
+    propertyId: number,
+    propertyStatus: string,
+    approvedBy: string
+}

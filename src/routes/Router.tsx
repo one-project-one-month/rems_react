@@ -13,6 +13,7 @@ import Home from "../client/components/property/Home";
 import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
+import PropertyDetail from "../admin/components/properties/PropertyDetail"
 
 const Router = () => {
 	const config = createBrowserRouter([
@@ -44,6 +45,11 @@ const Router = () => {
 					path: "/properties",
 					element: <PropertyList />,
 				},
+				{
+					path: "/properties/detail",
+					element: <PropertyDetail />,
+				},
+				
 			],
 		},
 		{

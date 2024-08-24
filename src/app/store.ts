@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import agentApi from "../services/admin/api/agentApi";
 import { clientApi } from "../services/admin/api/clientApi";
-// import propertiesApi from "../services/admin/api/propertiesApi";
+import propertiesApi from "../services/admin/api/propertiesApi";
 import transactionsApi from "../services/admin/api/transactions";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
@@ -13,7 +13,7 @@ export const store = configureStore({
 		currentPage: currentPageSlice,
 		[agentApi.reducerPath]: agentApi.reducer,
 		[clientApi.reducerPath]: clientApi.reducer,
-		// [propertiesApi.reducerPath]: propertiesApi.reducer,
+		[propertiesApi.reducerPath]: propertiesApi.reducer,
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
 	},
@@ -21,7 +21,7 @@ export const store = configureStore({
 		getDefaultMiddleware().concat([
 			agentApi.middleware,
 			clientApi.middleware,
-			// propertiesApi.middleware,
+			propertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
 		]),
