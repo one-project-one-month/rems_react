@@ -2,7 +2,7 @@ import type { TableProps } from "antd";
 import { Col, Row, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { useGetAllTransactionsQuery } from "../../../services/admin/api/transactions";
+import { useGetAllTransactionsQuery } from "../../../services/admin/api/transactionsApi";
 import { Transactions, TransApiResponse } from "../../../type/type";
 
 const renderStatus = (status: any) => {

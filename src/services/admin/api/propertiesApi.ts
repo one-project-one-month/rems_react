@@ -27,18 +27,21 @@ import { Properties ,ChangeStatus} from "../../../type/type";
 export const propertiesApi = createApi({
 	reducerPath: "propertiesApi",
 	baseQuery: baseUrl,
+	tagTypes: ["properties"],
 	endpoints: (builder) => ({
-		getAllProperties: builder.query<Properties[], void>({
-			query: () => ({
-				url: "properties",
+		getAllProperties: builder.query<Properties[], {pageNumber: number, pageSize: number}>({
+			query: ({ pageNumber, pageSize }) => ({
+				url: `properties/${pageNumber}/${pageSize}`,
 				method: "GET",
 			}),
+			providesTags: ['properties']
 		}),
 		deleteProperty: builder.mutation<void, number>({
 			query: (id) => ({
 				url: `properties/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ['properties']
 		}),
 		changestatus: builder.mutation<void,ChangeStatus>({
 			query: (changestatus) => ({
@@ -46,6 +49,7 @@ export const propertiesApi = createApi({
 			  method: "PUT",
 			  body: changestatus,
 			}),
+			invalidatesTags: ['properties']
 		}),
 	}),
 });

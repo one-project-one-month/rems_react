@@ -164,10 +164,15 @@ export interface State {
 }
 
 export interface PropertyResponse{
-    isLoading: boolean,
-    data: {
-        data: Properties
-    }
+	isFetching: boolean;
+	data: {
+		isSuccess: boolean;
+		isError: boolean;
+		data: {
+			pageSetting: PageSetting;
+			properties: Properties[];
+		};
+	};
 }
 
 export interface ChangeStatus {
