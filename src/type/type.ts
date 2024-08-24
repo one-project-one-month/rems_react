@@ -53,11 +53,22 @@ export interface Transactions {
 	client: Client;
 }
 
-export interface transactionResponse {
-	isSuccess: string;
-	isError: string;
-	data: Object;
-	message: string;
+interface PageSetting {
+	totalCount: number;
+	pageSize: number;
+	isEndOfPage: boolean;
+}
+
+export interface TransApiResponse {
+	isFetching: boolean;
+	data: {
+		isSuccess: boolean;
+		isError: boolean;
+		data: {
+			pageSetting: PageSetting;
+			lstTransaction: Transactions[];
+		};
+	};
 }
 
 interface Images {
@@ -151,9 +162,6 @@ export interface State {
 	id: number;
 	name: string;
 }
-
-
-
 
 export interface PropertyResponse{
     isLoading: boolean,

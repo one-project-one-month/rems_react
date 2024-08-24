@@ -3,7 +3,7 @@ import { Col, Row, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import { useGetAllTransactionsQuery } from "../../../services/admin/api/transactions";
-import { Transactions } from "../../../type/type";
+import { Transactions, TransApiResponse } from "../../../type/type";
 
 const renderStatus = (status: any) => {
 	let color;
@@ -20,24 +20,6 @@ const renderStatus = (status: any) => {
     }
     return <Tag color={color}>{status}</Tag>;
 };
-
-interface PageSetting {
-	totalCount: number;
-	pageSize: number;
-	isEndOfPage: boolean;
-}
-
-interface TransApiResponse {
-	isFetching: boolean;
-	data: {
-		isSuccess: boolean;
-		isError: boolean;
-		data: {
-			pageSetting: PageSetting;
-			lstTransaction: Transactions[];
-		};
-	};
-}
 
 const columns: TableProps<Transactions>['columns'] = [
     {
@@ -101,8 +83,6 @@ const columns: TableProps<Transactions>['columns'] = [
         render: (_, record) => renderStatus(record.transaction.status)
     }
 ];
-
-
 
 const TransactionList: React.FC = () => {
     const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
