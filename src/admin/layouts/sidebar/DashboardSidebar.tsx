@@ -6,6 +6,7 @@ import {
 	FundViewOutlined,
 	CalendarOutlined,
 	ProductOutlined,
+	HomeOutlined
 } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,12 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 	};
 
 	const navItems = [
+		{
+
+			key: '/',
+			icon: <HomeOutlined />,
+			label: "Dashboard"
+		},
 		{
 			key: "clients",
 			icon: <UserOutlined />,

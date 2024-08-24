@@ -1,9 +1,11 @@
 import DashboardLayout from "../admin/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "../admin/components/dashboard/HomePage";       
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
 import TransactionsList from "../admin/components/transactions/TransactionList";
 import PropertyList from "../admin/components/properties/PropertyList";
+
 import Appointments from "../admin/components/appointments/Appointments";
 // import Transaction from "../client/pages/Transaction";
 import Navbar from "../client/layouts/Navbar";
@@ -18,6 +20,10 @@ const Router = () => {
 			path: "/",
 			element: <DashboardLayout />,
 			children: [
+				{
+					path: "/",
+					element: <HomePage />
+				},
 				{
 					path: "/clients",
 					element: <ClientList />,
