@@ -142,7 +142,7 @@ export interface State {
   name: string;
 }
 
-export interface TResponse<T, D> {
+export interface TResponse<T> {
   isSuccess: boolean;
   isError: boolean;
   data: {
