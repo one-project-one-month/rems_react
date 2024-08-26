@@ -52,7 +52,7 @@ const PropertyById: React.FC = () => {
                     Get appointment
                   </Button>
                   <Button type="link">
-                    <Review/>
+                    <Review userId={0} propertyId={0}/>
                   </Button>
                 </div>
 
