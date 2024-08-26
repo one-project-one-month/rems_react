@@ -8,6 +8,7 @@ import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
 import { propertiesApi } from "../services/client/api/propertyApi";
 
+
 export const store = configureStore({
   reducer: {
     appointment: appointmentSlice,
