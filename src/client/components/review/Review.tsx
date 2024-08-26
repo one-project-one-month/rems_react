@@ -1,31 +1,52 @@
 import { useState } from "react";
 import RatingReview from "./RatingReview";
-import { Input , Card, Space} from "antd";
+import { Button, Modal, Input } from 'antd';
 
- {/* <RatingReview rating={rating} setRating={setRating} /> */}
-  // const [rating, setRating] = useState(0);
 
-  
-  
+const Review: React.FC = () => {
+  const [rating, setRating] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Review: React.FC  = () => {
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="mt-[3rem] h-full mx-[5rem]">
-      <div className="flex w-[20rem]"> 
-      <Input placeholder="write comment  " />
 
-      </div>
+    <div>
+      <Button type="link" onClick={showModal}>
+        Review
+      </Button>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        title="Review"
+      >
+        
+        <Input
+          placeholder="Name....."
+          className=" mt-5 "
 
-      <Space direction="vertical" size={16}>
-    <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
-      <p></p>
-      <p>Card content</p>
-      <p>Card content</p>
-    </Card>
-    
-    </Space>
-     
+        />
+        <Input
+          placeholder="Describe your experience...."
+          className="h-[3rem] mt-3"
+        />
+        <div className="mt-5 mb-3 b">
+          <p ><RatingReview rating={rating} setRating={setRating} /></p>
+        </div>
+      </Modal>
     </div>
+
   );
 };
 

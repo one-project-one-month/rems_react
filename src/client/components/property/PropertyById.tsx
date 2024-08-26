@@ -5,6 +5,7 @@ import { GiBathtub, GiBunkBeds } from "react-icons/gi";
 import { BiLocationPlus, BiRuler } from "react-icons/bi";
 import { useGetPropertyByIdQuery } from "../../../services/client/api/propertyApi";
 import { Button } from "antd";
+import Review from "../review/Review"
 
 const PropertyById: React.FC = () => {
   const { id } = useParams();
@@ -50,7 +51,9 @@ const PropertyById: React.FC = () => {
                   <Button href="/client/appointment" type="link">
                     Get appointment
                   </Button>
-                  <Button type="link">Review</Button>
+                  <Button type="link">
+                    <Review/>
+                  </Button>
                 </div>
 
                 {/* <div className="flex flex-col gap-2">
