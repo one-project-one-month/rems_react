@@ -2,8 +2,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
 import { AgentData } from "../../../type/type";
 
-// Define the Client type
-
 export const agentApi = createApi({
   reducerPath: "agentApi",
   baseQuery: baseUrl,
