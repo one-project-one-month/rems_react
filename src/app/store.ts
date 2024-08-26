@@ -7,6 +7,7 @@ import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
 import { propertiesApi } from "../services/client/api/propertyApi";
+import {clientReviewApi} from "../services/client/api/Review"
 
 
 export const store = configureStore({
@@ -19,6 +20,7 @@ export const store = configureStore({
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [propertiesApi.reducerPath]: propertiesApi.reducer,
+    [clientReviewApi.reducerPath] : clientReviewApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -28,6 +30,7 @@ export const store = configureStore({
       transactionsApi.middleware,
       appointmentApi.middleware,
       propertiesApi.middleware,
+      clientReviewApi.middleware,
     ]),
 });
 
