@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GiBathtub, GiBunkBeds } from "react-icons/gi";
 import { BiLocationPlus, BiRuler } from "react-icons/bi";
+import TransactionCreateForm from "../transaction/TransactionCreateForm";
 
 const PropertyById: React.FC = () => {
   const [property, setProperty] = useState<Property | null>(null);
@@ -126,6 +127,10 @@ const PropertyById: React.FC = () => {
                   </button>
                 </div>
                 <hr />
+              </div>
+
+              <div className="mt-5">
+                <TransactionCreateForm id={id}/>
               </div>
             </div>
           </div>

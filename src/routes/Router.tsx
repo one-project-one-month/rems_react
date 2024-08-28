@@ -5,7 +5,6 @@ import AgentList from "../admin/components/agents/AgentList";
 import TransactionsList from "../admin/components/transactions/TransactionList";
 import PropertyList from "../admin/components/properties/PropertyList";
 import Appointments from "../admin/components/appointments/Appointments";
-// import Transaction from "../client/pages/Transaction";
 import Navbar from "../client/layouts/Navbar";
 import Home from "../client/components/property/Home";
 import Error from "../error/Error";

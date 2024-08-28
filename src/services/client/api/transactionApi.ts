@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { TResponse } from "../../../type/type";
+import { CTransactionResponse, TResponse, TransApiResponse } from "../../../type/type";
 
 export interface TTransactionHistory {
   appointmentId: number;
@@ -21,6 +21,15 @@ export interface TTransactionHistory {
 //   notes: string;
 // }
 
+export interface CreateTransactionRequest {
+  propertyId: number;
+  clientId: number;
+  transactionDate: string;
+  salePrice: number;
+  commission: number;
+  status: string;
+} 
+
 export const transactionApi = createApi({
   reducerPath: "appointmentHistory",
   baseQuery: baseUrl,
@@ -34,7 +43,22 @@ export const transactionApi = createApi({
         `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
       providesTags: ["appointments"],
     }),
+
+    createTransaction: builder.mutation<void, CreateTransactionRequest>({
+      query: (newTransaction) => ({
+        url: `transactions`,
+        method: "POST",
+        body: newTransaction,
+      }),
+    }),
+
+    getAllTransactionByClientId : builder.query<TransApiResponse,{clientId:number,pageNumber:number,pageSize:number}>({
+      query:({clientId,pageNumber,pageSize})=>`transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`
+    })
   }),
 });
 
-export const { useGetTranscationHistoryQuery } = transactionApi;
+export const {
+  useGetTranscationHistoryQuery, 
+  useCreateTransactionMutation ,
+  useGetAllTransactionByClientIdQuery} = transactionApi;
