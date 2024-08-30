@@ -47,10 +47,10 @@ export interface Transaction {
 	status: string;
 }
 
-export interface PageSetting {
-  totalCount: number,
-  pageSize: number,
-  isEndOfPage: boolean
+interface PageSetting {
+	totalCount: number;
+	pageSize: number;
+	isEndOfPage: boolean;
 }
 
 export interface CTransactionResponse{
@@ -95,6 +95,18 @@ export interface CTransactionResponse{
       editdate: string
   }
 }
+// export interface TransApiResponse {
+//   isSuccess:boolean,
+//   isError: boolean,
+//   data: {
+//       pageSetting: {
+//           totalCount: number,
+//           pageSize: number,
+//           isEndOfPage:boolean
+//       },
+//       lstTransaction: CTransactionResponse[];
+//   };
+// }
 
 export interface Transactions {
 	transaction: Transaction;
