@@ -1,0 +1,40 @@
+{
+  "appointment": [
+    {
+      "appointmentId": "1",
+      "agentName": "John Doe",
+      "propertyName": "Sunny Apartments",
+      "appointmentDate": "2024-07-1",
+      "appointmentTime": "10:00 AM",
+      "status": "Pending",
+      "notes": "Client prefers morning appointments."
+    },
+    {
+      "appointmentId": "2",
+      "agentName": "Jane Smith",
+      "propertyName": "Green Meadows",
+      "appointmentDate": "2024-07-22",
+      "appointmentTime": "02:00 PM",
+      "status": "Confirmed",
+      "notes": "Bring property documents."
+    },
+    {
+      "appointmentId": "3",
+      "agentName": "Michael Brown",
+      "propertyName": "Ocean View Villas",
+      "appointmentDate": "2024-07-23",
+      "appointmentTime": "11:00 AM",
+      "status": "Done",
+      "notes": "Client rescheduled for next week."
+    },
+    {
+      "appointmentId": "4",
+      "agentName": "Emily Davis",
+      "propertyName": "Maple Residences",
+      "appointmentDate": "2024-07-24",
+      "appointmentTime": "09:00 AM",
+      "status": "Done",
+      "notes": "Awaiting client confirmation."
+    }
+  ]
+}

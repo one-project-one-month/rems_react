@@ -38,63 +38,63 @@ export interface Transaction {
 }
 
 export interface PageSetting {
-  totalCount: number,
-  pageSize: number,
-  isEndOfPage: boolean
+  totalCount: number;
+  pageSize: number;
+  isEndOfPage: boolean;
 }
 
-export interface CTransactionResponse{
+export interface CTransactionResponse {
   transaction: {
-    transactionId: number,
-    propertyId: number,
-    clientId: number,
-    transactionDate: string,
-    salePrice: number,
-    commission: number,
-    status: string
-  },
+    transactionId: number;
+    propertyId: number;
+    clientId: number;
+    transactionDate: string;
+    salePrice: number;
+    commission: number;
+    status: string;
+  };
   client: {
-      clientId: number,
-      userId: number,
-      firstName: string,
-      lastName: string,
-      phone: string,
-      email: string,
-      address: string,
-      role: string
-  },
+    clientId: number;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    address: string;
+    role: string;
+  };
   property: {
-      propertyId: number,
-      agentId: number,
-      address: string,
-      city: string,
-      state: string,
-      zipCode: string,
-      propertyType: string,
-      price: number,
-      size: number,
-      numberOfBedrooms: number,
-      numberOfBathrooms: number,
-      yearBuilt: number,
-      description: string,
-      status: string,
-      availiablityType: string,
-      minrentalPeriod: number,
-      approvedby: null,
-      adddate: string,
-      editdate: string
-  }
+    propertyId: number;
+    agentId: number;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    propertyType: string;
+    price: number;
+    size: number;
+    numberOfBedrooms: number;
+    numberOfBathrooms: number;
+    yearBuilt: number;
+    description: string;
+    status: string;
+    availiablityType: string;
+    minrentalPeriod: number;
+    approvedby: null;
+    adddate: string;
+    editdate: string;
+  };
 }
 export interface TransApiResponse {
-  isSuccess:boolean,
-  isError: boolean,
+  isSuccess: boolean;
+  isError: boolean;
   data: {
-      pageSetting: {
-          totalCount: number,
-          pageSize: number,
-          isEndOfPage:boolean
-      },
-      lstTransaction: CTransactionResponse[];
+    pageSetting: {
+      totalCount: number;
+      pageSize: number;
+      isEndOfPage: boolean;
+    };
+    lstTransaction: CTransactionResponse[];
   };
 }
 
@@ -203,7 +203,7 @@ export interface State {
   name: string;
 }
 
-export interface TResponse<T, D> {
+export interface TResponse<T> {
   isSuccess: boolean;
   isError: boolean;
   data: {

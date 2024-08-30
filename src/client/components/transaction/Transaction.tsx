@@ -1,28 +1,26 @@
 import { Table } from "antd";
-// import { dataSource } from "../../db/data";
 import { useEffect, useState } from "react";
 import TransactionSummary from "../transaction/TransactionSummary";
 import { useGetAllTransactionByClientIdQuery } from "../../../services/client/api/transactionApi";
-import { TransApiResponse } from "../../../type/type";
 
 
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
 
   const initailParams = {
-    clientId:3,
-    pageNumber:2,
-    pageSize:10
+    clientId: 3,
+    pageNumber: 2,
+    pageSize: 10
   }
 
-  const [params,setParams] = useState(initailParams)
+  // const [params,setParams] = useState(initailParams)
 
-  const {data,isSuccess,isError} = useGetAllTransactionByClientIdQuery<TransApiResponse>(params)
-  console.log("DAta",data ,isSuccess,isError);  
+  const { data, isSuccess, isError } = useGetAllTransactionByClientIdQuery(initailParams)
+  console.log("DAta", data, isSuccess, isError);
 
   // const clientId = 201;
   // const clientData = dataSource.filter((data) => data.client_id === clientId);
-  
+
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
