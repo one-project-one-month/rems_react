@@ -1,14 +1,28 @@
 import { Table } from "antd";
-import dayjs from "dayjs";
-import { dataSource } from "../../db/data";
+// import { dataSource } from "../../db/data";
 import { useEffect, useState } from "react";
-import TransactionSummary from "../TransactionSummary";
+import TransactionSummary from "../transaction/TransactionSummary";
+import { useGetAllTransactionByClientIdQuery } from "../../../services/client/api/transactionApi";
+import { TransApiResponse } from "../../../type/type";
+
 
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
 
-  const clientId = 201;
-  const clientData = dataSource.filter((data) => data.client_id === clientId);
+  const initailParams = {
+    clientId:3,
+    pageNumber:2,
+    pageSize:10
+  }
+
+  const [params,setParams] = useState(initailParams)
+
+  const {data,isSuccess,isError} = useGetAllTransactionByClientIdQuery<TransApiResponse>(params)
+  console.log("DAta",data ,isSuccess,isError);  
+
+  // const clientId = 201;
+  // const clientData = dataSource.filter((data) => data.client_id === clientId);
+  
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -26,18 +40,13 @@ const Transaction = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "transaction_id",
-      key: "transaction_id",
+      dataIndex: "transactionId",
+      key: "transactionId",
     },
     {
       title: "Property",
-      dataIndex: "property_id",
-      key: "property_id",
-    },
-    {
-      title: "Agent",
-      dataIndex: "agent",
-      key: "agent",
+      dataIndex: "propertyId",
+      key: "propertyId",
     },
     {
       title: "Type",
@@ -46,14 +55,12 @@ const Transaction = () => {
     },
     {
       title: "Transaction Date",
-      dataIndex: "transaction_date",
+      dataIndex: "transactionDate",
       key: "date",
-      render: (transaction_date: Date) =>
-        dayjs(transaction_date).format("YYYY-MM-DD HH:mm A"),
     },
     {
       title: "Sale Price",
-      dataIndex: "sale_price",
+      dataIndex: "salePrice",
       key: "sale_price",
     },
     {
@@ -73,11 +80,11 @@ const Transaction = () => {
   ];
 
   return (
-    <div className="mt-10">
+    <div>
       {isSummaryShow && <TransactionSummary setIsShow={setIsSummaryShow} />}
       <div className="px-2 md:px-8 lg:px-12 py-12 w-[390px] sm:w-[650px] md:w-[980px] lg:w-full overflow-x-scroll no-scrollbar">
         <Table
-          dataSource={clientData}
+          // dataSource={clientData}
           columns={columns}
           pagination={{
             className: "custom-pagination",

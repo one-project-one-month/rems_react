@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
 							History
 						</Link>
 						<Link
-							to='/user/transaction'
+							to='transaction'
 							className='text-white hover:text-gray-200'
 						>
 							Transaction
@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
 					</div>
 				</div>
 			</nav>
-			<div className='mt-12 container mx-auto py-4'>
+			<div className='mt-10 container mx-auto py-4'>
 				<Outlet />
 			</div>
 		</div>

@@ -5,7 +5,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 import { TAppointmentHistory } from "../../../services/client/api/appointmentApi";
 
-const AppointHistoty = ({
+const AppointHistory = ({
   data,
 }: {
   data: TAppointmentHistory[] | undefined;
@@ -82,4 +82,4 @@ const AppointHistoty = ({
   );
 };
 
-export default AppointHistoty;
+export default AppointHistory;

@@ -1,5 +1,4 @@
-import React from "react";
-import { transactionData } from "../db/data";
+import { transactionData } from "../../db/data";
 
 interface Props {
   setIsShow: (value: boolean) => void;

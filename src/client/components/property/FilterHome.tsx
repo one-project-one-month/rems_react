@@ -1,12 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import "../style/priceRange.css";
-import PriceRangeSlider from "../components/PriceRangeSlider";
-// import CheckboxGroup from "../components/CheckboxGroup";
-import HomeCard from "../components/PropertyCard";
+import HomeCard from "./PropertyCard";
 import { useLocation } from "react-router";
-import { Property } from "../Model/Property";
+import { Property } from "../../../type/type";
 import axios from "axios";
 import { TiDelete } from "react-icons/ti";
+import PriceRangeSlider from "./PriceRangeSlider";
 
 const FilterHome = () => {
   const location = useLocation();
@@ -30,7 +29,7 @@ const FilterHome = () => {
       const { data } = await axios.get<Property[]>(
         "http://localhost:3000/properties"
       );
-      
+
       setProperties(data);
     } catch (error) {
       console.error("Error fetching properties:", error);
@@ -63,40 +62,37 @@ const FilterHome = () => {
       setBathrooms(bathrooms);
       setSizes(sizes);
     }
-    
   }, [properties, filterCriteria]);
 
   useEffect(() => {
-    
-    const finalFilteredProperties = filteredProperties.filter(
-      (property) =>{
-        console.log(selectedBathrooms);
-        console.log(selectedBedrooms);
-        console.log(selectedSizes);
-    
-        const selectedBedroom = 
-          selectedBedrooms.length === 0 || selectedBedrooms.includes(property.numberOfBedrooms);
-        const selectedBathroom = 
-          selectedBathrooms.length === 0 || selectedBathrooms.includes(property.numberOfBathrooms);
-        const selectedSize = 
-          selectedSizes.length === 0 || selectedSizes.includes(property.size);
-    
-        return selectedBedroom && selectedBathroom && selectedSize;
-      }
-       
-    );
+    const finalFilteredProperties = filteredProperties.filter((property) => {
+      console.log(selectedBathrooms);
+      console.log(selectedBedrooms);
+      console.log(selectedSizes);
+
+      const selectedBedroom =
+        selectedBedrooms.length === 0 ||
+        selectedBedrooms.includes(property.numberOfBedrooms);
+      const selectedBathroom =
+        selectedBathrooms.length === 0 ||
+        selectedBathrooms.includes(property.numberOfBathrooms);
+      const selectedSize =
+        selectedSizes.length === 0 || selectedSizes.includes(property.size);
+
+      return selectedBedroom && selectedBathroom && selectedSize;
+    });
     console.log(finalFilteredProperties);
-    
+
     setFilteredProperties(finalFilteredProperties);
   }, [selectedBedrooms, selectedBathrooms, selectedSizes]);
 
   const handleDeleteClick = (value: number, type: string) => {
-    if (type === 'bedroom') {
+    if (type === "bedroom") {
       setSelectedBedrooms((prev) => prev.filter((item) => item !== value));
-      setFilteredProperties(filteredProperties)
-    } else if (type === 'bathroom') {
+      setFilteredProperties(filteredProperties);
+    } else if (type === "bathroom") {
       setSelectedBathrooms((prev) => prev.filter((item) => item !== value));
-    } else if (type === 'size') {
+    } else if (type === "size") {
       setSelectedSizes((prev) => prev.filter((item) => item !== value));
     }
   };
@@ -113,14 +109,23 @@ const FilterHome = () => {
   //   });
   // };
 
-  const handleChange = (setter: React.Dispatch<React.SetStateAction<number[]>>, value: number) => {
-    setter((prev) => prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]);
+  const handleChange = (
+    setter: React.Dispatch<React.SetStateAction<number[]>>,
+    value: number
+  ) => {
+    setter((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
   };
 
-  const handleBedroomChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedBedrooms, Number(e.target.value));
-  const handleBathroomChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedBathrooms, Number(e.target.value));
-  const handleSizeChange = (e: ChangeEvent<HTMLInputElement>) => handleChange(setSelectedSizes, Number(e.target.value));
-
+  const handleBedroomChange = (e: ChangeEvent<HTMLInputElement>) =>
+    handleChange(setSelectedBedrooms, Number(e.target.value));
+  const handleBathroomChange = (e: ChangeEvent<HTMLInputElement>) =>
+    handleChange(setSelectedBathrooms, Number(e.target.value));
+  const handleSizeChange = (e: ChangeEvent<HTMLInputElement>) =>
+    handleChange(setSelectedSizes, Number(e.target.value));
 
   const [minPrice, setMinPrice] = useState<number>(0); // Initial minimum price
   const [maxPrice, setMaxPrice] = useState<number>(1000); // Initial maximum price
@@ -153,7 +158,9 @@ const FilterHome = () => {
                       className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
                     >
                       Bedroom {bedroom}
-                      <TiDelete onClick={() => handleDeleteClick(bedroom, 'bedroom')}  />
+                      <TiDelete
+                        onClick={() => handleDeleteClick(bedroom, "bedroom")}
+                      />
                     </button>
                   ))}
                   {selectedBathrooms.map((bathroom, index) => (
@@ -162,7 +169,9 @@ const FilterHome = () => {
                       className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
                     >
                       Bedroom {bathroom}
-                      <TiDelete onClick={() => handleDeleteClick(bathroom, 'bathroom')} />
+                      <TiDelete
+                        onClick={() => handleDeleteClick(bathroom, "bathroom")}
+                      />
                     </button>
                   ))}
 
@@ -172,7 +181,9 @@ const FilterHome = () => {
                       className="border border-primary rounded-full px-2 py-1 flex items-center gap-2"
                     >
                       {size} SqFt
-                      <TiDelete onClick={() => handleDeleteClick(size, 'size')} />
+                      <TiDelete
+                        onClick={() => handleDeleteClick(size, "size")}
+                      />
                     </button>
                   ))}
                 </div>

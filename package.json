@@ -23,6 +23,7 @@
     "react-router": "^6.24.1",
     "react-router-dom": "^6.24.1",
     "recharts": "^2.12.7",
+    "react-star-rating": "^1.4.2",
     "sonner": "^1.5.0"
   },
   "devDependencies": {
@@ -40,4 +41,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
+
 }
