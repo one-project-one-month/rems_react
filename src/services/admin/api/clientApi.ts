@@ -1,13 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { Client } from "../../../type/type";
-
-// Define the Client type
-export interface ClientData {
-  data: {
-    dataLst: Client[];
-  };
-}
+import { ClientData } from "../../../type/type";
 
 export const clientApi = createApi({
   reducerPath: "clientApi",

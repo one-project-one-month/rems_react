@@ -1,9 +1,12 @@
 import DashboardLayout from "../admin/layouts/DashboardLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from "../admin/components/dashboard/HomePage";       
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
 import TransactionsList from "../admin/components/transactions/TransactionList";
 import PropertyList from "../admin/components/properties/PropertyList";
+import PropertyDetail from "../admin/components/properties/PropertyDetail"
+
 import Appointments from "../admin/components/appointments/Appointments";
 import Navbar from "../client/layouts/Navbar";
 import Home from "../client/components/property/Home";
@@ -16,33 +19,42 @@ import Review from "../client/components/review/Review";
 import PropertyById from "../client/components/property/PropertyById";
 
 const Router = () => {
-  const config = createBrowserRouter([
-    {
-      path: "/",
-      element: <DashboardLayout />,
-      children: [
-        {
-          path: "/clients",
-          element: <ClientList />,
-        },
-        {
-          path: "/agents",
-          element: <AgentList />,
-        },
-        {
-          path: "/transactions",
-          element: <TransactionsList />,
-        },
-        {
-          path: "/appointments",
-          element: <Appointments />,
-        },
-        {
-          path: "/properties",
-          element: <PropertyList />,
-        },
-      ],
-    },
+	const config = createBrowserRouter([
+		{
+			path: "/",
+			element: <DashboardLayout />,
+			children: [
+				{
+					path: "/",
+					element: <HomePage />
+				},
+				{
+					path: "/clients",
+					element: <ClientList />,
+				},
+				{
+					path: "/agents",
+					element: <AgentList />,
+				},
+				{
+					path: "/transactions",
+					element: <TransactionsList />,
+				},
+				{
+					path: "/appointments",
+					element: <Appointments />,
+				},
+				{
+					path: "/properties",
+					element: <PropertyList />,
+				},
+				{
+					path: "/properties/detail",
+					element: <PropertyDetail />,
+				},
+				
+			],
+		},
     {
       path: "/client",
       element: <Navbar />,

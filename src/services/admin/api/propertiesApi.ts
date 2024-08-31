@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { Properties } from "../../../type/type";
+import { Properties ,ChangeStatus} from "../../../type/type";
 
 // export interface Properties {
 // 	property_id: number;
@@ -27,24 +27,35 @@ import { Properties } from "../../../type/type";
 export const propertiesApi = createApi({
 	reducerPath: "propertiesApi",
 	baseQuery: baseUrl,
+	tagTypes: ["properties"],
 	endpoints: (builder) => ({
-		getAllProperties: builder.query<Properties[], void>({
-			query: () => ({
-				url: "properties",
+		getAllProperties: builder.query<Properties[], {pageNumber: number, pageSize: number}>({
+			query: ({ pageNumber, pageSize }) => ({
+				url: `properties/${pageNumber}/${pageSize}`,
 				method: "GET",
 			}),
+			providesTags: ['properties']
 		}),
 		deleteProperty: builder.mutation<void, number>({
 			query: (id) => ({
 				url: `properties/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ['properties']
+		}),
+		changestatus: builder.mutation<void,ChangeStatus>({
+			query: (changestatus) => ({
+			  url: `properties/ChangeStatus`,
+			  method: "PUT",
+			  body: changestatus,
+			}),
+			invalidatesTags: ['properties']
 		}),
 	}),
 });
 
 // Export the hooks
-export const { useGetAllPropertiesQuery, useDeletePropertyMutation } =
+export const { useGetAllPropertiesQuery, useDeletePropertyMutation ,useChangestatusMutation } =
 	propertiesApi;
 
 export default propertiesApi;
