@@ -45,7 +45,7 @@ const Transaction = () => {
     },
     {
       title: "Property",
-      dataIndex: "propertyId",
+      dataIndex: "propertyId", 
       key: "propertyId",
     },
     {
@@ -76,7 +76,7 @@ const Transaction = () => {
           {action}
         </a>
       ),
-    },
+    }, 
   ];
 
   return (

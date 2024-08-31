@@ -53,8 +53,7 @@ export const transactionApi = createApi({
     }),
 
     getAllTransactionByClientId : builder.query<TransApiResponse,{clientId:number,pageNumber:number,pageSize:number}>({
-      query:({clientId,pageNumber,pageSize})=>`transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`
-    })
+      query:({clientId,pageNumber,pageSize})=>`transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`    })
   }),
 });
 
