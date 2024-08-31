@@ -95,18 +95,6 @@ export interface CTransactionResponse{
       editdate: string
   }
 }
-// export interface TransApiResponse {
-//   isSuccess:boolean,
-//   isError: boolean,
-//   data: {
-//       pageSetting: {
-//           totalCount: number,
-//           pageSize: number,
-//           isEndOfPage:boolean
-//       },
-//       lstTransaction: CTransactionResponse[];
-//   };
-// }
 
 export interface Transactions {
 	transaction: Transaction;
@@ -124,6 +112,15 @@ export interface TransApiResponse {
 			lstTransaction: Transactions[];
 		};
 	};
+}
+interface LabelAndValue{
+	label:string,content:string
+}
+export interface TransDetailByID{
+	data:{
+		userData:LabelAndValue[],
+		transData:LabelAndValue[]
+	}
 }
 
 interface Images {
