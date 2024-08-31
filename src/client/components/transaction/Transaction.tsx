@@ -8,7 +8,7 @@ import TransactionSummary from "../transaction/TransactionSummary";
 
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
-  const [transDetailData ,setTransDetailData] = useState<Transactions | undefined>(undefined)
+  const [transDetailData ,setTransDetailData] = useState<Transactions|undefined>(undefined)
 
   const initailParams = {
     clientId: 3,

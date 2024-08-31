@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { CTransactionResponse, TResponse, TransApiResponse } from "../../../type/type";
+import { TransApiResponse } from "../../../type/type";
 
 export interface TTransactionHistory {
   appointmentId: number;
@@ -28,22 +28,13 @@ export interface CreateTransactionRequest {
   salePrice: number;
   commission: number;
   status: string;
-} 
+}
 
 export const transactionApi = createApi({
-  reducerPath: "appointmentHistory",
+  reducerPath: "transactionHistory",
   baseQuery: baseUrl,
   tagTypes: ["appointments"],
   endpoints: (builder) => ({
-    getTranscationHistory: builder.query<
-      TResponse<TAppointmentHistory>,
-      number[]
-    >({
-      query: (idArray) =>
-        `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
-      providesTags: ["appointments"],
-    }),
-
     createTransaction: builder.mutation<void, CreateTransactionRequest>({
       query: (newTransaction) => ({
         url: `transactions`,
@@ -52,12 +43,17 @@ export const transactionApi = createApi({
       }),
     }),
 
-    getAllTransactionByClientId : builder.query<TransApiResponse,{clientId:number,pageNumber:number,pageSize:number}>({
-      query:({clientId,pageNumber,pageSize})=>`transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`    })
+    getAllTransactionByClientId: builder.query<
+      TransApiResponse,
+      { clientId: number; pageNumber: number; pageSize: number }
+    >({
+      query: ({ clientId, pageNumber, pageSize }) =>
+        `transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`,
+    }),
   }),
 });
 
 export const {
-  useGetTranscationHistoryQuery, 
-  useCreateTransactionMutation ,
-  useGetAllTransactionByClientIdQuery} = transactionApi;
+  useCreateTransactionMutation,
+  useGetAllTransactionByClientIdQuery,
+} = transactionApi;
