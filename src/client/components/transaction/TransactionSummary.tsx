@@ -1,5 +1,4 @@
 import {  Transactions } from "../../../type/type";
-import { transactionData } from "../../db/data";
 
 interface Props {
   setIsShow: (value: boolean) => void;
