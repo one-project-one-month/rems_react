@@ -1,5 +1,5 @@
 import DashboardLayout from "../admin/layouts/DashboardLayout";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import HomePage from "../admin/components/dashboard/HomePage";       
 import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
@@ -14,47 +14,64 @@ import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 import PropertyDetail from "../admin/components/properties/PropertyDetail"
+import DetailPage from "../agents/property-list/DetailPage";
+import AgentTransactions from "../agents/transactions/AgentTransactions";
+import AgentAppointment from "../agents/appointment/AgentAppointment";
+import AgentPropertyList from "../agents/property-list/AgentPropertyList";
+import AgentHeader from "../agents/header/AgentHeader";
+import PropertiesCRUD from "../agents/property-crud/PropertiesCRUD";
+import { useAuth } from "../login/login-context/AuthContext";
+import Login from "../login/Login";
+import Register from "../login/Register";
 
 const Router = () => {
-	const config = createBrowserRouter([
+
+	const {user} = useAuth(); // Get the authenticated user from context
+
+	// Define routes for different user roles
+	const adminRoutes = [
 		{
-			path: "/",
-			element: <DashboardLayout />,
+			path: "/admin",
+			element: user && user.role.toLowerCase() === "admin" ? <DashboardLayout /> : <Navigate to="/" replace />,
 			children: [
 				{
-					path: "/",
+					path: "admin",
 					element: <HomePage />
 				},
 				{
-					path: "/clients",
+					path: "clients",
 					element: <ClientList />,
 				},
 				{
-					path: "/agents",
+					path: "agents",
 					element: <AgentList />,
 				},
 				{
-					path: "/transactions",
+					path: "transactions",
 					element: <TransactionsList />,
 				},
 				{
-					path: "/appointments",
+					path: "appointments",
 					element: <Appointments />,
 				},
 				{
-					path: "/properties",
+					path: "properties",
 					element: <PropertyList />,
 				},
 				{
-					path: "/properties/detail",
+					path: "properties/detail",
 					element: <PropertyDetail />,
 				},
 				
 			],
-		},
+		}
+	];
+	// ----
+
+	const clientRoutes = [
 		{
 			path: "/client",
-			element: <Navbar />,
+			element: user && user.role.toLowerCase() === "client" ? <Navbar /> : <Navigate to="/" replace />,
 			children: [
 				{
 					index: true,
@@ -74,7 +91,66 @@ const Router = () => {
 					],
 				},
 			],
-		},
+		}
+	];
+	// ----
+
+	const agentRoutes = [
+		{
+			path: "/agent",
+			element: user && user.role.toLowerCase() === "agent" ? <AgentHeader /> : <Navigate to="/" replace />,
+			children: [
+				{
+					path: "/agent",
+					element: <AgentPropertyList />
+				},
+				{
+					path: "/agent",
+					element: <AgentPropertyList/>,
+					children: [
+						{
+							path: ":id",
+							element: <DetailPage />
+						}
+					]
+				},
+				{
+					path: "agent-appointments",
+					element: <AgentAppointment />
+				},
+				{
+					path: "agent-transactions",
+					element: <AgentTransactions />
+				},
+				{
+					path: "property-create",
+					element: <PropertiesCRUD />
+				}
+			],
+		}
+	]
+
+	
+
+	const config = createBrowserRouter([
+		// admin
+		
+		// ----
+		// client--
+		
+		// ----
+		// agent ----
+		{
+      path: '/',
+      element: user ? <Navigate to={`/${user.role.toLowerCase()}`} replace /> : <Login />,  // Redirect to user's role dashboard if authenticated
+    },
+		{
+      path: '/register',
+      element: <Register /> 
+    },
+		...adminRoutes,
+		...clientRoutes,
+		...agentRoutes,
 		{
 			path: "*",
 			element: <Error />,
