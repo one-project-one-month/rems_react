@@ -47,7 +47,7 @@ const Router = () => {
         ),
       children: [
         {
-          path: "admin",
+          index: true,
           element: <HomePage />,
         },
         {
@@ -178,13 +178,6 @@ const Router = () => {
   ];
 
   const config = createBrowserRouter([
-    // admin
-
-    // ----
-    // client--
-
-    // ----
-    // agent ----
     {
       path: "/",
       element: user ? (
