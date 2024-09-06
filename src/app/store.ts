@@ -6,25 +6,31 @@ import transactionsApi from "../services/admin/api/transactionsApi";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
+import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
+import {api} from "../agents/agent-services/appointmentaApiSlice"
 
-export const store = configureStore({
-  reducer: {
-    appointment: appointmentSlice,
-    currentPage: currentPageSlice,
-    [agentApi.reducerPath]: agentApi.reducer,
-    [clientApi.reducerPath]: clientApi.reducer,
-    [propertiesApi.reducerPath]: propertiesApi.reducer,
-    [transactionsApi.reducerPath]: transactionsApi.reducer,
-    [appointmentApi.reducerPath]: appointmentApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      agentApi.middleware,
-      clientApi.middleware,
-      propertiesApi.middleware,
-      transactionsApi.middleware,
-      appointmentApi.middleware,
-    ]),
+export const store: any = configureStore({
+	reducer: {
+		appointment: appointmentSlice,
+		currentPage: currentPageSlice,
+		agentPropertyFilters:  agentPropertyFilter,
+		[agentApi.reducerPath]: agentApi.reducer,
+		[clientApi.reducerPath]: clientApi.reducer,
+		[propertiesApi.reducerPath]: propertiesApi.reducer,
+		[transactionsApi.reducerPath]: transactionsApi.reducer,
+		[appointmentApi.reducerPath]: appointmentApi.reducer,
+		[api.reducerPath]: api.reducer,
+
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat([
+			agentApi.middleware,
+			clientApi.middleware,
+			propertiesApi.middleware,
+			transactionsApi.middleware,
+			appointmentApi.middleware,
+			api.middleware
+		]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
