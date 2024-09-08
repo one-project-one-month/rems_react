@@ -6,6 +6,10 @@ export default {
       colors: {
         primary: "#a15103",
       },
+      fontFamily:{
+        raleWay: ["Raleway", "sans-serif"],
+        lato: ["Lato", "sans-serif"]
+      }
     },
   },
   plugins: [],

@@ -1,6 +1,7 @@
 import { ConfigProvider } from "antd";
 import Router from "./routes/Router";
 import { Toaster } from "sonner";
+import { AuthProvider } from "./login/login-context/AuthContext";
 
 export default function App() {
   return (
@@ -11,7 +12,9 @@ export default function App() {
         },
       }}>
       <Toaster richColors position="top-right" closeButton />
-      <Router />
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
     </ConfigProvider>
   );
 }

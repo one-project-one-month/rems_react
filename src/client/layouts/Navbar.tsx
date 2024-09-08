@@ -1,7 +1,11 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useAuth } from "../../login/login-context/AuthContext";
 
 const Navbar: React.FC = () => {
+
+	const auth = useAuth()
+
 	return (
 		<div>
 			<nav className='bg-[#a15103] fixed top-0 left-0 w-full z-50  shadow-md'>
@@ -24,15 +28,16 @@ const Navbar: React.FC = () => {
 							History
 						</Link>
 						<Link
-							to='/user/transaction'
+							to='transaction'
 							className='text-white hover:text-gray-200'
 						>
 							Transaction
 						</Link>
+						<button className="text-white" onClick={() => auth.logout()}>Logout</button>
 					</div>
 				</div>
 			</nav>
-			<div className='mt-12 container mx-auto py-4'>
+			<div className='mt-10 container mx-auto py-4'>
 				<Outlet />
 			</div>
 		</div>
