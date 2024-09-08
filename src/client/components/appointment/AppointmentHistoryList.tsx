@@ -1,5 +1,5 @@
 import { Button, Spin } from "antd";
-import AppointHistoty from "./AppointHistoty";
+import AppointHistory from "./AppointHistory";
 import { useState } from "react";
 import { useGetAppointmentHistoryQuery } from "../../../services/client/api/appointmentApi";
 
@@ -10,9 +10,8 @@ const AppointmentHistoryList = () => {
   const ids = [3, currentPage, perPage];
 
   const { data: appointment, isLoading } = useGetAppointmentHistoryQuery(ids);
-  console.log(appointment?.data.appointmentDetails);
 
-  const isLastPage = appointment?.data.isEndOfPage;
+  const isLastPage = appointment?.data.pageSetting.isEndOfPage;
 
   const next = () => {
     setCurrentPage((prev) => prev + 1);
@@ -32,8 +31,7 @@ const AppointmentHistoryList = () => {
 
   return (
     <>
-      {/* <Tabs defaultActiveKey="1" items={items} /> */}
-      <AppointHistoty data={appointment?.data.appointmentDetails} />
+      <AppointHistory data={appointment?.data.appointmentDetails} />
       <div className="flex">
         <Button disabled={currentPage === 1} onClick={prev}>
           Prev

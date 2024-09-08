@@ -6,7 +6,7 @@ import { useGetAllTransactionsQuery } from "../../../services/admin/api/transact
 import { Transactions, TransApiResponse } from "../../../type/type";
 
 const renderStatus = (status: any) => {
-	let color;
+    let color;
 
     switch (status) {
         case "Rent":
@@ -89,8 +89,8 @@ const TransactionList: React.FC = () => {
 
     const { isFetching, data } = useGetAllTransactionsQuery<TransApiResponse>(page);
 
-	const pageSetting = data?.data?.pageSetting;
-	const lstTransaction: Transactions[] = data?.data?.lstTransaction ?? [];
+    const pageSetting = data?.data?.pageSetting;
+    const lstTransaction: Transactions[] = data?.data?.lstTransaction ?? [];
 
     const handlePagination = (pageNumber: number, pageSize: number) => {
         setPage({
@@ -100,7 +100,10 @@ const TransactionList: React.FC = () => {
     };
 
     return (
-        <Table columns={columns} dataSource={lstTransaction} rowKey={(record) => record.transaction.transactionId} loading={isFetching}
+        <Table columns={columns}
+            dataSource={lstTransaction}
+            rowKey={(record) => record.transaction.transactionId}
+            loading={isFetching}
             pagination={{
                 total: pageSetting?.totalCount,
                 current: page?.pageNumber,
