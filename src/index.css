@@ -25,6 +25,12 @@ body {
 	}
 }
 
+@layer components {
+  body.active-modal {
+    @apply overflow-y-hidden
+  }
+}
+
 .custom-pagination {
 	position: fixed;
 	right: 15px;

@@ -26,7 +26,13 @@ export interface Client {
 }
 
 export interface AgentData {
-  data: Agent[];
+  data: {
+    pageSize: number;
+    pageNumber: number;
+    pageCount: number;
+    isEndOfPages: boolean;
+    agentList: Agent[];
+  };
 }
 
 export interface Agent {

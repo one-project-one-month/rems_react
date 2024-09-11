@@ -11,7 +11,7 @@ import { Agent } from "../../../type/type";
 import { toast } from "sonner";
 import {
   useDeleteAgentMutation,
-  useGetAllAgentQuery,
+  useGetAllAgentsQuery,
 } from "../../../services/admin/api/agentApi";
 
 const AgentList = () => {
@@ -22,8 +22,9 @@ const AgentList = () => {
   const [filteredData, setFilteredData] = useState<Agent[] | undefined>([]);
   const [dataSource, setDataSource] = useState<Agent[] | undefined>([]);
   const [agentToDelete, setAgentToDelete] = useState<Agent | null>(null);
+  const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
 
-  const { data: agents, refetch } = useGetAllAgentQuery();
+  const { data: agents, refetch } = useGetAllAgentsQuery(page);
   const [deleteAgent] = useDeleteAgentMutation();
 
   console.log("Agents===>", agents?.data);
@@ -31,10 +32,12 @@ const AgentList = () => {
   const fetchAndUpdateData = useCallback(async () => {
     try {
       if (agents?.data) {
-        const dataWithKeys = agents.data.map((item: Agent, index: number) => ({
-          ...item,
-          key: (index + 1).toString(),
-        }));
+        const dataWithKeys = agents.data.agentList.map(
+          (item: Agent, index: number) => ({
+            ...item,
+            key: (index + 1).toString(),
+          })
+        );
         setDataSource(dataWithKeys);
       }
     } catch (err) {
@@ -70,7 +73,7 @@ const AgentList = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const filtered = agents?.data.filter((item) =>
+    const filtered = agents?.data.agentList.filter((item) =>
       item.agencyName.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
