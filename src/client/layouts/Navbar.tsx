@@ -1,7 +1,11 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useAuth } from "../../login/login-context/AuthContext";
 
 const Navbar: React.FC = () => {
+
+	const auth = useAuth()
+
 	return (
 		<div>
 
@@ -31,7 +35,7 @@ const Navbar: React.FC = () => {
 						>
 							Transaction
 						</Link>
-
+						<button className="text-white" onClick={() => auth.logout()}>Logout</button>
 					</div>
 				</div>
 			</nav>

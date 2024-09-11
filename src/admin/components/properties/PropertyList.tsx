@@ -95,7 +95,7 @@ const columns: TableProps<Properties>["columns"] = [
 		dataIndex: "action",
 		key: "action",
 		render: (_, record) => (
-			<Link to='/properties/detail' state={{ properties: record }}>
+			<Link to='detail' state={{ properties: record }}>
 				<Typography.Link>Detail</Typography.Link>
 			</Link>
 		),

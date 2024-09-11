@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {
   useGetAppointmentsByAgentIdQuery,
   useUpdateAppointmentsStatusMutation
-} from "../../../store/slices/appointmentaApiSlice";
+} from "../agent-services/appointmentaApiSlice"
 
 interface DataType {
   id: number;
@@ -17,7 +17,7 @@ interface DataType {
   note: string;
 }
 
-const App: React.FC = () => {
+const AgentAppointment: React.FC = () => {
   const AGENT_ID = 1
   const {
     data: appointments = [],
@@ -146,4 +146,4 @@ const App: React.FC = () => {
   return <Table columns={columns} dataSource={appointments} rowKey="id" />;
 };
 
-export default App;
+export default AgentAppointment;
