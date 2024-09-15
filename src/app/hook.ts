@@ -6,6 +6,7 @@ const url = "http://65.18.112.78:44010/rems/api/v1/";
 
 const baseUrl = fetchBaseQuery({
   baseUrl: url,
+  
 
   // when backend added auth we set the bearer token in below
   // prepareHeaders: async (headers, { _ }) => {

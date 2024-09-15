@@ -2,17 +2,22 @@ import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
-import { Property } from "../Model/Property";
+import { Property } from "../../../type/type";
 import { PiBathtubThin } from "react-icons/pi";
 import { MdOutlineBedroomChild } from "react-icons/md";
 import { LiaRulerCombinedSolid } from "react-icons/lia";
-
+import { useNavigate } from "react-router";
 
 interface HomeCardProps {
   property: Property;
 }
 
 const PropertyCard: React.FC<HomeCardProps> = ({ property }) => {
+  const nav = useNavigate();
+
+  const handlePropertyDetail = () => {
+    nav(`./property/${property.id}`);
+  };
   return (
     <div className="border rounded-xl overflow-hidden">
       <div className="relative">
@@ -26,7 +31,10 @@ const PropertyCard: React.FC<HomeCardProps> = ({ property }) => {
             <div className="p-1 bg-black bg-opacity-50 hover:bg-primary rounded-md cursor-pointer">
               <CiHeart className="text-white text-xl font-semibold" />
             </div>
-            <div className="p-1 bg-black bg-opacity-50 hover:bg-primary rounded-md cursor-pointer">
+            <div
+              onClick={handlePropertyDetail}
+              className="p-1 bg-black bg-opacity-50 hover:bg-primary rounded-md cursor-pointer"
+            >
               <IoEyeOutline className="text-white text-xl font-semibold" />
             </div>
           </div>
@@ -41,13 +49,14 @@ const PropertyCard: React.FC<HomeCardProps> = ({ property }) => {
         </p>
         <div className="flex items-center gap-7 font-semibold">
           <p className="flex items-center gap-2">
-          <MdOutlineBedroomChild />{property.numberOfBedrooms}
+            <MdOutlineBedroomChild />
+            {property.numberOfBedrooms}
           </p>
           <p className="flex items-center gap-2">
-          <PiBathtubThin />  {property.numberOfBathrooms}
+            <PiBathtubThin /> {property.numberOfBathrooms}
           </p>
           <p className="flex items-center gap-2">
-          <LiaRulerCombinedSolid /> {property.size} SqFt
+            <LiaRulerCombinedSolid /> {property.size} SqFt
           </p>
         </div>
       </div>
@@ -61,7 +70,8 @@ const PropertyCard: React.FC<HomeCardProps> = ({ property }) => {
           <p>{property.agent_id}</p>
         </div>
         <h1 className="font-semibold">
-          {property.price} <span className="text-gray-500 font-normal text-sm">/month</span>
+          {property.price}{" "}
+          <span className="text-gray-500 font-normal text-sm">/month</span>
         </h1>
       </div>
     </div>

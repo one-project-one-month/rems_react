@@ -29,8 +29,7 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 
 	const navItems = [
 		{
-
-			key: '/',
+			key: '/admin',
 			icon: <HomeOutlined />,
 			label: "Dashboard"
 		},
@@ -49,11 +48,6 @@ const DashboardSidebar = ({ collapsed }: collapseProp) => {
 			icon: <SwapOutlined />,
 			label: "Transactions",
 		},
-		// {
-		// 	key: "review",
-		// 	icon: <FundViewOutlined />,
-		// 	label: "Review",
-		// },
 		{
 			key: "appointments",
 			icon: <CalendarOutlined />,

@@ -47,16 +47,59 @@ export interface Transaction {
 	status: string;
 }
 
+export interface PageSetting {
+  totalCount: number;
+  pageSize: number;
+  isEndOfPage: boolean;
+}
+
+export interface CTransactionResponse {
+  transaction: {
+    transactionId: number;
+    propertyId: number;
+    clientId: number;
+    transactionDate: string;
+    salePrice: number;
+    commission: number;
+    status: string;
+  };
+  client: {
+    clientId: number;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    address: string;
+    role: string;
+  };
+  property: {
+    propertyId: number;
+    agentId: number;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    propertyType: string;
+    price: number;
+    size: number;
+    numberOfBedrooms: number;
+    numberOfBathrooms: number;
+    yearBuilt: number;
+    description: string;
+    status: string;
+    availiablityType: string;
+    minrentalPeriod: number;
+    approvedby: null;
+    adddate: string;
+    editdate: string;
+  };
+}
+
 export interface Transactions {
 	transaction: Transaction;
 	property: Property;
 	client: Client;
-}
-
-interface PageSetting {
-	totalCount: number;
-	pageSize: number;
-	isEndOfPage: boolean;
 }
 
 export interface TransApiResponse {
@@ -69,6 +112,15 @@ export interface TransApiResponse {
 			lstTransaction: Transactions[];
 		};
 	};
+}
+interface LabelAndValue{
+	label:string,content:string
+}
+export interface TransDetailByID{
+	data:{
+		userData:LabelAndValue[],
+		transData:LabelAndValue[]
+	}
 }
 
 interface Images {
@@ -179,4 +231,17 @@ export interface ChangeStatus {
     propertyId: number,
     propertyStatus: string,
     approvedBy: string
+}
+
+export interface TResponse<T> {
+  isSuccess: boolean;
+  isError: boolean;
+  data: {
+    pageSetting: {
+      totalCount: number;
+      pageSize: number;
+      isEndOfPage: boolean;
+    };
+    appointmentDetails: T[];
+  };
 }
