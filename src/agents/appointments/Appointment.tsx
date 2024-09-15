@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Space, Table, Tag, message, Popconfirm, Alert } from "antd";
 import dayjs from "dayjs";
-import {
-  useGetAppointmentsByAgentIdQuery,
-  useUpdateAppointmentsStatusMutation
-} from "../../../store/slices/appointmentaApiSlice";
+// import {
+//   useGetAppointmentsByAgentIdQuery,
+//   useUpdateAppointmentsStatusMutation
+// } from "../../../store/slices/appointmentaApiSlice";
 
 interface DataType {
   id: number;
