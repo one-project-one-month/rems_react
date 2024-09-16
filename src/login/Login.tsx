@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./login-context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { Button, Form, Input, Typography } from "antd";
 import { toast } from "sonner";
 
@@ -38,10 +37,6 @@ const Login: React.FC = () => {
       const userRole = JSON.parse(
         atob(res.data.data.tokens.accessToken.split(".")[1])
       ).role;
-
-      const decodededToken = jwtDecode(res.data.data.tokens.accessToken);
-
-      console.log(decodededToken);
 
       if (userRole.toLowerCase() === "admin") {
         navigate("/admin");
@@ -93,7 +88,7 @@ const Login: React.FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Text className="text-sm block pt-3 text-center">
+          <Text className="text-sm block text-center">
             Don’t have an account yet?{" "}
             <Link href="/register" className="font-bold hover:text-blue-600">
               Register

@@ -38,15 +38,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const token = localStorage.getItem("token");
 
     if (token) {
-      const decodedToken: any = JSON.parse(atob(token.split(".")[1]));
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
       setUser(decodedToken);
     }
   }, []);
 
   const login = (tokens: Tokens) => {
-    const decodedToken: any = JSON.parse(
-      atob(tokens.accessToken.split(".")[1])
-    );
+    const decodedToken = JSON.parse(atob(tokens.accessToken.split(".")[1]));
     setUser(decodedToken);
     localStorage.setItem("token", tokens.accessToken);
     localStorage.setItem("refreshToken", tokens.refreshToken);
