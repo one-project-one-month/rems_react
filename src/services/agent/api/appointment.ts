@@ -2,55 +2,64 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
 
 export interface Appointment {
-	id: number;
-	agentId: number;
-	property: string;
-	clientName: string;
-	appointmentDate: Date;
-	appointmentTime: Date;
-	status: string;
-	note: string;
-  }
-  
-  
-  export interface Post {
-	id: string;
-	name: string;
-  }
-  
-  
-  export const AgentAppoimentApi = createApi({
-	baseQuery: baseUrl,
-	tagTypes: ["Appointment"],
-	endpoints: (build) => ({
-	  getAppointmentsByAgentId: build.query<Appointment[], number>({
-		query: (id) => `appointments/?agentId=${id}`,
-		providesTags: (result, error, id) => {
-		  console.log(id , "Dwadd");
-		  
-		  return [{ type: "Appointment", id }]
-		}
-	  }),
-  
-	  updateAppointmentsStatus:  build.mutation<void,{ id: number; appointmentId: number, data: { status: string } }>({
-		query: ({ id, appointmentId, data }) => {
-		  console.log(id);
-		  return {
-			url: `appointments/${appointmentId}`,
-			method: "PATCH",
-			body: JSON.stringify(data),
-		  };
-		},
-		invalidatesTags: (result, error, { id  }) => {
-		  console.log(id);
-		  
-		  return [{ type: "Appointment", id }]
-		}
-	  }),
-	}),
-  });
-  
-  export const {
-	useGetAppointmentsByAgentIdQuery,
-	useUpdateAppointmentsStatusMutation
-  } = AgentAppoimentApi;
+  appointmentId: number ;
+  agentName: string;
+  clientName: string;
+  appointmentDate: string;
+  appointmentTime: string;
+  agentPhoneNumber: string ;
+  status: string;
+  note: string ;
+  address: string;
+  city: string;
+  state: string;
+  price: number;
+  size: number;
+  numberOfBedrooms: number;
+  numberOfBathrooms: number;
+}
+
+export interface AppointmentsResponse {
+  isSuccess: boolean;
+  isError: boolean;
+  data: {
+    pageSetting: {
+      totalCount: number;
+      pageSize: number;
+      isEndOfPage: boolean;
+    };
+    appointmentDetails: Appointment[];
+  };
+  message: string;
+}
+
+export const AgentAppointmentApi = createApi({
+  baseQuery: baseUrl,
+  tagTypes: ["Appointment"],
+  endpoints: (build) => ({
+    getAppointmentsByAgentId: build.query<AppointmentsResponse, { id: number; pageNo: number; pageSize: number }>({
+      query: ({ id, pageNo, pageSize }) => `appointments/property/${id}/${pageNo + 1}/${pageSize}`,
+      providesTags: (result) => 
+        result?.data?.appointmentDetails
+          ? [
+              ...result.data.appointmentDetails.map(({ appointmentId }) => ({ type: 'Appointment' as const, id: appointmentId })),
+              { type: 'Appointment', id: 'LIST' },
+            ]
+          : [{ type: 'Appointment', id: 'LIST' }],
+    }),
+
+    updateAppointmentsStatus: build.mutation<void, { id: number; appointmentId: number; data: { status: string } }>({
+      query: ({ appointmentId, data }) => ({
+        url: `appointments/${appointmentId}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: "Appointment", id }],
+    }),
+  }),
+});
+
+export const {
+  useGetAppointmentsByAgentIdQuery,
+  useUpdateAppointmentsStatusMutation
+} = AgentAppointmentApi;

@@ -10,7 +10,7 @@ import { propertiesApi } from "../services/client/api/propertyApi";
 import {clientReviewApi} from "../services/client/api/Review"
 
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
-import {AgentAppoimentApi} from "../services/agent/api/appointment"
+import {AgentAppointmentApi} from "../services/agent/api/appointment"
 
 export const store: any = configureStore({
 	reducer: {
@@ -22,7 +22,7 @@ export const store: any = configureStore({
 		[propertiesApi.reducerPath]: propertiesApi.reducer,
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
-		[AgentAppoimentApi.reducerPath]: AgentAppoimentApi.reducer,
+		[AgentAppointmentApi.reducerPath] : AgentAppointmentApi.reducer,
 		[clientReviewApi.reducerPath] : clientReviewApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -32,7 +32,7 @@ export const store: any = configureStore({
 			propertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
-			AgentAppoimentApi.middleware,
+			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
 		]),
 });
