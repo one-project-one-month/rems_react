@@ -122,16 +122,9 @@ export default function AgentAppointment() {
     )
   }
   const checkStatus = (status: string, appointmentId: number) => {
-    if (!appointmentId) {
-      return <Alert message="Invalid Appointment" type="warning" className="text-xs" />
-    }
-    
-    switch (status) {
-      case "FDS":
-        return <Alert message="Cancelled Appointment" type="error" className="text-xs" />
-      case "Approved":
-        return <Alert message="Approved Appointment" type="success" className="text-xs" />
-      default:
+ 
+    if (status) {
+      
         return (
           <Space>
             <Popconfirm
