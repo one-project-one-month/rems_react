@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import agentApi from "../services/admin/api/agentApi";
 import { clientApi } from "../services/admin/api/clientApi";
-import propertiesApi from "../services/admin/api/propertiesApi";
+// import propertiesApi from "../services/admin/api/propertiesApi";
 import transactionsApi from "../services/admin/api/transactionsApi";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
 import { appointmentApi } from "../services/client/api/appointmentApi";
+import { propertiesApi } from "../services/client/api/propertyApi";
+import {clientReviewApi} from "../services/client/api/Review"
+
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
 import {api} from "../agents/agent-services/appointmentaApiSlice"
 
@@ -20,7 +23,7 @@ export const store: any = configureStore({
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
 		[api.reducerPath]: api.reducer,
-
+		[clientReviewApi.reducerPath] : clientReviewApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
@@ -29,7 +32,8 @@ export const store: any = configureStore({
 			propertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
-			api.middleware
+			api.middleware,
+			clientReviewApi.middleware,
 		]),
 });
 

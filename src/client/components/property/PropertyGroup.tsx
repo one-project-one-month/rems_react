@@ -29,8 +29,8 @@ const PropertyGroup: React.FC<HomeGroupProps> = ({
               onClick={() => setActiveType(type)}
               className={`px-6 py-2 text-[16px] cursor-pointer rounded-md ${
                 activeType === type
-                  ? "bg-primary text-white"
-                  : "border border-primary text-primary"
+                  ? "bg-blue-500 text-white"
+                  : "border border-blue-500 text-blue-500"
               }`}
             >
               {type}

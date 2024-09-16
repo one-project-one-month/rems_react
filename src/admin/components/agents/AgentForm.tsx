@@ -33,12 +33,17 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
   const onFinish = async () => {
     const values = form.getFieldsValue();
     const passwordWithValue = { ...values, password: "password123" };
+    const userNameWithValue = {
+      ...values,
+      password: "password123",
+      userName: initialValues?.agencyName,
+    };
 
     try {
       if (initialValues && initialValues.userId) {
         // Update agent if initialValues is provided
         await updateAgent({
-          data: passwordWithValue,
+          data: userNameWithValue,
           id: initialValues.userId,
         });
         refetch();
@@ -93,12 +98,14 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
           rules={[{ required: true, message: "Please enter agent name." }]}>
           <Input placeholder="Please enter agent name" />
         </Form.Item>
-        <Form.Item
-          name="userName"
-          label="User Name"
-          rules={[{ required: true, message: "Please enter user name." }]}>
-          <Input placeholder="Please enter user name" />
-        </Form.Item>
+        {!initialValues && (
+          <Form.Item
+            name="userName"
+            label="User Name"
+            rules={[{ required: true, message: "Please enter user name." }]}>
+            <Input placeholder="Please enter user name" />
+          </Form.Item>
+        )}
         <Form.Item
           name="licenseNumber"
           label="License Number"
@@ -115,8 +122,8 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
           <Input placeholder="Please enter your email" />
         </Form.Item>
         <Form.Item
-          name="phone"
-          label="Phone"
+          name={initialValues ? "phoneNumber" : "phone"}
+          label="phone number"
           rules={[{ validator: validatePhoneNumber }]}>
           <Input
             className="w-full"

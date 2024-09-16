@@ -115,26 +115,22 @@ const AgentList = () => {
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.length - b.email.length,
-      responsive: ["md"],
     },
     {
       title: "License Number",
       dataIndex: "licenseNumber",
       key: "licenseNumber",
       sorter: (a, b) => a.licenseNumber.length - b.licenseNumber.length,
-      responsive: ["md"],
     },
     {
       title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-      responsive: ["lg"],
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
-      responsive: ["xl"],
     },
     {
       title: "Roles",
