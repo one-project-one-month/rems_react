@@ -52,7 +52,7 @@ const AgentList = () => {
   const handleOk = async () => {
     try {
       if (agentToDelete) {
-        await deleteAgent(agentToDelete.userId).unwrap();
+        await deleteAgent(agentToDelete.agentId).unwrap();
         refetch();
         toast.success(`Agent deletion successfully`);
       }
@@ -95,9 +95,18 @@ const AgentList = () => {
     setIsModalOpen(true);
   };
 
+  const pageSetting = agents?.data?.pageSetting;
+
+  const handlePagination = (pageNumber: number, pageSize: number) => {
+    setPage({
+      pageNumber,
+      pageSize,
+    });
+  };
+
   const columns: TableProps<Agent>["columns"] = [
     {
-      title: "Agent Id",
+      title: "ID",
       dataIndex: "agentId",
       key: "agentId",
       sorter: (a, b) => a.agentId - b.agentId,
@@ -124,8 +133,8 @@ const AgentList = () => {
     },
     {
       title: "Phone",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
       title: "Address",
@@ -192,6 +201,9 @@ const AgentList = () => {
         pagination={{
           responsive: true,
           position: ["bottomLeft"],
+          total: pageSetting?.totalCount,
+          current: page?.pageNumber,
+          onChange: handlePagination,
         }}
       />
       <AgentDrawer

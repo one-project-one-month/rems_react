@@ -33,18 +33,13 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
   const onFinish = async () => {
     const values = form.getFieldsValue();
     const passwordWithValue = { ...values, password: "password123" };
-    const userNameWithValue = {
-      ...values,
-      password: "password123",
-      userName: initialValues?.agencyName,
-    };
 
     try {
-      if (initialValues && initialValues.userId) {
+      if (initialValues && initialValues.agentId) {
         // Update agent if initialValues is provided
         await updateAgent({
-          data: userNameWithValue,
-          id: initialValues.userId,
+          data: passwordWithValue,
+          id: initialValues.agentId,
         });
         refetch();
         toast.success("Agent update successfully");
@@ -63,7 +58,7 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
   };
 
   const validatePhoneNumber = (_: RuleObject, value: StoreValue) => {
-    const phoneRegex = /^09\d{7,10}$/;
+    const phoneRegex = /^09\d{7,9}$/;
     if (!value) {
       return Promise.reject(new Error("Please enter your phone number."));
     }
@@ -93,19 +88,17 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
         onFinish={onFinish}
         className="custom-form">
         <Form.Item
+          name="agencyName"
+          label="Agency Name"
+          rules={[{ required: true, message: "Please enter agency name." }]}>
+          <Input placeholder="Please enter agency name" />
+        </Form.Item>
+        <Form.Item
           name="agentName"
           label="Agent Name"
-          rules={[{ required: true, message: "Please enter agent name." }]}>
+          rules={[{ required: true, message: "Please enter user name." }]}>
           <Input placeholder="Please enter agent name" />
         </Form.Item>
-        {!initialValues && (
-          <Form.Item
-            name="userName"
-            label="User Name"
-            rules={[{ required: true, message: "Please enter user name." }]}>
-            <Input placeholder="Please enter user name" />
-          </Form.Item>
-        )}
         <Form.Item
           name="licenseNumber"
           label="License Number"
@@ -122,8 +115,8 @@ const AgentForm = ({ onClose, initialValues, refetch }: Props) => {
           <Input placeholder="Please enter your email" />
         </Form.Item>
         <Form.Item
-          name={initialValues ? "phoneNumber" : "phone"}
-          label="phone number"
+          name="phone"
+          label="Phone Number"
           rules={[{ validator: validatePhoneNumber }]}>
           <Input
             className="w-full"

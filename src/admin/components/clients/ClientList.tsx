@@ -103,14 +103,14 @@ const ClientList = () => {
 
   const columns: TableProps<Client>["columns"] = [
     {
-      title: "Client Id",
+      title: "ID",
       dataIndex: "clientId",
       key: "clientId",
       sorter: (a, b) => a.clientId - b.clientId,
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Full name",
+      title: "Name",
       dataIndex: "fullname",
       key: "fullname",
       sorter: (a, b) =>
