@@ -6,8 +6,7 @@ import { Button, Form, Input, Typography } from "antd";
 import { toast } from "sonner";
 
 const Login: React.FC = () => {
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -50,7 +49,6 @@ const Login: React.FC = () => {
 
       setLoading(false);
     } catch (error) {
-      setError(true);
       setLoading(false);
     }
   };
