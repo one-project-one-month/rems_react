@@ -19,7 +19,7 @@ import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 import Transaction from "../client/components/transaction/Transaction";
 import TransactionCreateForm from "../client/components/transaction/TransactionCreateForm";
-import Review from "../client/components/review/Review";
+// import Review from "../client/components/review/Review";
 import PropertyById from "../client/components/property/PropertyById";
 
 import DetailPage from "../agents/property-list/DetailPage";
@@ -115,7 +115,7 @@ const Router = () => {
             },
             {
               path: "create",
-              element: <TransactionCreateForm />,
+              element: <TransactionCreateForm id={""} />,
             },
           ],
         },
@@ -123,15 +123,15 @@ const Router = () => {
           path: "property/:id",
           element: <PropertyById />,
         },
-        {
-          path: "review",
-          children: [
-            {
-              index: true,
-              element: <Review />,
-            },
-          ],
-        },
+        // {
+        //   path: "review",
+        //   children: [
+        //     {
+        //       index: true,
+        //       element: <Review />,
+        //     },
+        //   ],
+        // },
       ],
     },
   ];

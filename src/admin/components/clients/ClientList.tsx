@@ -22,8 +22,9 @@ const ClientList = () => {
   const [filteredData, setFilteredData] = useState<Client[] | undefined>([]);
   const [dataSource, setDataSource] = useState<Client[] | undefined>([]);
   const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+  const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
 
-  const { data: clients, refetch } = useGetAllClientsQuery();
+  const { data: clients, refetch } = useGetAllClientsQuery(page);
   const [deleteClient] = useDeleteClientMutation();
 
   const fetchAndUpdateData = useCallback(async () => {
@@ -91,16 +92,25 @@ const ClientList = () => {
     setIsModalOpen(true);
   };
 
+  const pageSetting = clients?.data?.pageSetting;
+
+  const handlePagination = (pageNumber: number, pageSize: number) => {
+    setPage({
+      pageNumber,
+      pageSize,
+    });
+  };
+
   const columns: TableProps<Client>["columns"] = [
     {
-      title: "Client Id",
+      title: "ID",
       dataIndex: "clientId",
       key: "clientId",
       sorter: (a, b) => a.clientId - b.clientId,
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Full name",
+      title: "Name",
       dataIndex: "fullname",
       key: "fullname",
       sorter: (a, b) =>
@@ -193,6 +203,9 @@ const ClientList = () => {
         pagination={{
           responsive: true,
           position: ["bottomLeft"],
+          total: pageSetting?.totalCount,
+          current: page?.pageNumber,
+          onChange: handlePagination,
         }}
       />
       <UserDrawer

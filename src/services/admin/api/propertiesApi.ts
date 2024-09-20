@@ -24,7 +24,7 @@ import { Properties ,ChangeStatus} from "../../../type/type";
 // 	edit_date: Date;
 // }
 
-export const propertiesApi = createApi({
+export const adminPropertiesApi = createApi({
 	reducerPath: "propertiesApi",
 	baseQuery: baseUrl,
 	tagTypes: ["properties"],
@@ -56,6 +56,6 @@ export const propertiesApi = createApi({
 
 // Export the hooks
 export const { useGetAllPropertiesQuery, useDeletePropertyMutation ,useChangestatusMutation } =
-	propertiesApi;
+adminPropertiesApi;
 
-export default propertiesApi;
+export default adminPropertiesApi;

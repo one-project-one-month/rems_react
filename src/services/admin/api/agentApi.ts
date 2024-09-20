@@ -2,15 +2,16 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
 import { AgentData } from "../../../type/type";
 
-// Define the Client type
-
 export const agentApi = createApi({
   reducerPath: "agentApi",
   baseQuery: baseUrl,
   endpoints: (builder) => ({
-    getAllAgent: builder.query<AgentData, void>({
-      query: () => ({
-        url: "agents",
+    getAllAgents: builder.query<
+      AgentData,
+      { pageNumber: number; pageSize: number }
+    >({
+      query: ({ pageNumber, pageSize }) => ({
+        url: `agents/${pageNumber}/${pageSize}`,
         method: "GET",
       }),
     }),
@@ -45,7 +46,7 @@ export const agentApi = createApi({
 
 // Export the hooks
 export const {
-  useGetAllAgentQuery,
+  useGetAllAgentsQuery,
   useCreateAgentMutation,
   useGetAgentByIdQuery,
   useUpdateAgentByIdMutation,
