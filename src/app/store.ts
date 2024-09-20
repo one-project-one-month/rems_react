@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import agentApi from "../services/admin/api/agentApi";
 import { clientApi } from "../services/admin/api/clientApi";
-// import propertiesApi from "../services/admin/api/propertiesApi";
+import adminPropertiesApi from "../services/admin/api/propertiesApi";
 import transactionsApi from "../services/admin/api/transactionsApi";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
@@ -10,7 +10,7 @@ import { propertiesApi } from "../services/client/api/propertyApi";
 import {clientReviewApi} from "../services/client/api/Review"
 
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
-import {api} from "../agents/agent-services/appointmentaApiSlice"
+import {AgentAppointmentApi} from "../services/agent/api/appointment"
 
 export const store: any = configureStore({
 	reducer: {
@@ -20,9 +20,11 @@ export const store: any = configureStore({
 		[agentApi.reducerPath]: agentApi.reducer,
 		[clientApi.reducerPath]: clientApi.reducer,
 		[propertiesApi.reducerPath]: propertiesApi.reducer,
+		[adminPropertiesApi.reducerPath]: adminPropertiesApi.reducer,
+
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
-		[api.reducerPath]: api.reducer,
+		[AgentAppointmentApi.reducerPath] : AgentAppointmentApi.reducer,
 		[clientReviewApi.reducerPath] : clientReviewApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
@@ -30,9 +32,10 @@ export const store: any = configureStore({
 			agentApi.middleware,
 			clientApi.middleware,
 			propertiesApi.middleware,
+			adminPropertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
-			api.middleware,
+			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
 		]),
 });

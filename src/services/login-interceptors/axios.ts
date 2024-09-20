@@ -21,6 +21,8 @@ api.interceptors.request.use(async (config) => {
       const newRefreshToken = res.data.data.refreshToken;
       localStorage.setItem("refreshToken", newRefreshToken);
 
+      config.headers.Authorization = `Bearer ${accessToken}`;
+
     } catch (error) {
       auth.logout();
       return Promise.reject(error)

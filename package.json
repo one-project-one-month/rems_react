@@ -15,8 +15,13 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "antd": "^5.19.1",
+<<<<<<< HEAD
     "axios": "^1.7.5",
     "framer-motion": "^11.5.4",
+=======
+    "axios": "^1.7.7",
+    "framer-motion": "^11.4.0",
+>>>>>>> aea3db181abd5ee4cbc56ecd4af2eb6088a2a94a
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
