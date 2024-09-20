@@ -41,7 +41,6 @@ const Transaction = () => {
     
   }
 
-
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (isSummaryShow) {
