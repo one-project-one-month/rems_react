@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { collapseProp } from "../sidebar/DashboardSidebar";
 import type { MenuProps } from "antd";
+import { useAuth } from "../../../login/login-context/AuthContext";
 
 const { Header } = Layout;
 
@@ -18,7 +19,7 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
 		{
 			key: "1",
 			label: (
-				<a rel='noopener noreferrer' href='/logout'>
+				<a onClick={() => useAuth().logout()} rel='noopener noreferrer' href='/logout'>
 					Log out
 				</a>
 			),

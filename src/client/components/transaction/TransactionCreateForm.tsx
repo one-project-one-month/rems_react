@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCreateTransactionMutation } from "../../../services/client/api/transactionApi";
 
 interface Props {
-  id: string;
+  id?: string;
 }
 
 const TransactionCreateForm = ({ id }: Props) => {
