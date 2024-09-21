@@ -1,44 +1,42 @@
-import React from "react";
-import { Button, Space, Table, Tag, message, Popconfirm, Alert } from "antd";
-import dayjs from "dayjs";
-import {
-  useGetAppointmentsByAgentIdQuery,
-  useUpdateAppointmentsStatusMutation
-} from "../agent-services/appointmentaApiSlice"
+import { useState } from "react"
+import { Table, Tag, message, Popconfirm, Alert, Button, Space } from "antd"
+import { CheckOutlined, CloseOutlined, LoadingOutlined } from "@ant-design/icons"
+import { useGetAppointmentsByAgentIdQuery, useUpdateAppointmentsStatusMutation } from "../../services/agent/api/appointment"
 
-interface DataType {
-  id: number;
-  agentId: number;
-  property: string;
-  clientName: string;
-  appointmentDate: Date;
-  appointmentTime: Date;
-  status: string;
-  note: string;
+interface Appointment {
+  appointmentId: number 
+  agentName: string
+  clientName: string
+  appointmentDate: string
+  appointmentTime: string
+  agentPhoneNumber: string 
+  status: string
+  note: string 
+  address: string
+  city: string
+  state: string
+  price: number
+  size: number
+  numberOfBedrooms: number
+  numberOfBathrooms: number
 }
 
-const AgentAppointment: React.FC = () => {
+export default function AgentAppointment() {
   const AGENT_ID = 1
-  const {
-    data: appointments = [],
-    error,
-    isLoading,
-  } = useGetAppointmentsByAgentIdQuery(AGENT_ID);
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  
+  const { data, error, isLoading } = useGetAppointmentsByAgentIdQuery({
+    id: AGENT_ID,
+    pageNo: page - 1,
+    pageSize: pageSize
+  })
+  
+  const [updateAppointmentsStatus] = useUpdateAppointmentsStatusMutation()
+  const appointmentData = data?.data.appointmentDetails || [];
 
-  const [ updateAppointmentsStatus] = useUpdateAppointmentsStatusMutation()
 
   const columns = [
-    {
-      title: "Appointment ID",
-      dataIndex: "id",
-      key: "id",
-      sorter: (a: DataType, b: DataType) => a.id - b.id,
-    },
-    {
-      title: "Property Address",
-      dataIndex: "property",
-      key: "property",
-    },
     {
       title: "Client Name",
       dataIndex: "clientName",
@@ -48,17 +46,15 @@ const AgentAppointment: React.FC = () => {
       title: "Appointment Date",
       dataIndex: "appointmentDate",
       key: "appointmentDate",
-      render: (date: Date) => dayjs(date).format("DD/MM/YYYY"),
-      sorter: (a: DataType, b: DataType) =>
-        a.appointmentDate.getTime() - b.appointmentDate.getTime(),
+      render: (date: string) => new Date(date).toLocaleDateString(),
+      sorter: (a: Appointment, b: Appointment) => new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime(),
     },
     {
       title: "Appointment Time",
       dataIndex: "appointmentTime",
       key: "appointmentTime",
-      render: (time: Date) => dayjs(time).format("HH:mm"),
-      sorter: (a: DataType, b: DataType) =>
-        a.appointmentTime.getTime() - b.appointmentTime.getTime(),
+      render: (time: string) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      sorter: (a: Appointment, b: Appointment) => new Date(`1970-01-01T${a.appointmentTime}`).getTime() - new Date(`1970-01-01T${b.appointmentTime}`).getTime(),
     },
     {
       title: "Status",
@@ -67,83 +63,152 @@ const AgentAppointment: React.FC = () => {
       render: (status: string) => getStatusTag(status),
     },
     {
-      title: "Note",
-      dataIndex: "note",
-      key: "note",
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "City",
+      dataIndex: "city",
+      key: "city",
+    },
+    {
+      title: "State",
+      dataIndex: "state",
+      key: "state",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (price: number) => `$${price.toLocaleString()}`,
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+      render: (size: number) => `${size} sq ft`,
+    },
+    {
+      title: "Bedrooms",
+      dataIndex: "numberOfBedrooms",
+      key: "numberOfBedrooms",
+    },
+    {
+      title: "Bathrooms",
+      dataIndex: "numberOfBathrooms",
+      key: "numberOfBathrooms",
     },
     {
       title: "Action",
-      dataIndex: ["status"],
       key: "action",
-      render: (_: DataType, resource: DataType) =>
-        checkStatus(resource.status, resource.id),
+      render: (_: any, record: Appointment) => {
+        console.log("Record:", record);  
+        return checkStatus(record.status, record.appointmentId);
+      },
     },
-  ];
+  ]
 
-  // Function to determine the color of the status
   const getStatusTag = (status: string) => {
     const statusColors: { [key: string]: string } = {
-      COMPLETED: "green",
-      SCHEDULED: "blue",
-      CANCELLED: "red",
-    };
-    return <Tag color={statusColors[status] || "default"}>{status}</Tag>;
-  };
-
-  // Check the status for button
-  const checkStatus = (status: string, appointmentsId: number) => {
-    switch (status) {
-      case "CANCELLED":
-        return <Alert message="Cancelled Appointment" type="error" />;
-      case "COMPLETED":
-        return <Alert message="Completed Appointment" type="success" />;
-      default:
+      Approved: "green",
+      pending: "gold",
+      FDS: "red",
+    }
+    return (
+      <Tag color={statusColors[status] || "default"} className="text-xs">
+        {status}
+      </Tag>
+    )
+  }
+  const checkStatus = (status: string, appointmentId: number) => {
+ 
+    if (status) {
+      
         return (
           <Space>
             <Popconfirm
-              title="Confirm Appointment?"
-              description="Are you sure you want to confirm this appointment?"
+              title="Approve Appointment?"
+              description="Are you sure you want to approve this appointment?"
               onConfirm={async () => {
-                message.success("Appointment confirmed");
-              
-                await  updateAppointmentsStatus({id: AGENT_ID,  appointmentId : appointmentsId, data: {status : "COMPLETED"} }).unwrap()
-               
+                try {
+                  await updateAppointmentsStatus({
+                    id: AGENT_ID,
+                    appointmentId,
+                    data: { status: "Approved" },
+                  }).unwrap()
+                  message.success("Appointment approved")
+                } catch (error) {
+                  message.error("Failed to approve appointment")
+                  console.error("Approval error:", error)
+                }
               }}
               onCancel={() => {
-                message.error("Cancellation aborted");
+                message.error("Approval aborted")
               }}
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary">Confirm</Button>
+              <Button type="primary" icon={<CheckOutlined />} size="small">
+                Approve
+              </Button>
             </Popconfirm>
             <Popconfirm
               title="Cancel Appointment?"
               description="Are you sure you want to cancel this appointment?"
               onConfirm={async () => {
-                message.success("Appointment cancelled");
-                await  updateAppointmentsStatus({id: AGENT_ID,  appointmentId : appointmentsId, data: {status : "CANCELLED"} }).unwrap()
+                try {
+                  await updateAppointmentsStatus({
+                    id: AGENT_ID,
+                    appointmentId,
+                    data: { status: "FDS" },
+                  }).unwrap()
+                  message.success("Appointment cancelled")
+                } catch (error) {
+                  message.error("Failed to cancel appointment")
+                  console.error("Cancellation error:", error)
+                }
               }}
               onCancel={() => {
-                message.error("Cancellation aborted");
+                message.error("Cancellation aborted")
               }}
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary" danger>
+              <Button danger icon={<CloseOutlined />} size="small">
                 Cancel
               </Button>
             </Popconfirm>
           </Space>
-        );
+        )
     }
-  };
+  }
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <div className="flex justify-center items-center h-screen"><LoadingOutlined className="text-4xl" spin /></div>
+  if (error) {
+    console.error("API Error:", error)
+    return <Alert message="Error loading appointments" type="error" />
+  }
 
-  if (error) return <p>Error...</p>;
-
-  return <Table columns={columns} dataSource={appointments} rowKey="id" />;
-};
-
-export default AgentAppointment;
+  return (
+    
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Agent Appointments</h1>
+      <Table 
+        columns={columns} 
+        dataSource={appointmentData} 
+        rowKey="appointmentId"
+        pagination={{
+          current: page,
+          pageSize: pageSize,
+          total: data?.data.pageSetting.totalCount,
+          onChange: (page, pageSize) => {
+            setPage(page)
+            setPageSize(pageSize ?? 10)
+          }
+        }}
+        className="w-full"
+      />
+    </div>
+  )
+}

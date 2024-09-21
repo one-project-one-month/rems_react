@@ -22,7 +22,6 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   name,
   options,
   selectedValues,
-  checked,
   optional = false,
   onChange,
 }) => {
@@ -41,8 +40,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
             index={index}
             option={option}
             selectedValues={selectedValues}
-            onChange={onChange}
-          />
+            onChange={onChange} checked={false}          />
         ))}
       </div>
     </div>

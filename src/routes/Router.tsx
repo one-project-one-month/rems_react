@@ -31,6 +31,7 @@ import PropertiesCRUD from "../agents/property-crud/PropertiesCRUD";
 import { useAuth } from "../login/login-context/AuthContext";
 import Login from "../login/Login";
 import Register from "../login/Register";
+import AgentDefaultPage from "../agents/defalult-page/AgentDefaultPage";
 
 const Router = () => {
   const { user } = useAuth(); // Get the authenticated user from context
@@ -115,7 +116,7 @@ const Router = () => {
             },
             {
               path: "create",
-              element: <TransactionCreateForm />,
+              element: <TransactionCreateForm id={""} />,
             },
           ],
         },
@@ -149,10 +150,10 @@ const Router = () => {
       children: [
         {
           path: "/agent",
-          element: <AgentPropertyList />,
+          element: <AgentDefaultPage />
         },
         {
-          path: "/agent",
+          path: "property-list",
           element: <AgentPropertyList />,
           children: [
             {

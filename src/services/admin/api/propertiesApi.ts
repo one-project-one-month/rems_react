@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
 import { Properties, ChangeStatus, PropertyResponse } from "../../../type/type";
 
-export const propertiesApi = createApi({
+export const adminPropertiesApi = createApi({
 	reducerPath: "propertiesApi",
 	baseQuery: baseUrl,
 	tagTypes: ["properties"],
@@ -41,6 +41,6 @@ export const propertiesApi = createApi({
 
 // Export the hooks
 export const { useGetAllPropertiesQuery, useGetPropertyByIdQuery, useDeletePropertyMutation, useChangestatusMutation } =
-	propertiesApi;
+adminPropertiesApi;
 
-export default propertiesApi;
+export default adminPropertiesApi;

@@ -1,106 +1,101 @@
-import React, {useState} from 'react'
-import axios from 'axios';
-import { useAuth } from './login-context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import React, { useState } from "react";
+import axios from "axios";
+import { useAuth } from "./login-context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Input, Typography } from "antd";
+import { toast } from "sonner";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false);
 
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const { Text, Link } = Typography;
+
+  const handleSubmit = async (values: { email: string; password: string }) => {
     try {
       setLoading(true);
+      const { email, password } = values;
 
-      if (!email || !password) {
-        setError(true);
-        setLoading(false)
-        return
+      const res = await axios.post(
+        "http://65.18.112.78:44010/rems/api/v1/Signin",
+        { email, password }
+      );
+
+      if (res.data.message.includes("Username or Password is incorrect.")) {
+        toast.error(res.data.message);
       }
-      const res = await axios.post("http://65.18.112.78:44010/rems/api/v1/Signin", {email, password});
-      
+
+      if (res.data.message.includes("Operation Successful.")) {
+        toast.success("Login successfully");
+      }
+
       auth.login(res.data.data.tokens);
 
-      const userRole = JSON.parse(atob(res.data.data.tokens.accessToken.split('.')[1])).role;
+      const userRole = JSON.parse(
+        atob(res.data.data.tokens.accessToken.split(".")[1])
+      ).role;
 
-      const decodededToken = jwtDecode(res.data.data.tokens.accessToken);
-
-      console.log(decodededToken)
-      
-
-      if (userRole.toLowerCase() === 'admin') {
-        navigate('/admin');
-      } else if (userRole.toLowerCase() === 'agent') {
-        navigate('/agent');
-      }else if (userRole.toLowerCase() === "client") {
-        navigate('/client');
+      if (userRole.toLowerCase() === "admin") {
+        navigate("/admin");
+      } else if (userRole.toLowerCase() === "agent") {
+        navigate("/agent");
+      } else if (userRole.toLowerCase() === "client") {
+        navigate("/client");
       } else {
-        navigate('/');
+        navigate("/");
       }
 
       setLoading(false);
-
     } catch (error) {
-      console.log("Login failed", error);
-      setError(true);
-      setLoading(false)
-      setEmail('')
-      setPassword('')
-      
+      setLoading(false);
     }
   };
 
-  if(loading) return <p>Loading...</p>
-
   return (
-    <form className=' w-[80%] md:w-[40%] lg:w-[30%] xl:w-[20%] border-2 flex flex-col justify-center items-center mx-auto mt-[8rem] rounded-md shadow-md py-5'>
+    <>
+      <Form
+        className="w-[80%] md:w-[40%] lg:w-[30%] xl:w-[23%] border-2 mx-auto mt-[8rem] p-5 rounded-xl shadow-md"
+        onFinish={handleSubmit}>
+        <h1 className="text-[1.4rem] font-bold text-blue-400 text-center pb-6">
+          Login
+        </h1>
 
-      <h1 className='text-[1.2rem] font-bold text-blue-400'>REMS Login</h1>
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}>
+          <Input placeholder="Enter your email" type="email" size="large" />
+        </Form.Item>
 
-      <div className='flex flex-col w-[100%] p-5'>
-        <input 
-          type="email" 
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          className={`w-[90%] focus:outline-none border-b-2 mt-5 pb-2 ${error ? "border-red-200": ""}`}
-          placeholder='email....'
-        />
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}>
+          <Input.Password placeholder="Enter your password" size="large" />
+        </Form.Item>
 
-        <input 
-          type="password" 
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          className={`w-[90%] focus:outline-none border-b-2 mt-5 pb-2 ${error ? "border-red-200" : ""}`}
-          placeholder='password....'
-        />
-      </div>
+        <Form.Item className="text-center">
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            disabled={loading}
+            className="w-full">
+            Login
+          </Button>
+        </Form.Item>
 
-      {error && <p className='text-[0.9rem] my-5 text-red-500'>Wrong password or email</p>}
+        <Form.Item>
+          <Text className="text-sm block text-center">
+            Don’t have an account yet?{" "}
+            <Link href="/register" className="font-bold hover:text-blue-600">
+              Register
+            </Link>
+          </Text>
+        </Form.Item>
+      </Form>
+    </>
+  );
+};
 
-      <button 
-        onClick={handleSubmit} 
-        className='bg-blue-400 active:bg-blue-700 hover:bg-blue-500 text-white text-[0.9rem] font-bold px-5 py-2 rounded-xl'
-      >
-        Login
-      </button>
-
-      <div className='text-center mt-5'>
-        <p className='mb-2 classname text-gray-600'>If you don't have an account?</p>
-        <p>
-          <span className='font-bold text-gray-500'>Sign Up</span>
-          <Link to={'/register'}>
-              <span className='font-bold hover:text-blue-600'> here.</span>
-          </Link>
-        </p>
-      </div>
-    </form>
-  )
-}
-
-export default Login
+export default Login;

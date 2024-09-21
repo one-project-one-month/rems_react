@@ -39,7 +39,9 @@ const TransactionCreateForm = ({ id }: Props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     const newTransaction = {
@@ -50,7 +52,6 @@ const TransactionCreateForm = ({ id }: Props) => {
         commission: Number(formData?.commission),
         status: formData.status,
     };
-    
 
     try {
       const response = await createTransaction(newTransaction);
@@ -64,8 +65,7 @@ const TransactionCreateForm = ({ id }: Props) => {
     <div className="flex justify-center mt-4">
       <form
         onSubmit={handleSubmitHandler}
-        className="bg-white shadow-md border w-full p-6 space-y-4 rounded-lg"
-      >
+        className="bg-white shadow-md border w-full p-6 space-y-4 rounded-lg">
         <div className="flex flex-col space-y-2 text-gray-600">
           <label className="font-semibold ">Contact Name</label>
           <input
@@ -89,8 +89,7 @@ const TransactionCreateForm = ({ id }: Props) => {
           <select
             name="status"
             onChange={handleChangeHandler}
-            className="ps-3 pe-10 bg-[#F7F7F7] py-3 rounded-md appearance-none outline-none focus:border focus:border-blue-500"
-          >
+            className="ps-3 pe-10 bg-[#F7F7F7] py-3 rounded-md appearance-none outline-none focus:border focus:border-blue-500">
             <option value="">Choose a transaction type</option>
             <option value="Rent">Rent</option>
             <option value="Buy">Buy</option>
@@ -121,8 +120,7 @@ const TransactionCreateForm = ({ id }: Props) => {
         <button
           type="submit"
           className="bg-blue-500 text-white p-3 w-full rounded-md font-semibold"
-          disabled={isLoading}
-        >
+          disabled={isLoading}>
           {isLoading ? "Submitting..." : "Submit"}
         </button>
       </form>

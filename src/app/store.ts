@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import agentApi from "../services/admin/api/agentApi";
 import { clientApi } from "../services/admin/api/clientApi";
-import propertiesApi from "../services/admin/api/propertiesApi";
+import adminPropertiesApi from "../services/admin/api/propertiesApi";
 import transactionsApi from "../services/admin/api/transactionsApi";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
@@ -11,6 +11,7 @@ import {clientReviewApi} from "../services/client/api/Review"
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
 import {api} from "../agents/agent-services/appointmentaApiSlice"
 import dashboardApi from "../services/admin/api/dashboardApi";
+import {AgentAppointmentApi} from "../services/agent/api/appointment"
 
 export const store: any = configureStore({
 	reducer: {
@@ -19,10 +20,12 @@ export const store: any = configureStore({
 		agentPropertyFilters:  agentPropertyFilter,
 		[agentApi.reducerPath]: agentApi.reducer,
 		[clientApi.reducerPath]: clientApi.reducer,
-		[propertiesApi.reducerPath]: propertiesApi.reducer,
+		// [propertiesApi.reducerPath]: propertiesApi.reducer,
+		[adminPropertiesApi.reducerPath]: adminPropertiesApi.reducer,
+
 		[transactionsApi.reducerPath]: transactionsApi.reducer,
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
-		[api.reducerPath]: api.reducer,
+		[AgentAppointmentApi.reducerPath] : AgentAppointmentApi.reducer,
 		[clientReviewApi.reducerPath] : clientReviewApi.reducer,
 		[dashboardApi.reducerPath]: dashboardApi.reducer
 	},
@@ -30,10 +33,11 @@ export const store: any = configureStore({
 		getDefaultMiddleware().concat([
 			agentApi.middleware,
 			clientApi.middleware,
-			propertiesApi.middleware,
+			// propertiesApi.middleware,
+			adminPropertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
-			api.middleware,
+			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
 			dashboardApi.middleware,
 		]),

@@ -1,50 +1,54 @@
 export interface Review {
-	reviewId: number;
-	userId: number;
-	propertyId: number;
-	rating: number;
-	comments: string;
-	dateCreated: Date;
+  reviewId: number;
+  userId: number;
+  propertyId: number;
+  rating: number;
+  comments: string;
+  dateCreated: Date;
 }
 
 export interface ClientData {
-	data: {
-		dataLst: Client[];
-	};
+  data: {
+    dataLst: Client[];
+    pageSetting: PageSetting;
+  };
 }
 
 export interface Client {
-	userId: number;
-	clientId: number;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phone: string;
-	address: string;
-	role: string;
+  userId: number;
+  clientId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  role: string;
 }
 
 export interface AgentData {
-	data: Agent[];
+  data: {
+    agentList: Agent[];
+    pageSetting: PageSetting;
+  };
 }
 
 export interface Agent {
-	agentId: number;
-	userId: number;
-	agencyName: string;
-	licenseNumber: string;
-	email: string;
-	phoneNumber: string;
-	address: string;
-	role: string;
+  agentId: number;
+  userId: number;
+  agencyName: string;
+  licenseNumber: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  role: string;
 }
 
 export interface Transaction {
-	transactionId: number;
-	transactionDate: Date;
-	salePrice: number;
-	commission: number;
-	status: string;
+  transactionId: number;
+  transactionDate: Date;
+  salePrice: number;
+  commission: number;
+  status: string;
 }
 
 export interface PageSetting {
@@ -97,115 +101,137 @@ export interface CTransactionResponse {
 }
 
 export interface Transactions {
-	transaction: Transaction;
-	property: Property;
-	client: Client;
+  transaction: Transaction;
+  property: Property;
+  client: Client;
 }
 
 export interface TransApiResponse {
-	isFetching: boolean;
-	data: {
-		isSuccess: boolean;
-		isError: boolean;
-		data: {
-			pageSetting: PageSetting;
-			lstTransaction: Transactions[];
-		};
-	};
+  isFetching: boolean;
+  data: {
+    isSuccess: boolean;
+    isError: boolean;
+    data: {
+      pageSetting: PageSetting;
+      lstTransaction: Transactions[];
+    };
+  };
 }
-interface LabelAndValue{
-	label:string,content:string
+interface LabelAndValue {
+  label: string;
+  content: string;
 }
-export interface TransDetailByID{
-	data:{
-		userData:LabelAndValue[],
-		transData:LabelAndValue[]
-	}
+export interface TransDetailByID {
+  data: {
+    userData: LabelAndValue[];
+    transData: LabelAndValue[];
+  };
 }
 
 interface Images {
-	imageId: number;
-	propertyId: number;
-	imageUrl: string;
-	description: string;
-	dateUploaded: string;
+  imageId: number;
+  propertyId: number;
+  imageUrl: string;
+  description: string;
+  dateUploaded: string;
 }
 
 export interface Properties {
-	property: Property;
-	images: Images[];
-	reviews: Review[];
+  property: Property;
+  images: Images[];
+  reviews: Review[];
 }
 
 export interface Property {
-	propertyId: number;
-	agent?: Agent;
-	agentId?: number;
-	address: string;
-	city: string;
-	state: string;
-	zipCode: string;
-	propertyType: string;
-	price: number;
-	size: number;
-	numberOfBedrooms: number;
-	numberOfBathrooms: number;
-	yearBuilt: number;
-	description: string;
-	status: string;
-	availiablityType: string;
-	minrentalPeriod: number;
-	approvedby: string;
-	adddate: Date;
-	editdate: Date;
+  propertyId: number;
+  agent?: Agent;
+  agentId?: number;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  propertyType: string;
+  price: number;
+  size: number;
+  numberOfBedrooms: number;
+  numberOfBathrooms: number;
+  yearBuilt: number;
+  description: string;
+  status: string;
+  availiablityType: string;
+  minrentalPeriod: number;
+  approvedby: string;
+  adddate: Date;
+  editdate: Date;
 }
 
 export interface TAppointment {
-	appointmentDate: string;
-	appointmentTime: string;
-	rawAppointmentTime: Date | null;
-	status: "pending" | "done";
-	notes?: string;
+  appointmentDate: string;
+  appointmentTime: string;
+  rawAppointmentTime: Date | null;
+  status: "pending" | "done";
+  notes?: string;
 }
 
 export interface Agent {
-	agent_id: number;
-	agentName: string;
+  agent_id: number;
+  agentName: string;
 }
 
 export interface City {
-	id: number;
-	name: string;
-	state_id: number;
+  id: number;
+  name: string;
+  state_id: number;
 }
 
 // types.ts
 export interface PropertyImage {
-	url: string;
-	description: string;
+  url: string;
+  description: string;
+}
+
+
+export interface Property {
+  id: string;
+  agent_id: number;
+  address: string;
+  city_id: string;
+  state_id: string;
+  zipCode: string;
+  propertyType: string;
+  price: number;
+  size: number;
+  numberOfBedrooms: number;
+  numberOfBathrooms: number;
+  yearBuilt: number;
+  description: string;
+  status: string;
+  dateListed: string; // or Date if you plan to convert it to a Date object
+  images: PropertyImage[];
 }
 
 export interface HomeGroupProps {
-	properties: Properties[];
-	propertyTypes: string[];
-	agents: Agent[];
+  properties: Property[];
+  propertyTypes: string[];
+  agents: Agent[];
 }
 
 export interface State {
-	id: number;
-	name: string;
+  id: number;
+  name: string;
 }
 
-export interface PropertyResponse{
-	isFetching: boolean;
-	data: {
-		isSuccess: boolean;
-		isError: boolean;
-		data: {
-			pageSetting?: PageSetting;
-			properties: Properties[];
-		};
-	};
+
+export interface PropertyResponse {
+  isFetching: boolean;
+  data: {
+    isSuccess: boolean;
+    isError: boolean;
+    data: {
+      pageSetting: PageSetting;
+      properties: Properties[];
+    };
+  };
 }
 
 export interface PropertyIdResponse{
@@ -218,9 +244,9 @@ export interface PropertyIdResponse{
 }
 
 export interface ChangeStatus {
-    propertyId: number,
-    propertyStatus: string,
-    approvedBy: string
+  propertyId: number;
+  propertyStatus: string;
+  approvedBy: string;
 }
 
 export interface TResponse<T> {
