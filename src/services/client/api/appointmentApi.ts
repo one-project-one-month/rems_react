@@ -31,7 +31,7 @@ export const appointmentApi = createApi({
       number[]
     >({
       query: (idArray) =>
-        `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
+        `appointments/client/${idArray.join("/")}`,
       providesTags: ["appointments"],
     }),
     postAppointment: builder.mutation<TAppointmentHistory, TCreatePostRequest>({

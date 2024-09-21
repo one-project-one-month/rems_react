@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { collapseProp } from "../sidebar/DashboardSidebar";
 import type { MenuProps } from "antd";
+import { useAuth } from "../../../login/login-context/AuthContext";
 
 const { Header } = Layout;
 
@@ -13,14 +14,15 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+	const auth = useAuth()
 
 	const items: MenuProps["items"] = [
 		{
 			key: "1",
 			label: (
-				<a rel='noopener noreferrer' href='/logout'>
+				<button rel='noopener noreferrer' onClick={() => auth.logout()}>
 					Log out
-				</a>
+				</button>
 			),
 		},
 	];

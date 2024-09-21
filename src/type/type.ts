@@ -185,27 +185,8 @@ export interface PropertyImage {
 	description: string;
 }
 
-export interface Property {
-	id: string;
-	agent_id: number;
-	address: string;
-	city_id: string;
-	state_id: string;
-	zipCode: string;
-	propertyType: string;
-	price: number;
-	size: number;
-	numberOfBedrooms: number;
-	numberOfBathrooms: number;
-	yearBuilt: number;
-	description: string;
-	status: string;
-	dateListed: string; // or Date if you plan to convert it to a Date object
-	images: PropertyImage[];
-}
-
 export interface HomeGroupProps {
-	properties: Property[];
+	properties: Properties[];
 	propertyTypes: string[];
 	agents: Agent[];
 }
@@ -221,9 +202,18 @@ export interface PropertyResponse{
 		isSuccess: boolean;
 		isError: boolean;
 		data: {
-			pageSetting: PageSetting;
+			pageSetting?: PageSetting;
 			properties: Properties[];
 		};
+	};
+}
+
+export interface PropertyIdResponse{
+	isFetching: boolean;
+	data: {
+		isSuccess: boolean;
+		isError: boolean;
+		data: Properties
 	};
 }
 

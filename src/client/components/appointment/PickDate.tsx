@@ -7,7 +7,11 @@ import { addAppointmentDate } from "../../../services/client/features/appointmen
 
 dayjs.extend(customParseFormat);
 
-const PickDate: React.FC = () => {
+interface PickDateProps {
+  nextPage: () => void; // Define the function signature in the props
+}
+
+const PickDate: React.FC<PickDateProps> = ({ nextPage }) => {
   const dispatch = useAppDispatch();
   const pickedDate = useAppSelector(
     (state) => state.appointment.appointmentDate
@@ -15,12 +19,14 @@ const PickDate: React.FC = () => {
 
   const onChange: DatePickerProps["onChange"] = (_, dateString) => {
     dispatch(addAppointmentDate(dateString));
-    dispatch(next());
+    // dispatch(next());
+    nextPage()
   };
 
   return (
     <>
       <DatePicker
+        style={{ width: '40%' }}
         onChange={onChange}
         value={pickedDate.length > 1 ? dayjs(pickedDate) : null}
       />

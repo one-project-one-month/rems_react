@@ -1,40 +1,25 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { Properties ,ChangeStatus} from "../../../type/type";
-
-// export interface Properties {
-// 	property_id: number;
-// 	agent: string;
-// 	address: string;
-// 	city: string;
-// 	state: string;
-// 	zip_code: string;
-// 	property_type: string;
-// 	price: number;
-// 	size: number;
-// 	number_of_bedrooms: number;
-// 	number_of_bathrooms: number;
-// 	year_built: number;
-// 	description: string;
-// 	status: string;
-// 	availability_type: string;
-// 	min_rental_period: number;
-// 	approved_by: string;
-// 	add_date: Date;
-// 	edit_date: Date;
-// }
+import { Properties, ChangeStatus, PropertyResponse } from "../../../type/type";
 
 export const propertiesApi = createApi({
 	reducerPath: "propertiesApi",
 	baseQuery: baseUrl,
 	tagTypes: ["properties"],
 	endpoints: (builder) => ({
-		getAllProperties: builder.query<Properties[], {pageNumber: number, pageSize: number}>({
+		getAllProperties: builder.query<Properties[], { pageNumber: number, pageSize: number }>({
 			query: ({ pageNumber, pageSize }) => ({
 				url: `properties/${pageNumber}/${pageSize}`,
 				method: "GET",
 			}),
 			providesTags: ['properties']
+		}),
+		getPropertyById: builder.query<void, number | undefined>({
+			query: (propertyId) => ({
+				url: `properties/${propertyId}`,
+                method: "GET",
+			}),
+			providesTags: ["properties"],
 		}),
 		deleteProperty: builder.mutation<void, number>({
 			query: (id) => ({
@@ -43,11 +28,11 @@ export const propertiesApi = createApi({
 			}),
 			invalidatesTags: ['properties']
 		}),
-		changestatus: builder.mutation<void,ChangeStatus>({
+		changestatus: builder.mutation<void, ChangeStatus>({
 			query: (changestatus) => ({
-			  url: `properties/ChangeStatus`,
-			  method: "PUT",
-			  body: changestatus,
+				url: `properties/ChangeStatus`,
+				method: "PUT",
+				body: changestatus,
 			}),
 			invalidatesTags: ['properties']
 		}),
@@ -55,7 +40,7 @@ export const propertiesApi = createApi({
 });
 
 // Export the hooks
-export const { useGetAllPropertiesQuery, useDeletePropertyMutation ,useChangestatusMutation } =
+export const { useGetAllPropertiesQuery, useGetPropertyByIdQuery, useDeletePropertyMutation, useChangestatusMutation } =
 	propertiesApi;
 
 export default propertiesApi;

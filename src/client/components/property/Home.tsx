@@ -1,12 +1,13 @@
 import React, { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Property, Agent, City, State } from "../../../type/type";
+import { Property, Agent, City, State, PropertyResponse, Properties } from "../../../type/type";
 import PropertyGroup from "./PropertyGroup";
+import { useGetAllPropertiesQuery } from "../../../services/admin/api/propertiesApi";
 
 const Home: React.FC = () => {
 	const [states, setStates] = useState<State[]>([]);
-	const [properties, setProperties] = useState<Property[]>([]);
+	// const [properties, setProperties] = useState<Property[]>([]); 
 	const [cities, setCities] = useState<City[]>([]);
 	const [agents, setAgents] = useState<Agent[]>([]);
 	const [propertyTypes] = useState<string[]>([
@@ -23,12 +24,17 @@ const Home: React.FC = () => {
 	>("");
 	const [buttonDisabled, setButtonDisabled] = useState(true);
 
+	const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
+	const { isFetching, data: PropertyData } = useGetAllPropertiesQuery<PropertyResponse>(page);
+
+	const properties: Properties[] = PropertyData?.data?.properties ?? [];
+
 	const navigate = useNavigate(); // Hook for navigation
 
 	useEffect(() => {
-		fetchStates();
-		fetchProperties();
-		fetchAgents();
+		// fetchStates();
+		// fetchProperties();
+		// fetchAgents();
 	}, []);
 
 	useEffect(() => {
@@ -51,16 +57,16 @@ const Home: React.FC = () => {
 		checkButtonDisabled();
 	}, [selectedState, selectedCity, selectedPropertyType]);
 
-	const fetchProperties = async () => {
-		try {
-			const { data } = await axios.get<Property[]>(
-				"http://localhost:3000/properties"
-			);
-			setProperties(data);
-		} catch (error) {
-			console.error("Error fetching properties:", error);
-		}
-	};
+	// const fetchProperties = async () => {
+	// 	try {
+	// 		const { data } = await axios.get<Property[]>(
+	// 			"http://localhost:3000/properties"
+	// 		);
+	// 		setProperties(data);
+	// 	} catch (error) {
+	// 		console.error("Error fetching properties:", error);
+	// 	}
+	// };
 
 	const fetchAgents = async () => {
 		try {
@@ -147,7 +153,7 @@ const Home: React.FC = () => {
 			{/* Scrollable Content */}
 			<div className='relative z-20 w-full pt-20 text-white'>
 				<div className='w-full mx-auto'>
-					<div className='h-screen mt-20'>
+					<div className='mt-20'>
 						<header className='text-center mb-8'>
 							<h1 className='text-7xl font-bold mb-20'>
 								Find Your Dream Home

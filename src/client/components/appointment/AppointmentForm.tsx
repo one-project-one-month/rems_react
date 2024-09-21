@@ -25,7 +25,11 @@ type FieldType = {
   notes?: string;
 };
 
-const AppointmentForm: React.FC = () => {
+interface PickTimeProps {
+  prevPage: () => void;
+}
+
+const AppointmentForm: React.FC<PickTimeProps> = ({prevPage}) => {
   const dispatch = useAppDispatch();
   const [postAppointment, { isSuccess }] = usePostAppointmentMutation();
   const { appointmentTime, appointmentDate, rawAppointmentTime } =
@@ -72,7 +76,10 @@ const AppointmentForm: React.FC = () => {
               {appointmentTime}
             </Space>
           </Typography>
-          <Button type="link" onClick={() => dispatch(prev())}>
+          <Button type="link" onClick={() => {
+            // dispatch(prev());
+            prevPage();
+          }}>
             Change
           </Button>
         </Flex>
