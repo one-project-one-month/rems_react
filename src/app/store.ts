@@ -9,7 +9,7 @@ import { appointmentApi } from "../services/client/api/appointmentApi";
 import {clientReviewApi} from "../services/client/api/Review"
 
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
-import {api} from "../agents/agent-services/appointmentaApiSlice"
+// import {api} from "../agents/agent-services/appointmentaApiSlice"
 import dashboardApi from "../services/admin/api/dashboardApi";
 import {AgentAppointmentApi} from "../services/agent/api/appointment"
 

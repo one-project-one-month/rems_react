@@ -1,34 +1,17 @@
-import React from "react";
-import { Table, Tag } from "antd";
+import { Table } from "antd";
+import { TableProps } from "antd/lib";
 import dayjs from "dayjs";
+import React, { useState } from "react";
+import { useGetAppoitmentByAdminQuery } from "../../../services/client/api/appointmentApi";
+import { TAppointment } from "../../../type/type";
 
-interface DataType {
-  appointmentId: number;
-  agentName: string;
-  clientName: string;
-  appointmentDate: Date;
-  appointmentTime: Date;
-  status: string;
-  note: string;
-}
-
-// Function to determine the color of the status
-const getStatusTag = (status: string) => {
-  const statusColors: { [key: string]: string } = {
-    COMPLETED: "green",
-    SCHEDULED: "blue",
-    CANCELLED: "red",
-  };
-  return <Tag color={statusColors[status] || "default"}>{status}</Tag>;
-};
-
-// Columns for the table
-const columns = [
+const columns: TableProps<TAppointment>['columns'] = [
   {
     title: "Appointment ID",
     dataIndex: "appointmentId",
     key: "appointmentId",
-    sorter: (a: DataType, b: DataType) => a.appointmentId - b.appointmentId,
+    width: 20,
+    align: 'center',
   },
   {
     title: "Agent Name",
@@ -45,23 +28,40 @@ const columns = [
     dataIndex: "appointmentDate",
     key: "appointmentDate",
     render: (date: Date) => dayjs(date).format("DD/MM/YYYY"),
-    sorter: (a: DataType, b: DataType) =>
-      a.appointmentDate.getTime() - b.appointmentDate.getTime(),
   },
   {
     title: "Appointment Time",
     dataIndex: "appointmentTime",
     key: "appointmentTime",
-    render: (time: Date) => dayjs(time).format("HH:mm"),
-    sorter: (a: DataType, b: DataType) =>
-      a.appointmentTime.getTime() - b.appointmentTime.getTime(),
+    render: (time: string) => {
+      const formattedTime = time.split('.')[0];
+      const dayjsTime = dayjs(formattedTime, "HH:mm:ss");
+      return dayjs(dayjsTime).format("HH:mm:ss A");
+    },
   },
   {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (status: string) => getStatusTag(status),
-    sorter: (a: DataType, b: DataType) => a.status.localeCompare(b.status),
+		title: "Features",
+		dataIndex: "features",
+		key: "features",
+		render: (_, record) => <span>{`${record.size} sq ft, ${record.numberOfBedrooms} bed, ${record.numberOfBathrooms} bath`}</span>
+,
+	},
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
+    render: (_, record) => (
+      <div>
+        <span>{`${record.address}, (${record.city}, ${record.state})`}</span>{" "}
+        <br />
+      </div>
+    ),
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+    render: (_, record) => <span>{record.price} MMK</span>
   },
   {
     title: "Note",
@@ -70,93 +70,27 @@ const columns = [
   },
 ];
 
-// Data for the table
-const data: DataType[] = [
-  {
-    appointmentId: 100,
-    agentName: "David Hub",
-    clientName: "John Doe",
-    appointmentDate: new Date("2024-07-21"),
-    appointmentTime: new Date("2024-07-21T11:30:00"),
-    status: "COMPLETED",
-    note: "An appointment has been made to sell the apartment",
-  },
-  {
-    appointmentId: 101,
-    agentName: "Emma Clarke",
-    clientName: "Sophia Smith",
-    appointmentDate: new Date("2024-08-05"),
-    appointmentTime: new Date("2024-08-05T14:00:00"),
-    status: "SCHEDULED",
-    note: "Client requested a viewing of the property",
-  },
-  {
-    appointmentId: 102,
-    agentName: "James Carter",
-    clientName: "Michael Johnson",
-    appointmentDate: new Date("2024-09-10"),
-    appointmentTime: new Date("2024-09-10T09:00:00"),
-    status: "CANCELLED",
-    note: "Client cancelled the appointment due to personal reasons",
-  },
-  {
-    appointmentId: 103,
-    agentName: "Olivia Brown",
-    clientName: "Emma Davis",
-    appointmentDate: new Date("2024-10-15"),
-    appointmentTime: new Date("2024-10-15T16:30:00"),
-    status: "CANCELLED",
-    note: "Appointment rescheduled to a later date",
-  },
-  {
-    appointmentId: 104,
-    agentName: "Liam Wilson",
-    clientName: "Isabella Garcia",
-    appointmentDate: new Date("2024-11-20"),
-    appointmentTime: new Date("2024-11-20T10:30:00"),
-    status: "COMPLETED",
-    note: "Inspection of the property completed",
-  },
-  {
-    appointmentId: 105,
-    agentName: "Ava Johnson",
-    clientName: "Lucas Martinez",
-    appointmentDate: new Date("2024-12-25"),
-    appointmentTime: new Date("2024-12-25T13:00:00"),
-    status: "SCHEDULED",
-    note: "Client interested in buying the property",
-  },
-  {
-    appointmentId: 106,
-    agentName: "Ethan Lee",
-    clientName: "Charlotte Anderson",
-    appointmentDate: new Date("2024-07-30"),
-    appointmentTime: new Date("2024-07-30T15:00:00"),
-    status: "COMPLETED",
-    note: "Property appraisal appointment completed",
-  },
-  {
-    appointmentId: 107,
-    agentName: "Mia Taylor",
-    clientName: "Benjamin Thomas",
-    appointmentDate: new Date("2024-08-12"),
-    appointmentTime: new Date("2024-08-12T08:30:00"),
-    status: "SCHEDULED",
-    note: "Meeting with client to discuss property sale",
-  },
-  {
-    appointmentId: 108,
-    agentName: "Noah Harris",
-    clientName: "Lily Wilson",
-    appointmentDate: new Date("2024-09-03"),
-    appointmentTime: new Date("2024-09-03T12:00:00"),
-    status: "CANCELLED",
-    note: "Appointment cancelled due to unforeseen circumstances",
-  },
-];
+const App: React.FC = () => {
+  const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
 
-const App: React.FC = () => (
-  <Table columns={columns} dataSource={data} rowKey="appointmentId" />
-);
+  const { isFetching, data } = useGetAppoitmentByAdminQuery(page)
+
+  const pageSetting = data?.data?.pageSetting;
+  const appoitmentData = data?.data?.appointmentDetails ?? [];
+
+  const handlePagination = (page: number, pageSize: number) => {
+    setPage({ pageNumber: page, pageSize: pageSize });
+  };
+
+  return (
+    <Table columns={columns} dataSource={appoitmentData} rowKey="appointmentId" 
+    loading={isFetching}
+    pagination={{
+        total: pageSetting?.totalCount,
+        current: page?.pageNumber,
+        onChange: handlePagination
+    }} />
+  );
+}
 
 export default App;

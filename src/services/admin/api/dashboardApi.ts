@@ -9,8 +9,6 @@ interface overview {
     "propertyRentedIncome": number
 }
 
-// export type Overview = overview[];
-
 export interface WeeklyActivity {
     "name": string,
     "sold": number,

@@ -166,11 +166,19 @@ export interface Property {
 }
 
 export interface TAppointment {
+  appointmentId: number;
+  agentName: string;
+  clientName: string;
   appointmentDate: string;
   appointmentTime: string;
-  rawAppointmentTime: Date | null;
-  status: "pending" | "done";
   notes?: string;
+  address: string,
+  city: string,
+  state: string,
+  price: 0.00,
+  size: 0.00,
+  numberOfBedrooms: 0,
+  numberOfBathrooms: 0
 }
 
 export interface Agent {

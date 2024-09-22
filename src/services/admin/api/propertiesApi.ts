@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { Properties, ChangeStatus, PropertyResponse } from "../../../type/type";
+import { Properties, ChangeStatus } from "../../../type/type";
 
 export const adminPropertiesApi = createApi({
 	reducerPath: "propertiesApi",

@@ -1,7 +1,7 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons'
 import { Card, Col, ConfigProvider, Flex, Row, Skeleton, Statistic, Table, TableProps, Typography } from 'antd'
-import LineChartDashboard from './LineChartDashboard'
 import { AgentActivity, DashboardData, useGetDashboardDataQuery } from '../../../services/admin/api/dashboardApi'
+import LineChartDashboard from './LineChartDashboard'
 
 interface statisticProps {
   title: String
@@ -65,9 +65,13 @@ const CustomStatistic = (props: statisticProps) => {
 const HomePage = () => {
   const { isFetching, data } = useGetDashboardDataQuery();
 
-  const dashboardData: DashboardData = data?.data?? {};
+  const dashboardData: DashboardData = {
+    overview: Array.isArray(data?.data?.overview) ? data.data.overview : [],
+    weeklyActivity: Array.isArray(data?.data?.weeklyActivity) ? data.data.weeklyActivity : [],
+    agentActivity: Array.isArray(data?.data?.agentActivity) ? data.data.agentActivity : [],
+  }
 
-  const {overview, weeklyActivity, agentActivity } = dashboardData;
+  const overviewArr = dashboardData.overview || [];
 
   return (
     <>
@@ -83,15 +87,15 @@ const HomePage = () => {
                       <Flex gap={20} vertical>
                         <CustomStatistic
                           title="Agents"
-                          value={overview[0]?.agents}
+                          value={overviewArr[0]?.agents}
                         />
                         <CustomStatistic
                           title="Clients"
-                          value={overview[0]?.clients}
+                          value={overviewArr[0]?.clients}
                         />
                         <CustomStatistic
                           title="Properties"
-                          value={overview[0]?.properties}
+                          value={overviewArr[0]?.properties}
                         />
                       </Flex>
                     </Col>
@@ -99,7 +103,7 @@ const HomePage = () => {
                       <Flex gap={20} vertical>
                         <CustomStatistic
                           title="Property Sold Income"
-                          value={overview[0]?.propertySoldIncome}
+                          value={overviewArr[0]?.propertySoldIncome}
                           precision={2}
                           valueStyle={{
                             color: '#3f8600',
@@ -109,7 +113,7 @@ const HomePage = () => {
                         />
                         <CustomStatistic
                           title="Property Rented Income"
-                          value={overview[0]?.propertyRentedIncome}
+                          value={overviewArr[0]?.propertyRentedIncome}
                           precision={2}
                           valueStyle={{
                             color: 'orange',
@@ -117,23 +121,17 @@ const HomePage = () => {
                           prefix={<ArrowDownOutlined />}
                           suffix="$"
                         />
-                        {/* <CustomStatistic
-                          title="Total Revenue"
-                          value={}
-                          precision={2}
-                          suffix="$"
-                        /> */}
                       </Flex>
                     </Col>
                   </Row>
                 </Card>
               </Col>
               <Col span={12}>
-                <LineChartDashboard data={weeklyActivity ?? []} />
+                <LineChartDashboard data={dashboardData?.weeklyActivity ?? []} />
               </Col>
             </Row>
             <Typography.Title level={3}>Top Agent Activity</Typography.Title>
-            <Table columns={columns} dataSource={agentActivity} />
+            <Table columns={columns} dataSource={dashboardData?.agentActivity} />
           </>
         }
       </>
