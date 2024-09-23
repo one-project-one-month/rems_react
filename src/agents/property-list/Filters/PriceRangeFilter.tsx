@@ -10,7 +10,7 @@ const PriceRangeFilter: React.FC = () => {
   const {minPrice, maxPrice} = useAppSelector(state => state.agentPropertyFilters)
 
   const priceOptions = [
-    {value: null, label: "Any"},
+    {value: 0, label: "Any"},
     {value: 90000000, label: "90M"},
     {value: 100000000, label: "100M"},
     {value: 200000000, label: "200M"},

@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@ant-design/icons"
 import { useParams } from "react-router"
-import { propertyData } from "./data-for-agent/propertyData"
+// import { propertyData } from "./data-for-agent/propertyData"
 import { reviewsData } from "./data-for-agent/reviewsData"
 import PropertyDetails from "./PropertyDetails"
 import Reviews from "./Reviews"

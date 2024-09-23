@@ -143,7 +143,7 @@ const DashboardHeader = () => {
           </div>
         )}
       </Header>
-      <div className='mt-10  mx-auto py-4'>
+      <div className='mx-auto'>
         <Outlet />
       </div>
     </>
