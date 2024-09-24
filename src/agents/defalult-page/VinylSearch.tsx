@@ -16,7 +16,7 @@ const VinylSearch = () => {
             className="text-[1rem] w-[100%] rounded-md p-3 hover:border-[0.5px] hover:border-blue-500 focus:outline-blue-500 transition-all ease-in-out duration-75 placeholder:text-[1rem]"
             placeholder="Enter City You Want To Search"
           />
-          <div className="py-4 px-5 hover:bg-blue-500 rounded-r-md absolute  hover:border-blue-500 focus:outline-blue-500 right-0 top-0 cursor-pointer transition-all ease-in-out duration-300 hover:text-white">
+          <div className="py-4 px-5 hover:bg-blue-500 rounded-r-md absolute  hover:border-blue-500 focus:outline-blue-500 active:bg-blue-700 right-0 top-0 cursor-pointer transition-all ease-in-out duration-300 hover:text-white">
             <FaSearch className=" cursor-pointer" />
           </div>
         </div>

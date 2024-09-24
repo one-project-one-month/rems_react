@@ -27,6 +27,16 @@ export interface Property {
 export interface PropertyDataType {
   property: Property;
   images: image[];
+  reviews: Review[];
+}
+
+export interface Review {
+  reviewId: number,
+  userId: number,
+  propertyId: number,
+  rating: number,
+  comments: string,
+  dateCreated: string
 }
 
 export interface image {

@@ -9,6 +9,7 @@ import HomeTypeFilter from './Filters/HomeTypeFilter';
 import DetailPage from './DetailPage';
 import CityFilter from './Filters/CityFilter';
 import { useGetPropertiesQuery } from '../../services/agent/api/propertyApiSlice';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const itemsPerPage = 6;
 
@@ -93,7 +94,9 @@ const AgentPropertyList: React.FC = () => {
 
       <div className="py-5 w-full grid grid-cols-2 gap-1">
         {isLoading ? (
-          <div>Loading...</div>
+          <div className="flex justify-center items-center h-[50vh]">
+            <LoadingOutlined className="text-4xl" spin />
+          </div>
         ) : error ? (
           <div style={{ textAlign: 'center', color: 'red' }}>Error</div>
         ) : filteredData?.length === 0 ? (

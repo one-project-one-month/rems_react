@@ -1,10 +1,11 @@
 import { CloseOutlined } from "@ant-design/icons"
 import { useParams } from "react-router"
 // import { propertyData } from "./data-for-agent/propertyData"
-import { reviewsData } from "./data-for-agent/reviewsData"
+// import { reviewsData } from "./data-for-agent/reviewsData"
 import PropertyDetails from "./PropertyDetails"
 import Reviews from "./Reviews"
 import { useState } from "react"
+import { useGetPropertiesQuery } from "../../services/agent/api/propertyApiSlice"
 
 interface DetailPgProp {
   toggle?: () => void
@@ -15,8 +16,17 @@ const DetailPage: React.FC<DetailPgProp>= ({toggle}) => {
   const [currentPage, setCurrentPage] = useState('propertyDetails');
   const {id} = useParams();
 
-  const property = propertyData.find(property => property.propertyId.toString() === id);
-  const review = reviewsData.filter(review => review.propertyId.toString() === property?.propertyId.toString());
+  const { data, error, isLoading } = useGetPropertiesQuery({ page: 1, limit: 100}) ;
+
+  const propertyData = data?.data.properties;
+
+  console.log(propertyData);
+
+  const property = propertyData?.find(property => property.property.propertyId.toString() === id);
+  // const review = reviewsData.filter(review => review.propertyId.toString() === property?.propertyId.toString());
+
+  const review = property?.reviews
+
 
   const renderPage = () => {
     switch (currentPage) {
