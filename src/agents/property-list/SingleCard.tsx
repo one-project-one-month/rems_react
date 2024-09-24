@@ -1,11 +1,11 @@
 import { Card, Carousel } from "antd";
-import { Property } from "./data-for-agent/propertyData";
+import { Property, PropertyDataType } from "./data-for-agent/propertyData";
 import { formatNumber } from "./AgentPropertyList";
 import { Link } from "react-router-dom";
 
 
 interface SingleCardProp {
-  item: Property;
+  item: PropertyDataType;
   key: number;
   toggle?: () => void;
 }
@@ -28,21 +28,21 @@ const SingleCard: React.FC<SingleCardProp> = ({item, key, toggle}) => {
         
         key={key}
       >
-        <Link to={`${item.propertyId.toString()}`} className="hover:text-gray-400" onClick={toggle}>
+        <Link to={`${item.property.propertyId.toString()}`} className="hover:text-gray-400" onClick={toggle}>
           <h1>
-            <span className="text-[1.125rem] font-bold">${formatNumber(item.price).toLocaleString()}</span> MMK
+            <span className="text-[1.125rem] font-bold">${formatNumber(item.property.price).toLocaleString()}</span> MMK
           </h1>
           <div className="space-y-2">
             <div className="flex gap-2 flex-wrap">
-              <p className="font-bold font-lato text-[1rem] ">Ba: {item.numberOfBathrooms} |</p>
-              <p className="font-bold font-lato text-[1rem] ">Bds: {item.numberOfBedrooms} |</p>
-              <p className="font-bold font-lato text-[1rem] ">{item.size} sqft - </p>
-              <p className="font-bold font-lato text-[1rem] ">{item.availiablityType} for {item.propertyType}</p>
+              <p className="font-bold font-lato text-[1rem] ">Ba: {item.property.numberOfBathrooms} |</p>
+              <p className="font-bold font-lato text-[1rem] ">Bds: {item.property.numberOfBedrooms} |</p>
+              <p className="font-bold font-lato text-[1rem] ">{item.property.size} sqft - </p>
+              <p className="font-bold font-lato text-[1rem] ">{item.property.availiablityType} for {item.property.propertyType}</p>
             </div>
-            <h3 className="font-raleWay font-bold">{item.address}</h3>
+            <h3 className="font-raleWay font-bold">{item.property.address}</h3>
             <div className="flex gap-2">
-              <p className="font-bold font-lato text-[1rem] ">{item.city} | </p>
-              <p className="font-bold font-lato text-[1rem] ">{item.state} state</p>
+              <p className="font-bold font-lato text-[1rem] ">{item.property.city} | </p>
+              <p className="font-bold font-lato text-[1rem] ">{item.property.state} state</p>
             </div>
           </div>
         </Link>
