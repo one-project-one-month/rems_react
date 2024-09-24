@@ -31,13 +31,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const token = localStorageToken();
-<<<<<<< HEAD
-  
-  const [user, setUser] = useState<User | null>(token);  
-=======
-
   const [user, setUser] = useState<User | null>(token);
->>>>>>> aea3db181abd5ee4cbc56ecd4af2eb6088a2a94a
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");

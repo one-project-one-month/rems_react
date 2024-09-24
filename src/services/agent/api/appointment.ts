@@ -39,13 +39,7 @@ export const AgentAppointmentApi = createApi({
   endpoints: (build) => ({
     getAppointmentsByAgentId: build.query<AppointmentsResponse, { id: number; pageNo: number; pageSize: number }>({
       query: ({ id, pageNo, pageSize }) => `appointments/property/${id}/${pageNo + 1}/${pageSize}`,
-      providesTags: (result) => 
-        result?.data?.appointmentDetails
-          ? [
-              ...result.data.appointmentDetails.map(({ appointmentId }) => ({ type: 'Appointment' as const, id: appointmentId })),
-              { type: 'Appointment', id: 'LIST' },
-            ]
-          : [{ type: 'Appointment', id: 'LIST' }],
+   	providesTags: ['Appointment']
     }),
 
     updateAppointmentsStatus: build.mutation<void, { id: number; appointmentId: number; data: { status: string } }>({

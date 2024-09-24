@@ -134,8 +134,9 @@ export default function AgentAppointment() {
                 try {
                   await updateAppointmentsStatus({
                     id: AGENT_ID,
-                    appointmentId,
+                    // appointmentId,
                     data: { status: "Approved" },
+                    appointmentId: 0
                   }).unwrap()
                   message.success("Appointment approved")
                 } catch (error) {
