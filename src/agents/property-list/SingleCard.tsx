@@ -37,7 +37,7 @@ const SingleCard: React.FC<SingleCardProp> = ({item, key, toggle}) => {
               <p className="font-bold font-lato text-[1rem] ">Ba: {item.property.numberOfBathrooms} |</p>
               <p className="font-bold font-lato text-[1rem] ">Bds: {item.property.numberOfBedrooms} |</p>
               <p className="font-bold font-lato text-[1rem] ">{item.property.size} sqft - </p>
-              <p className="font-bold font-lato text-[1rem] ">{item.property.availiablityType} for {item.property.propertyType}</p>
+              <p className="font-bold font-lato text-[1rem] ">{item.property.propertyType} for {item.property.availiablityType}</p>
             </div>
             <h3 className="font-raleWay font-bold">{item.property.address}</h3>
             <div className="flex gap-2">

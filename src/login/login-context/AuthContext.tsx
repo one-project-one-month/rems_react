@@ -3,6 +3,7 @@ import axios from "axios";
 
 interface User {
   role: string;
+  UserId: number;
 }
 
 interface AuthContextType {
