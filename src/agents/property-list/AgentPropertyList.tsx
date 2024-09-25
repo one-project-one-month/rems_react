@@ -25,7 +25,11 @@ const AgentPropertyList: React.FC = () => {
 
   const toggleModal = () => setModal(!modal);
 
-  const { data, error, isLoading } = useGetPropertiesQuery({ page: 1, limit: 100}) ;
+  const { data, error, isLoading } = useGetPropertiesQuery({ 
+    page: 1, 
+    limit: 100,
+    city: ""
+  }) ;
 
   if (modal) {
     document.body.classList.add('active-modal');
@@ -42,7 +46,7 @@ const AgentPropertyList: React.FC = () => {
     if (!data?.data.properties) return []; 
     return data?.data.properties?.filter((item) => {
       return (
-        (cityFilter === "string" || item.property.city.toLowerCase().includes(cityFilter.toLowerCase())) &&
+        (cityFilter === "All" || item.property.city.toLowerCase().includes(cityFilter.toLowerCase())) &&
         (bedRoomFilter === 0 || item.property.numberOfBedrooms >= bedRoomFilter) &&
         (bathRoomFilter === 0 || item.property.numberOfBathrooms >= bathRoomFilter) &&
         (
@@ -50,7 +54,7 @@ const AgentPropertyList: React.FC = () => {
             &&
           (maxPrice === 0 || item.property.price <= maxPrice) 
         ) &&
-        (homeType === "string" || item.property.propertyType.toLowerCase().includes(homeType.toLowerCase()))
+        (homeType === "All" || item.property.propertyType.toLowerCase().includes(homeType.toLowerCase()))
       );
     });
   }, [cityFilter, bedRoomFilter, bathRoomFilter, minPrice, maxPrice, homeType, data]);
@@ -75,7 +79,7 @@ const AgentPropertyList: React.FC = () => {
       <h1 className="text-center mb-5 mt-0 text-[1.3rem] text-lato font-bold">Explore Some Market Values</h1>
       <div className="flex flex-wrap gap-5">
         <Flyout FlyoutContent={CityFilter}>
-          <span className="mr-3">{cityFilter === 'string' ? "Select City" : cityFilter}</span>
+          <span className="mr-3">{cityFilter === 'All' ? "Select City" : cityFilter}</span>
         </Flyout>
         <Flyout FlyoutContent={BaAndBdsFilter}>
           <span className="mr-3 lg:mr-0 cursor-pointer">
@@ -88,7 +92,7 @@ const AgentPropertyList: React.FC = () => {
           </span>
         </Flyout>
         <Flyout FlyoutContent={HomeTypeFilter}>
-          <span className="mr-3">{homeType === "string" ? "Home Type" : homeType}</span>
+          <span className="mr-3">{homeType === "All" ? "Home Type" : homeType}</span>
         </Flyout>
       </div>
 
