@@ -36,6 +36,8 @@ const DetailPage: React.FC<DetailPgProp>= ({toggle}) => {
     }
   };
 
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>
 
   return (
     <div  className="modal | w-[100vw] h-[100vh] z-[0] top-0 left-0 bottom-0 right-0 fixed">

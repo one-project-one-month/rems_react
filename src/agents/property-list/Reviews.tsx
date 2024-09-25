@@ -136,7 +136,7 @@ const Reviews: React.FC<ReviewsProp> = ({review, property}) => {
                     )
                   }
                 </div>
-                <p className='font-bold mb-5'>Rating: {review.rating}/10</p>
+                <p className='font-bold mb-5'>Rating: {review.rating}/5</p>
                 <p className='mb-5 font-bold font-lato'>{review.comments}</p>
               </div>
             )
@@ -163,9 +163,9 @@ const Reviews: React.FC<ReviewsProp> = ({review, property}) => {
           <input
           type="number"
           value={rating}
-          onChange={(e) => setRating(Math.max(1, Math.min(10, Number(e.target.value))))} // Limit input between 1 and 10
+          onChange={(e) => setRating(Math.max(1, Math.min(5, Number(e.target.value))))} // Limit input between 1 and 10
           min="1"
-          max="10"
+          max="5"
           className='bg-gray-300 border-2 font-bold border-blue-500 focus:outline-none px-2 py-2 rounded-md'
         />
         </div>
