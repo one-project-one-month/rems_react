@@ -97,9 +97,9 @@ const DashboardHeader: React.FC = () => {
             "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <div className="container no-scrollbar mx-auto px-4 flex items-center h-16">
+        <div className="container no-scrollbar mx-auto px-4 flex justify-between items-center h-16">
           {/* Mobile Menu Toggle */}
-          <div className="md:hidden mr-4">
+          <div className="lg:hidden mr-4">
             <button
               onClick={toggleMobileMenu}
               className="text-xl focus:outline-none"
@@ -109,7 +109,7 @@ const DashboardHeader: React.FC = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="gap-6 md:flex-1 md:justify-start hidden  md:flex">
+          <nav className="gap-4 lg:gap-2 xl:gap-6 md:flex-1 md:justify-start hidden lg:flex">
             <Link
               to="property-list"
               className="font-semibold text-[1rem] hover:text-blue-500"
@@ -137,7 +137,7 @@ const DashboardHeader: React.FC = () => {
           </nav>
 
           {/* Company Logo */}
-          <Link to="/agent" className="flex-1 flex justify-center">
+          <Link to="/agent" className="flex-1 lg:ml-[8rem] flex justify-center">
             <img
               src="/images/logo_of_REMS.avif"
               alt="REMS Logo"
@@ -152,13 +152,13 @@ const DashboardHeader: React.FC = () => {
             trigger={["click"]}
           >
             <div className="flex justify-center items-center">
-              <div className="flex flex-col gap-0">
+              <div>
                 {isLoading ? (
                   <div className="text-blue-500">
                     <LoadingOutlined />
                   </div>
                 ) : (
-                  <h1 className="font-raleWay font-bold ">
+                  <h1 className="font-raleWay hidden lg:text-[0.8rem] xl:text-[1rem] lg:block font-bold ">
                     {agent?.agentName}
                   </h1>
                 )}
@@ -166,7 +166,7 @@ const DashboardHeader: React.FC = () => {
               <Avatar
                 size={32}
                 icon={<UserOutlined />}
-                className="cursor-pointer ml-4"
+                className="cursor-pointer ml-2"
               />
             </div>
           </Dropdown>
@@ -174,7 +174,7 @@ const DashboardHeader: React.FC = () => {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white shadow-md">
+          <div className="lg:hidden bg-white shadow-md">
             <nav className="flex flex-col gap-4 p-4">
               <Link
                 to="property-list"
