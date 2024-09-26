@@ -33,8 +33,6 @@ const RecentPosts: React.FC = () => {
     agentId: agentId,
   });
 
-  console.log(propertyData?.data.properties);
-
   const recentPosts = propertyData?.data.properties;
 
   if (isPropertyError) return <p>Error...</p>

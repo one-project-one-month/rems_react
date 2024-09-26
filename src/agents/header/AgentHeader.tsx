@@ -1,14 +1,28 @@
 import { useState } from "react";
 import { Avatar, Dropdown, Layout, theme } from "antd";
-import { UserOutlined, MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  MenuOutlined,
+  CloseOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../../login/login-context/AuthContext";
+import { useGetAgentByUserIdQuery } from "../../services/agent/api/getAgentApiSlice";
 
 const { Header } = Layout;
 
-const DashboardHeader = () => {
+const DashboardHeader: React.FC = () => {
   const auth = useAuth();
+  const { user } = useAuth();
+  const userId = user?.UserId;
+  const { data, isLoading, error } = useGetAgentByUserIdQuery(userId);
+
+  const agent = data?.data;
+
+  console.log(agent);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -21,9 +35,47 @@ const DashboardHeader = () => {
     {
       key: "1",
       label: (
-        <button onClick={() => auth.logout()} rel="noopener noreferrer">
-          Log out
-        </button>
+        <div className="w-[200px]">
+          {isLoading ? (
+            <div className="flex justify-center text-blue-500 items-center h-[100px]">
+              <LoadingOutlined />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 mb-2">
+              <p>
+                Name:{" "}
+                <span className="font-bold font-raleWay">
+                  {agent?.agentName}
+                </span>
+              </p>
+
+              <p>
+                Agency Name:{" "}
+                <span className="font-bold font-raleWay">
+                  {agent?.agencyName}
+                </span>
+              </p>
+
+              <p>
+                Phone:{" "}
+                <span className="font-bold font-lato">{agent?.phone}</span>
+              </p>
+
+              <p>
+                Address:{" "}
+                <span className="font-bold font-raleWay">{agent?.address}</span>
+              </p>
+            </div>
+          )}
+          <hr></hr>
+          <button
+            onClick={() => auth.logout()}
+            rel="noopener noreferrer"
+            className="hover:bg-blue-500 mt-1 hover:text-white w-full font-bold text-[1rem] py-1 transition-all ease-in-out duration-300 rounded-md"
+          >
+            Log out
+          </button>
+        </div>
       ),
     },
   ];
@@ -99,11 +151,24 @@ const DashboardHeader = () => {
             placement="bottomRight"
             trigger={["click"]}
           >
-            <Avatar
-              size={32}
-              icon={<UserOutlined />}
-              className="cursor-pointer ml-4"
-            />
+            <div className="flex justify-center items-center">
+              <div className="flex flex-col gap-0">
+                {isLoading ? (
+                  <div className="text-blue-500">
+                    <LoadingOutlined />
+                  </div>
+                ) : (
+                  <h1 className="font-raleWay font-bold ">
+                    {agent?.agentName}
+                  </h1>
+                )}
+              </div>
+              <Avatar
+                size={32}
+                icon={<UserOutlined />}
+                className="cursor-pointer ml-4"
+              />
+            </div>
           </Dropdown>
         </div>
 
@@ -143,7 +208,7 @@ const DashboardHeader = () => {
           </div>
         )}
       </Header>
-      <div className='mx-auto'>
+      <div className="mx-auto">
         <Outlet />
       </div>
     </>
