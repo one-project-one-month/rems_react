@@ -9,15 +9,21 @@ export const propertyListApi = createApi({
     getProperties: builder.query<{ data: PropertiesResponse }, { 
       page: number, 
       limit: number,
-      city?: string
+      city?: string,
+      agentId?: number | undefined
     }>({
-      query: ({ page, limit, city }) => {
+      query: ({ page, limit, city, agentId }) => {
          let queryStr = `properties/${page}/${limit}`;
          if (city) {
           queryStr += `?city=${encodeURIComponent(city)}`
          }
+
+         if (agentId) {
+            queryStr = `properties/${page}/${limit}?agentId=${agentId}`
+         }
          return queryStr;
-      },
+      }, 
+       
     }),
   }),
 });

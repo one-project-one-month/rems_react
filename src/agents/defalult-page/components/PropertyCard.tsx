@@ -5,28 +5,27 @@ import { setCityFilter } from '../../agent-services/propertyFilterSearch';
 import { useNavigate } from 'react-router';
 import { formatNumber } from '../../property-list/AgentPropertyList';
 
-interface YangonCardProp {
+interface PropertyCardProp {
   property: PropertyDataType;
+  nav: string
 }
 
-const YangonCard: React.FC<YangonCardProp> = ({ property }) => {
+const PropertyCard: React.FC<PropertyCardProp> = ({ property , nav}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(setCityFilter(property?.property.city));
-    navigate(`/agent/property-list`);
+    navigate(`/agent/${nav}`);
   };
 
   const images = property?.images;
   const imageURL = images[0]?.imgBase64;
 
-  console.log(images)
 
-  console.log(imageURL)
 
   return (
-    <div className='max-w-[95%] sm:max-w-[500px] mx-auto h-auto bg-white rounded-lg shadow-lg overflow-hidden'>
+    <div className='max-w-[95%] sm:max-w-[500px] mx-auto h-auto bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition-all ease-in-out duration-300'>
       <div className="relative">
         <img
           src={
@@ -59,4 +58,4 @@ const YangonCard: React.FC<YangonCardProp> = ({ property }) => {
   );
 };
 
-export default YangonCard;
+export default PropertyCard;

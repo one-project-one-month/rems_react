@@ -12,14 +12,13 @@ const NavCards:React.FC = () => {
   return (
     <div className="carousel-with-yangoncity flex flex-wrap justify-center md:gap-[3rem] gap-[1rem] items-center bg-gray-100 py-5">
         <div 
-          className='bg-white w-[300px] h-[400px] shadow-md rounded-md p-5 flex flex-col gap-4 justify-center items-center   '
+          className='bg-white w-[300px] h-[400px] shadow-lg rounded-md p-5 flex flex-col gap-4 justify-center items-center hover:shadow-2xl transition-all ease-in-out duration-300 '
         >
           <div className='bg-blue-500 p-5 rounded-[100%] text-white text-[1.5rem]'>
             <FaHouseChimney/>
           </div>
           <p className='text-center mt-5 text-[0.9rem] font-bold font-lato md:text-[1.2rem]'> 
             If you want to explore for some Market Values?
-          
           </p>
           <p className='text-center text-[0.9rem] font-bold font-lato md:text-[1rem]'>
             Click below
@@ -33,7 +32,7 @@ const NavCards:React.FC = () => {
         </div>
 
         <div 
-          className='bg-white w-[300px] h-[400px] shadow-md rounded-md p-5 flex flex-col gap-4 justify-center items-center   '
+          className='bg-white w-[300px] h-[400px] shadow-lg  rounded-md p-5 flex flex-col gap-4 justify-center items-center hover:shadow-2xl transition-all ease-in-out duration-300  '
         >
           <div className='bg-blue-500 p-5 rounded-[100%] text-white text-[1.5rem]'>
             <CiTextAlignLeft/>
@@ -53,7 +52,7 @@ const NavCards:React.FC = () => {
         </div>
 
         <div 
-          className='bg-white w-[300px] h-[400px] shadow-md rounded-md p-5 flex flex-col gap-4 justify-center items-center   '
+          className='bg-white w-[300px] h-[400px] shadow-lg rounded-md p-5 flex flex-col gap-4 justify-center items-center hover:shadow-2xl transition-all ease-in-out duration-300 '
         >
           <div className='bg-blue-500 p-5 rounded-[100%] text-white text-[1.5rem]'>
             <IoIosCreate/>

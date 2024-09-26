@@ -15,8 +15,6 @@ const VinylSearch: React.FC = () => {
   const [options, setOptions] = useState<string[]>([...city]);
   const [filteredOptions, setFilteredOptions] = useState<string[] | []>([]);
 
-  console.log(options);
-
   const dispatch = useAppDispatch();
 
   const handleSearch = () => {
