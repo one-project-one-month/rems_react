@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hook"
 
 interface FilterDropdownProps {
   item: string;
-  options: {value: number | null; label: string}[]  ;
+  options: {value: number ; label: string}[]  ;
   selectedOptions:  number;
   onFilterChange: (filter: any) => void;  
 }
@@ -23,7 +23,7 @@ const PriceDropDown: React.FC<FilterDropdownProps> = ({
       dispatch(onFilterChange(value));
 
       if (value > maxPrice) {
-        dispatch(onFilterChange(null))
+        dispatch(onFilterChange(0))
       }  
     }
 
@@ -47,7 +47,7 @@ const PriceDropDown: React.FC<FilterDropdownProps> = ({
           }
        )).filter(option => selectedOptions === maxPrice
           ? 
-        (option.value !== null ? option.value >= minPrice : option) 
+        (option.value !== 0 ? option.value >= minPrice : option) 
           : 
         option)}
       />

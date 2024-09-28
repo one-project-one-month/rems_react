@@ -11,7 +11,7 @@ const BaAndBdsFilter = () => {
   const bedRoomsOptions = [0,1,2,3,4,5,6,7];
   const bathRoomsOptions = [0,1,2,3,4,5,6,7];
   return (
-    <div className='w-45 h-[10rem] rounded-full  '>
+    <div className='w-45 h-auto rounded-full  '>
       <div className='flex gap-2'>
         <FilterDropdown
          item="bathroom" 

@@ -12,6 +12,7 @@ import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch"
 // import {api} from "../agents/agent-services/appointmentaApiSlice"
 import dashboardApi from "../services/admin/api/dashboardApi";
 import {AgentAppointmentApi} from "../services/agent/api/appointment"
+import { propertyListApi } from "../services/agent/api/propertyApiSlice";
 
 export const store: any = configureStore({
 	reducer: {
@@ -27,19 +28,24 @@ export const store: any = configureStore({
 		[appointmentApi.reducerPath]: appointmentApi.reducer,
 		[AgentAppointmentApi.reducerPath] : AgentAppointmentApi.reducer,
 		[clientReviewApi.reducerPath] : clientReviewApi.reducer,
-		[dashboardApi.reducerPath]: dashboardApi.reducer
+
+		[dashboardApi.reducerPath]: dashboardApi.reducer,
+		[propertyListApi.reducerPath]: propertyListApi.reducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
 			agentApi.middleware,
 			clientApi.middleware,
-			// propertiesApi.middleware,
+
+			// propertiesApi.middleware,	
 			adminPropertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
 			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
+
 			dashboardApi.middleware,
+			propertyListApi.middleware
 		]),
 });
 

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Property } from './data-for-agent/propertyData'
+import { Property, PropertyDataType } from './data-for-agent/propertyData'
 import { Carousel } from 'antd';
 
 interface PropertyDetailsProp {
-  property: Property | undefined;
+  property: PropertyDataType | undefined;
 }
 
 const PropertyDetails: React.FC<PropertyDetailsProp> = ({property}) => {
@@ -22,22 +22,22 @@ const PropertyDetails: React.FC<PropertyDetailsProp> = ({property}) => {
 
       <div className="column-2 | p-6 ">
         <div className="mb-[1.5rem]">
-          <p className="font-bold text-[1.6rem] mb-4 ">${property?.price.toLocaleString()} MMK</p>
-          <p className='font-raleWay font-bold'>{property?.address}</p>
+          <p className="font-bold text-[1.6rem] mb-4 ">${property?.property.price.toLocaleString()} MMK</p>
+          <p className='font-raleWay font-bold'>{property?.property.address}</p>
         </div>
         <div className="bds-bas | flex gap-2 items-center">
-          <p className="font-semibold text-[1.3rem]">{property?.numberOfBedrooms}-Beds</p>
+          <p className="font-semibold text-[1.3rem]">{property?.property.numberOfBedrooms}-Beds</p>
           <span>|</span>
-          <p className="font-semibold text-[1.3rem]">{property?.numberOfBathrooms}-Bathrooms</p>
+          <p className="font-semibold text-[1.3rem]">{property?.property.numberOfBathrooms}-Bathrooms</p>
         </div>
 
         <div className="flex flex-wrap gap-2 my-[1rem]">
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold text-[0.9rem]">{property?.availiablityType}</p>
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">{property?.size} sqft</p>
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">Built: {property?.yearBuilt}</p>
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">For: {property?.propertyType}</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold text-[0.9rem]">{property?.property.availiablityType}</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">{property?.property.size} sqft</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">Built: {property?.property.yearBuilt}</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">For: {property?.property.propertyType}</p>
         </div>
-        <p className="text-[0.9rem] font-semibold font-raleWay ">{property?.description}</p>
+        <p className="text-[0.9rem] font-semibold font-raleWay ">{property?.property.description}</p>
       </div>
     </div>
   )
