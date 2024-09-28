@@ -18,6 +18,7 @@ import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 import Transaction from "../client/components/transaction/Transaction";
+import TransactionSummary from "../client/components/transaction/TransactionSummary";
 import TransactionCreateForm from "../client/components/transaction/TransactionCreateForm";
 // import Review from "../client/components/review/Review";
 import PropertyById from "../client/components/property/PropertyById";
@@ -115,9 +116,15 @@ const Router = () => {
               element: <Transaction />,
             },
             {
+            
+              index: true,
+              element: <TransactionSummary/>,
+            },
+            {
               path: "create",
               element: <TransactionCreateForm id={""} />,
             },
+           
           ],
         },
         {

@@ -44,6 +44,7 @@ export interface Agent {
 }
 
 export interface Transaction {
+  contractDate: string;
   transactionId: number;
   transactionDate: Date;
   salePrice: number;
@@ -101,6 +102,7 @@ export interface CTransactionResponse {
 }
 
 export interface Transactions {
+  status: any;
   transaction: Transaction;
   property: Property;
   client: Client;
