@@ -23,6 +23,7 @@ const TransactionSummary = ({ setIsShow ,data}: Props) => {
     const property = data.property;
     const transaction = data.transaction;
     const formattedDate = formatDate("2024-08-09T14:35:30.957");
+console.log(data);
 
 
     details = {

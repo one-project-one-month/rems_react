@@ -8,10 +8,17 @@ export const adminPropertiesApi = createApi({
 	tagTypes: ["properties"],
 	endpoints: (builder) => ({
 		getAllProperties: builder.query<Properties[], { pageNumber: number, pageSize: number,propertyType?: string }>({
-			query: (params) => ({
-				url: `properties/${params.pageNumber}/${params.pageSize}?propertyType=${params.propertyType}`,
+			
+			query: (params) => {
+				const baseUrl = `properties/${params.pageNumber}/${params.pageSize}`;
+				const url = params.propertyType 
+				? `${baseUrl}?propertyType=${encodeURIComponent(params.propertyType)}` 
+				: baseUrl;
+
+				return ({
+				url,
 				method: "GET",
-			}),
+			})},
 			providesTags: ['properties']
 		}),
 		getPropertyById: builder.query<void, number | undefined>({
