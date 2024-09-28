@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Table, Tag, message, Popconfirm, Alert, Button, Space } from "antd"
-import { CheckOutlined, CloseOutlined, LoadingOutlined } from "@ant-design/icons"
-import { useGetAppointmentsByAgentIdQuery, useUpdateAppointmentsStatusMutation } from "../../services/agent/api/appointment"
+import { Table, Tag, Alert } from "antd"
+import { LoadingOutlined } from "@ant-design/icons"
+import { useGetAppointmentsByAgentIdQuery } from "../../services/agent/api/appointment"
 
 interface Appointment {
   appointmentId: number 
@@ -32,7 +32,7 @@ export default function AgentAppointment() {
     pageSize: pageSize
   })
   
-  const [updateAppointmentsStatus] = useUpdateAppointmentsStatusMutation()
+
   const appointmentData = data?.data.appointmentDetails || [];
 
 
@@ -61,6 +61,7 @@ export default function AgentAppointment() {
       dataIndex: "status",
       key: "status",
       render: (status: string) => getStatusTag(status),
+      sorter : (a: Appointment, b: Appointment) =>  a.status.localeCompare(b.status),
     },
     {
       title: "Address",
@@ -99,14 +100,7 @@ export default function AgentAppointment() {
       dataIndex: "numberOfBathrooms",
       key: "numberOfBathrooms",
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (_: any, record: Appointment) => {
-        console.log("Record:", record);  
-        return checkStatus(record.status, record.appointmentId);
-      },
-    },
+   
   ]
 
   const getStatusTag = (status: string) => {
@@ -120,68 +114,6 @@ export default function AgentAppointment() {
         {status}
       </Tag>
     )
-  }
-  const checkStatus = (status: string, appointmentId: number) => {
- 
-    if (status) {
-      
-        return (
-          <Space>
-            <Popconfirm
-              title="Approve Appointment?"
-              description="Are you sure you want to approve this appointment?"
-              onConfirm={async () => {
-                try {
-                  await updateAppointmentsStatus({
-                    id: AGENT_ID,
-                    appointmentId,
-                    data: { status: "Approved" },
-                  }).unwrap()
-                  message.success("Appointment approved")
-                } catch (error) {
-                  message.error("Failed to approve appointment")
-                  console.error("Approval error:", error)
-                }
-              }}
-              onCancel={() => {
-                message.error("Approval aborted")
-              }}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary" icon={<CheckOutlined />} size="small">
-                Approve
-              </Button>
-            </Popconfirm>
-            <Popconfirm
-              title="Cancel Appointment?"
-              description="Are you sure you want to cancel this appointment?"
-              onConfirm={async () => {
-                try {
-                  await updateAppointmentsStatus({
-                    id: AGENT_ID,
-                    appointmentId,
-                    data: { status: "FDS" },
-                  }).unwrap()
-                  message.success("Appointment cancelled")
-                } catch (error) {
-                  message.error("Failed to cancel appointment")
-                  console.error("Cancellation error:", error)
-                }
-              }}
-              onCancel={() => {
-                message.error("Cancellation aborted")
-              }}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger icon={<CloseOutlined />} size="small">
-                Cancel
-              </Button>
-            </Popconfirm>
-          </Space>
-        )
-    }
   }
 
   if (isLoading) return <div className="flex justify-center items-center h-screen"><LoadingOutlined className="text-4xl" spin /></div>
@@ -197,7 +129,7 @@ export default function AgentAppointment() {
       <Table 
         columns={columns} 
         dataSource={appointmentData} 
-        rowKey="appointmentId"
+    
         pagination={{
           current: page,
           pageSize: pageSize,

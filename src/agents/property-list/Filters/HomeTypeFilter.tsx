@@ -4,7 +4,7 @@ import SimpleFilterDropDown from "../Dropdowns/SimpleFilterDropDown";
 
 const HomeTypeFilter: React.FC = () => {
 
-  const homeTypeOptions = ["string", "Houses", "Townhomes", "Multi-family", "Condominium", "Lands", "Apartments", "Manufactured", "Single Family Home"]
+  const homeTypeOptions = ["All", "Houses", "Townhomes", "Multi-family", "Condominium", "Lands", "Apartments", "Manufactured", "Single Family Home"]
 
   const {homeType} = useAppSelector(state => state.agentPropertyFilters);
 

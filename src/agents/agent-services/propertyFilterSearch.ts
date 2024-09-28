@@ -10,10 +10,10 @@ interface FilterState {
 }
 
 const initialState: FilterState = {
-  cityFilter: "string",
+  cityFilter: "All",
   bedRoomFilter: 0,
   bathRoomFilter: 0,
-  homeType: "string",
+  homeType: "All",
   minPrice: 0,
   maxPrice: 0
 }

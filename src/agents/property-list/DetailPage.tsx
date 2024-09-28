@@ -20,10 +20,7 @@ const DetailPage: React.FC<DetailPgProp>= ({toggle}) => {
 
   const propertyData = data?.data.properties;
 
-  console.log(propertyData);
-
   const property = propertyData?.find(property => property.property.propertyId.toString() === id);
-  // const review = reviewsData.filter(review => review.propertyId.toString() === property?.propertyId.toString());
 
   const review = property?.reviews
 
@@ -33,12 +30,14 @@ const DetailPage: React.FC<DetailPgProp>= ({toggle}) => {
       case 'propertyDetails':
         return <PropertyDetails property={property} />;
       case 'reviews':
-        return <Reviews review={review}/>;
+        return <Reviews review={review} property={property}/>;
       default:
         return <PropertyDetails property={property}/>;
     }
   };
 
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>
 
   return (
     <div  className="modal | w-[100vw] h-[100vh] z-[0] top-0 left-0 bottom-0 right-0 fixed">
@@ -51,7 +50,7 @@ const DetailPage: React.FC<DetailPgProp>= ({toggle}) => {
       <div className="detail-content | bg-white w-[100%] h-[100vh] absolute z-[99999999] top-[12.5%] xl:w-[85%] xl:h-[85vh] xl:left-[7%] overflow-auto rounded-md pt-10 xl:px-9 xl:pt-0 pb-5">
 
         <nav className="w-[100%]">
-          <ul className="w-[100%]  flex gap-5 justify-center items-center py-5">
+          <ul className="w-[100%] flex gap-5 justify-center items-center py-5">
             <li>
               <button 
                 className={`text-[1rem] font-semibold ${

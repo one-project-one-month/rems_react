@@ -32,10 +32,10 @@ const PropertyDetails: React.FC<PropertyDetailsProp> = ({property}) => {
         </div>
 
         <div className="flex flex-wrap gap-2 my-[1rem]">
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold text-[0.9rem]">{property?.property.availiablityType}</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold text-[0.9rem]">{property?.property.propertyType}</p>
           <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">{property?.property.size} sqft</p>
           <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">Built: {property?.property.yearBuilt}</p>
-          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">For: {property?.property.propertyType}</p>
+          <p className="bg-gray-200 px-3 py-2  rounded-md font-bold  text-[0.9rem]">For: {property?.property.availiablityType}</p>
         </div>
         <p className="text-[0.9rem] font-semibold font-raleWay ">{property?.property.description}</p>
       </div>

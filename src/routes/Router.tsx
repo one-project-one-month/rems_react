@@ -16,6 +16,7 @@ import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
 import Home from "../client/components/property/Home";
 import Transaction from "../client/components/transaction/Transaction";
+import TransactionSummary from "../client/components/transaction/TransactionSummary";
 import TransactionCreateForm from "../client/components/transaction/TransactionCreateForm";
 import Navbar from "../client/layouts/Navbar";
 import Error from "../error/Error";
@@ -115,9 +116,15 @@ const Router = () => {
               element: <Transaction />,
             },
             {
+            
+              index: true,
+              element: <TransactionSummary/>,
+            },
+            {
               path: "create",
               element: <TransactionCreateForm id={""} />,
             },
+           
           ],
         },
         {

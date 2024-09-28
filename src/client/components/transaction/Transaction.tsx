@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table, Tag} from "antd";
 import { TableProps } from "antd/lib";
 import dayjs from 'dayjs';
 import { useEffect, useState } from "react";
@@ -8,17 +8,18 @@ import { clientId } from "../../../services/client/features/idSlice";
 import { Transactions, TransApiResponse } from "../../../type/type";
 import TransactionSummary from "../transaction/TransactionSummary";
 
+
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
   const [transDetailData, setTransDetailData] = useState<Transactions | undefined>(undefined);
   const  id= useSelector(clientId) 
 
+  
   const initailParams = {
     clientId: id,
     pageNumber: 1,
     pageSize: 10
   }
-
   const [params, setParams] = useState(initailParams)
 
   const { isFetching, data } = useGetTransactionByClientIdQuery<TransApiResponse>(params);
@@ -41,11 +42,10 @@ const Transaction = () => {
       const transactionDataById = transactionData.find((data) => data.transaction.transactionId === id)
       setTransDetailData(transactionDataById)
     }
-
   }
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
+    const handleOutsideClick = () => {
       if (isSummaryShow) {
         setIsSummaryShow(false);
       }
@@ -65,12 +65,19 @@ const Transaction = () => {
       align: 'center',
       render: (value, item, index) => <span>{(params?.pageNumber - 1) * params?.pageSize + index + 1}</span>
     },
+   
     {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
-      render: (_, record) => record.transaction.status
+      render: (_status: string, record) => getStatusTag(record.transaction.status),
+      sorter: (a: Transactions, b: Transactions) => {
+        const statusA = a.transaction?.status || ""; 
+        const statusB = b.transaction?.status || ""; 
+        return statusA.localeCompare(statusB);
+      },
     },
+    
     {
       title: 'Transaction Date',
       dataIndex: 'transactionDate',
@@ -105,6 +112,23 @@ const Transaction = () => {
       ),
     },
   ];
+
+  const getStatusTag = (status: string) => {
+    const statusColors: { [key: string]: string } = {
+      Approved: "green",
+      pending: "gold",
+      Rent: "red",
+      Sell: "green",
+      true: "yellow",
+      string : "blue"
+     
+    }
+    return (
+      <Tag color={statusColors[status] || "default"} className="text-xs">
+        {status}
+      </Tag>
+    )
+  }
 
   return (
     <div>

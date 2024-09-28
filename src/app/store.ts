@@ -17,13 +17,14 @@ import storage from "redux-persist/lib/storage";
 import dashboardApi from "../services/admin/api/dashboardApi";
 import { AgentAppointmentApi } from "../services/agent/api/appointment";
 import { propertyListApi } from "../services/agent/api/propertyApiSlice";
+import { apiAgentSlice } from "../services/agent/api/getAgentApiSlice";
 import userIdApi from "../services/client/api/userIdApi";
 
 const rootReducer = combineReducers({
 	id: idSlice,
 	appointment: appointmentSlice,
 	currentPage: currentPageSlice,
-	agentPropertyFilters:  agentPropertyFilter,
+	agentPropertyFilters: agentPropertyFilter,
 	[agentApi.reducerPath]: agentApi.reducer,
 	[clientApi.reducerPath]: clientApi.reducer,
 	// [propertiesApi.reducerPath]: propertiesApi.reducer,
@@ -31,12 +32,13 @@ const rootReducer = combineReducers({
 
 	[transactionsApi.reducerPath]: transactionsApi.reducer,
 	[appointmentApi.reducerPath]: appointmentApi.reducer,
-	[AgentAppointmentApi.reducerPath] : AgentAppointmentApi.reducer,
-	[clientReviewApi.reducerPath] : clientReviewApi.reducer,
+	[AgentAppointmentApi.reducerPath]: AgentAppointmentApi.reducer,
+	[clientReviewApi.reducerPath]: clientReviewApi.reducer,
 
 	[dashboardApi.reducerPath]: dashboardApi.reducer,
 	[propertyListApi.reducerPath]: propertyListApi.reducer,
 	[userIdApi.reducerPath]: userIdApi.reducer,
+	[apiAgentSlice.reducerPath]: apiAgentSlice.reducer
 })
 
 const persistConfig = {
@@ -48,6 +50,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store: any = configureStore({
 	reducer: persistedReducer,
+
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
 			agentApi.middleware,
@@ -59,10 +62,10 @@ export const store: any = configureStore({
 			appointmentApi.middleware,
 			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
-
 			dashboardApi.middleware,
 			propertyListApi.middleware,
 			userIdApi.middleware,
+			apiAgentSlice.middleware
 		]),
 });
 

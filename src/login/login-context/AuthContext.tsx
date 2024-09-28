@@ -6,6 +6,7 @@ import { clearId } from "../../services/client/features/idSlice";
 interface User {
   UserId: number;
   role: string;
+  UserId: number;
 }
 
 interface AuthContextType {

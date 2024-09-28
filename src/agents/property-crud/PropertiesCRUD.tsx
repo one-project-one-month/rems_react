@@ -191,7 +191,7 @@ const PropertiesCRUD = () => {
 
   return (
     <>
-      <div className="flex justify-end pb-3">
+      <div className="flex justify-end pb-3 pt-5 w-[80%] mx-auto">
         <Button type="primary" onClick={handleCreate}>
           Create Properties
         </Button>

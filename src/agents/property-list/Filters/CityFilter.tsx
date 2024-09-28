@@ -8,7 +8,7 @@ const CityFilter:React.FC = () => {
  
   const city = cityData.map(city => city.TownshipName)
   
-  const cityOptions = ["string", ...city];
+  const cityOptions = ["All", ...city];
 
   const {cityFilter} = useAppSelector(state => state.agentPropertyFilters)
 

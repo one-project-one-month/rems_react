@@ -8,7 +8,7 @@ export interface TTransactionHistory {
   clientName: string;
   appointmentDate: string;
   appointmentTime: string;
-  status: "pending" | "confirmed" | "done";
+  status:string;
   notes?: string;
 }
 
