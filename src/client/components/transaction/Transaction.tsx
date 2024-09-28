@@ -2,43 +2,46 @@ import { Table } from "antd";
 import { TableProps } from "antd/lib";
 import dayjs from 'dayjs';
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useGetTransactionByClientIdQuery } from "../../../services/admin/api/transactionsApi";
-import { Transactions, TransApiResponse} from "../../../type/type";
+import { clientId } from "../../../services/client/features/idSlice";
+import { Transactions, TransApiResponse } from "../../../type/type";
 import TransactionSummary from "../transaction/TransactionSummary";
 
 const Transaction = () => {
   const [isSummaryShow, setIsSummaryShow] = useState<boolean>(false);
-  const [transDetailData ,setTransDetailData] = useState<Transactions|undefined>(undefined);
+  const [transDetailData, setTransDetailData] = useState<Transactions | undefined>(undefined);
+  const  id= useSelector(clientId) 
 
   const initailParams = {
-    clientId: 3,
+    clientId: id,
     pageNumber: 1,
     pageSize: 10
   }
 
   const [params, setParams] = useState(initailParams)
 
-  const { isFetching, data } = useGetTransactionByClientIdQuery<TransApiResponse>(params);    
+  const { isFetching, data } = useGetTransactionByClientIdQuery<TransApiResponse>(params);
 
   const pageSetting = data?.data?.pageSetting;
   const transactionData: Transactions[] = data?.data?.lstTransaction ?? [];
-  
+
   const handlePagination = (pageNumber: number, pageSize: number) => {
-   setParams({
-    clientId: 3,
-    pageNumber,
-    pageSize
-   })
+    setParams((prev) => ({
+      ...prev,
+      pageNumber,
+      pageSize
+    }))
   };
 
-  const detailClickHandler = (id:number)=>{
+  const detailClickHandler = (id: number) => {
     setIsSummaryShow(true)
 
-    if(transactionData){
-      const transactionDataById = transactionData.find((data)=>data.transaction.transactionId === id)
+    if (transactionData) {
+      const transactionDataById = transactionData.find((data) => data.transaction.transactionId === id)
       setTransDetailData(transactionDataById)
     }
-    
+
   }
 
   useEffect(() => {
@@ -56,22 +59,11 @@ const Transaction = () => {
 
   const columns: TableProps<Transactions>['columns'] = [
     {
-      title: "ID",
+      title: "Transaction Id",
       dataIndex: "transactionId",
       key: "transactionId",
       align: 'center',
-      render: (_, record) => (
-        <span>{record?.transaction?.transactionId}</span>
-      )
-    },
-    {
-      title: "Property",
-      dataIndex: "propertyId", 
-      key: "propertyId",
-      render: (_, record) => (
-        <span>{record?.property?.propertyId}</span>
-      ),
-      align: 'center'
+      render: (value, item, index) => <span>{(params?.pageNumber - 1) * params?.pageSize + index + 1}</span>
     },
     {
       title: 'Status',
@@ -107,11 +99,11 @@ const Transaction = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <a className="text-blue-400" onClick={()=>detailClickHandler(record.transaction.transactionId)}>
+        <a className="text-blue-400" onClick={() => detailClickHandler(record.transaction.transactionId)}>
           Detail
         </a>
       ),
-    }, 
+    },
   ];
 
   return (
@@ -127,7 +119,7 @@ const Transaction = () => {
             total: pageSetting?.totalCount,
             current: params?.pageNumber,
             onChange: handlePagination
-        }}
+          }}
         />
       </div>
     </div>

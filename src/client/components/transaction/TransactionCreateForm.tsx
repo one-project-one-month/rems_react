@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { Button, Form, Input, message, Select } from "antd";
+import { FormInstance } from "antd/lib";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useCreateTransactionMutation } from "../../../services/client/api/transactionApi";
-import dayjs from 'dayjs';
+import { clientId } from "../../../services/client/features/idSlice";
+
+const { Option } = Select;
 
 interface Props {
   id?: string;
@@ -8,54 +13,27 @@ interface Props {
 
 const TransactionCreateForm = ({ id }: Props) => {
   const [createTransaction, { isLoading }] = useCreateTransactionMutation();
+  const formRef = useRef<FormInstance>(null);
+  const client = useSelector(clientId)
 
-  // const date = new Date();
-
-  // const year = date.getFullYear();
-  // const month = String(date.getMonth() + 1).padStart(2, '0'); 
-  // const day = String(date.getDate()).padStart(2, '0');
-
-  // let hours = date.getHours();
-  // const minutes = String(date.getMinutes()).padStart(2, '0');
-  // const ampm = hours >= 12 ? 'PM' : 'AM';
-  // hours = hours % 12 || 12; 
-  
-  // const formattedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
-  
-  const initialInput = {
-    client: "",
-    salePrice: 0,
-    commission: 0,
-    status: "buy",
-  };
-
-  const [formData, setFormData] = useState(initialInput);
-
-  const handleChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = event.target;
-
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmitHandler = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-
+  const handleSubmitHandler = async (values: any) => {
     const newTransaction = {
-        propertyId: Number(id),
-        clientId: 3,
-        transactionDate: new Date().toISOString(),
-        salePrice: Number(formData?.salePrice),
-        commission: Number(formData?.commission),
-        status: formData.status,
+      propertyId: Number(id),
+      clientId: client,
+      transactionDate: new Date().toISOString(),
+      salePrice: Number(values.salePrice),
+      commission: Number(values.commission),
+      status: values.status,
     };
 
     try {
-      const response = await createTransaction(newTransaction);
-      console.log("Transaction created successfully:", response);
+      await createTransaction(newTransaction)
+        .unwrap()
+        .then(() => {
+          message.success("Transaction created successfully")
+          formRef.current?.resetFields()
+        })
+        .catch((error) => console.error('rejected', error));
     } catch (error) {
       console.error("Failed to create transaction:", error);
     }
@@ -63,67 +41,64 @@ const TransactionCreateForm = ({ id }: Props) => {
 
   return (
     <div className="flex justify-center mt-4">
-      <form
-        onSubmit={handleSubmitHandler}
+      <Form
+        ref={formRef}
+        onFinish={handleSubmitHandler}
+        layout="vertical"
         className="bg-white shadow-md border w-full p-6 space-y-4 rounded-lg">
-        <div className="flex flex-col space-y-2 text-gray-600">
-          <label className="font-semibold ">Contact Name</label>
-          <input
-            name="client"
-            onChange={handleChangeHandler}
-            className="p-3 rounded-md bg-[#F7F7F7] outline-none focus:border focus:border-blue-500"
-            type="text"
+
+        <Form.Item label="Contact Name" name="client" rules={[{ required: true }]}
+        >
+          <Input
             placeholder="Emily Fleur"
           />
-        </div>
-        <div className="flex flex-col space-y-2 text-gray-600">
-          <label className="font-semibold ">Contact Phone</label>
-          <input
-            className="p-3 rounded-md bg-[#F7F7F7] outline-none focus:border focus:border-blue-500"
+        </Form.Item>
+
+        <Form.Item label="Contact Phone" name="phone" rules={[{ required: true }]}>
+          <Input
             type="tel"
             placeholder="09********"
           />
-        </div>
-        <div className="flex flex-col space-y-2 text-gray-600">
-          <label className="font-semibold ">Transaction Type</label>
-          <select
-            name="status"
-            onChange={handleChangeHandler}
-            className="ps-3 pe-10 bg-[#F7F7F7] py-3 rounded-md appearance-none outline-none focus:border focus:border-blue-500">
-            <option value="">Choose a transaction type</option>
-            <option value="Rent">Rent</option>
-            <option value="Buy">Buy</option>
-            <option value="Sell">Sell</option>
-          </select>
-        </div>
-        <div className="flex flex-col space-y-2 text-gray-600">
-          <label className="font-semibold ">Transaction Amount</label>
-          <input
-            name="salePrice"
-            onChange={handleChangeHandler}
-            className="p-3 rounded-md bg-[#F7F7F7] outline-none focus:border focus:border-blue-500"
-            type="number"
-            placeholder="10,*******"
-          />
-        </div>
-        <div className="flex flex-col text-gray-600">
-          <label className="font-semibold pb-2">Commission Fee</label>
-          <input
-            name="commission"
-            onChange={handleChangeHandler}
-            className="p-3 rounded-md mb-6 bg-[#F7F7F7] outline-none focus:border focus:border-blue-500"
-            type="number"
-            placeholder="10,*******"
-          />
-        </div>
+        </Form.Item>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-3 w-full rounded-md font-semibold"
-          disabled={isLoading}>
-          {isLoading ? "Submitting..." : "Submit"}
-        </button>
-      </form>
+        <Form.Item label="Transaction Type" name="status" rules={[{ required: true }]}
+        >
+          <Select
+            placeholder="Choose a transaction type"
+          >
+            <Option value="Rent">Rent</Option>
+            <Option value="Buy">Buy</Option>
+            <Option value="Sell">Sell</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Transaction Amount" name="salePrice" rules={[{ required: true }]}
+        >
+          <Input
+            type="number"
+            placeholder="10,*******"
+          />
+        </Form.Item>
+
+        <Form.Item label="Commission Fee" name="commission" rules={[{ required: true }]}
+        >
+          <Input
+            type="number"
+            placeholder="10,*******"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={isLoading}
+            className="w-full"
+          >
+            {isLoading ? "Submitting..." : "Submit"}
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

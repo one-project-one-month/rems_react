@@ -1,40 +1,40 @@
-import DashboardLayout from "../admin/layouts/DashboardLayout";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import HomePage from "../admin/components/dashboard/HomePage";
-import ClientList from "../admin/components/clients/ClientList";
 import AgentList from "../admin/components/agents/AgentList";
-import TransactionsList from "../admin/components/transactions/TransactionList";
-import PropertyList from "../admin/components/properties/PropertyList";
-import PropertyDetail from "../admin/components/properties/PropertyDetail";
 import Appointments from "../admin/components/appointments/Appointments";
+import ClientList from "../admin/components/clients/ClientList";
+import HomePage from "../admin/components/dashboard/HomePage";
+import PropertyDetail from "../admin/components/properties/PropertyDetail";
+import PropertyList from "../admin/components/properties/PropertyList";
+import TransactionsList from "../admin/components/transactions/TransactionList";
+import DashboardLayout from "../admin/layouts/DashboardLayout";
 
-import Navbar from "../client/layouts/Navbar";
-import Home from "../client/components/property/Home";
-import Error from "../error/Error";
 import Appointment from "../client/components/appointment/Appointment";
 import AppointmentHistoryList from "../client/components/appointment/AppointmentHistoryList";
+import Home from "../client/components/property/Home";
 import Transaction from "../client/components/transaction/Transaction";
 import TransactionCreateForm from "../client/components/transaction/TransactionCreateForm";
+import Navbar from "../client/layouts/Navbar";
+import Error from "../error/Error";
 // import Review from "../client/components/review/Review";
 import PropertyById from "../client/components/property/PropertyById";
 
-import DetailPage from "../agents/property-list/DetailPage";
-import AgentTransactions from "../agents/transactions/AgentTransactions";
 import AgentAppointment from "../agents/appointment/AgentAppointment";
-import AgentPropertyList from "../agents/property-list/AgentPropertyList";
+import AgentDefaultPage from "../agents/defalult-page/AgentDefaultPage";
 import AgentHeader from "../agents/header/AgentHeader";
 import PropertiesCRUD from "../agents/property-crud/PropertiesCRUD";
-import { useAuth } from "../login/login-context/AuthContext";
+import AgentPropertyList from "../agents/property-list/AgentPropertyList";
+import DetailPage from "../agents/property-list/DetailPage";
+import AgentTransactions from "../agents/transactions/AgentTransactions";
 import Login from "../login/Login";
+import { useAuth } from "../login/login-context/AuthContext";
 import Register from "../login/Register";
-import AgentDefaultPage from "../agents/defalult-page/AgentDefaultPage";
 
 const Router = () => {
-  const { user } = useAuth(); // Get the authenticated user from context
+  const { user } = useAuth(); // Get the authenticated user from context	
 
   // Define routes for different user roles
   const adminRoutes = [

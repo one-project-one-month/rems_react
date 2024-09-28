@@ -7,9 +7,9 @@ export const adminPropertiesApi = createApi({
 	baseQuery: baseUrl,
 	tagTypes: ["properties"],
 	endpoints: (builder) => ({
-		getAllProperties: builder.query<Properties[], { pageNumber: number, pageSize: number }>({
-			query: ({ pageNumber, pageSize }) => ({
-				url: `properties/${pageNumber}/${pageSize}`,
+		getAllProperties: builder.query<Properties[], { pageNumber: number, pageSize: number,propertyType?: string }>({
+			query: (params) => ({
+				url: `properties/${params.pageNumber}/${params.pageSize}?propertyType=${params.propertyType}`,
 				method: "GET",
 			}),
 			providesTags: ['properties']

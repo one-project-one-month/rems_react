@@ -6,7 +6,6 @@ interface Props {
 }
 
 const TransactionSummary = ({ setIsShow ,data}: Props) => {
-  console.log(data);
 
   function formatDate(dateString: string): string {
     const date = new Date(dateString);

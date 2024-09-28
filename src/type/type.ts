@@ -218,10 +218,16 @@ export interface Property {
   images: PropertyImage[];
 }
 
+export interface HomeProperties{
+	properties: Properties[];
+	pageSetting: PageSetting
+}
+
 export interface HomeGroupProps {
-  properties: Property[];
+  properties: HomeProperties;
   propertyTypes: string[];
   agents: Agent[];
+  pagination: () => void;
 }
 
 export interface State {

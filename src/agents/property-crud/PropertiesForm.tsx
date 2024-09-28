@@ -46,6 +46,7 @@ const PropertiesForm = ({ onClose, initialValues }: IProps) => {
   const onFinish = () => {
     console.log("form", form.getFieldsValue());
     const formData = form.getFieldsValue();
+    
     const image = images.map((img) => img.dataURLKey);
     const imageBase64 = image.toString();
     const imagesArray: ImageProps = {

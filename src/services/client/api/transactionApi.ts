@@ -41,6 +41,7 @@ export const transactionApi = createApi({
         method: "POST",
         body: newTransaction,
       }),
+      invalidatesTags: ["appointments"],
     }),
 
     getAllTransactionByClientId: builder.query<
@@ -49,6 +50,7 @@ export const transactionApi = createApi({
     >({
       query: ({ clientId, pageNumber, pageSize }) =>
         `transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`,
+      providesTags: ["appointments"]
     }),
   }),
 });

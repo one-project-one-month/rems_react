@@ -15,7 +15,7 @@ export const transactionsApi = createApi({
       }),
       providesTags: ['transaction']
     }),
-    getTransactionByClientId: builder.query<Transaction[], { clientId: number, pageNumber: number, pageSize: number }>({
+    getTransactionByClientId: builder.query<Transaction[], { clientId?: number, pageNumber: number, pageSize: number }>({
       query: ({ clientId, pageNumber, pageSize }) => ({
         url: `transactions/Client?clientId=${clientId}&pageNo=${pageNumber}&pageSize=${pageSize}`,
         method: "GET"

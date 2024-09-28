@@ -1,10 +1,9 @@
-import { Button, Space, TimePicker, TimePickerProps, Typography } from "antd";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import dayjs from "dayjs";
 import { ClockCircleOutlined } from "@ant-design/icons";
+import { Button, Space, TimePicker, TimePickerProps, Typography } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useAppDispatch, useAppSelector } from "../../../app/hook";
 import { addAppointmentTime } from "../../../services/client/features/appointmentSlice";
-import { next, prev } from "../../../services/client/features/currentPageSlice";
 
 dayjs.extend(customParseFormat);
 
@@ -29,8 +28,6 @@ const PickTime: React.FC<PickTimeProps> = ({ nextPage, prevPage }) => {
         rawAppointmentTime: timeOnly,
       })
     );
-
-    // dispatch(next());
     nextPage()
   };
   return (
@@ -43,7 +40,6 @@ const PickTime: React.FC<PickTimeProps> = ({ nextPage, prevPage }) => {
           </Space>
         </Typography>
         <Button type="link" onClick={() => {
-          // dispatch(prev())
           prevPage()
         }}>
           Change

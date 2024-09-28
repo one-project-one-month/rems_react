@@ -3,7 +3,7 @@ import RatingReview from "./RatingReview";
 import { Button, Modal, Input, message } from 'antd';
 import { usePostReviewMutation } from "../../../services/client/api/Review";
 
-const App: React.FC<{ userId: number; propertyId: number }> = ({ userId, propertyId }) => {
+const App: React.FC<{ userId?: number; propertyId: number }> = ({ userId, propertyId }) => {
 
   const [rating, setRating] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const App: React.FC<{ userId: number; propertyId: number }> = ({ userId, propert
   const handleOk = async () => {
     try {
       await postReview({
-        userId,
+        userId: Number(userId),
         propertyId,
         rating,
         comments: reviewText,

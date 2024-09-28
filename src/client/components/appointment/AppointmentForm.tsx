@@ -1,23 +1,24 @@
+import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import type { FormProps } from "antd";
 import {
-  message,
   Button,
   Flex,
   Form,
   Input,
+  message,
   Space,
-  Typography,
   Spin,
+  Typography,
 } from "antd";
-import type { FormProps } from "antd";
-import React from "react";
-import { ClockCircleOutlined, CalendarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-dayjs.extend(customParseFormat);
-import { useNavigate } from "react-router";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../../app/hook";
 import { usePostAppointmentMutation } from "../../../services/client/api/appointmentApi";
-import { prev } from "../../../services/client/features/currentPageSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hook";
+import { clearInterval } from "../../../services/client/features/appointmentSlice";
+import { clientId } from "../../../services/client/features/idSlice";
+dayjs.extend(customParseFormat);
 
 const { Title } = Typography;
 
@@ -26,34 +27,37 @@ type FieldType = {
 };
 
 interface PickTimeProps {
+  propertyId?: number;
   prevPage: () => void;
+  closeDrawer?: () => void;
 }
 
-const AppointmentForm: React.FC<PickTimeProps> = ({prevPage}) => {
-  const dispatch = useAppDispatch();
+const AppointmentForm: React.FC<PickTimeProps> = ({ propertyId, prevPage, closeDrawer }) => {
   const [postAppointment, { isSuccess }] = usePostAppointmentMutation();
-  const { appointmentTime, appointmentDate, rawAppointmentTime } =
-    useAppSelector((state) => state.appointment);
-  const navigate = useNavigate();
+  const { appointmentTime, appointmentDate, rawAppointmentTime } = useAppSelector((state) => state.appointment);
+  const dispatch = useDispatch();
+  const id = useSelector(clientId)
 
   if (isSuccess) {
     return <Spin />;
   }
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async () => {
+  const onFinish: FormProps<FieldType>["onFinish"] = async (value) => {
     try {
       await postAppointment({
-        clientId: 3,
-        propertyId: 2,
+        clientId: id,
+        propertyId: propertyId || 0,
         appointmentDate: appointmentDate,
         appointmentTime: rawAppointmentTime,
         status: "Pending",
-        notes: "I am busy",
+        notes: value.notes || "",
       })
         .unwrap()
         .then(() => message.success("Your appointment have been recorded"));
-
-      navigate("history");
+      dispatch(clearInterval())
+      if (closeDrawer) {
+        closeDrawer();
+      }
     } catch (error) {
       message.error("Something went wrong , Please try again");
     }
@@ -77,7 +81,6 @@ const AppointmentForm: React.FC<PickTimeProps> = ({prevPage}) => {
             </Space>
           </Typography>
           <Button type="link" onClick={() => {
-            // dispatch(prev());
             prevPage();
           }}>
             Change

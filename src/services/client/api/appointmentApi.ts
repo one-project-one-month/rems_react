@@ -5,11 +5,12 @@ import { TAppointment, TResponse } from "../../../type/type";
 export interface TAppointmentHistory {
   appointmentId: number;
   agentName: string;
+  agentPhoneNumber: string;
   clientName: string;
   appointmentDate: string;
   appointmentTime: string;
   status: "pending" | "confirmed" | "done";
-  notes?: string;
+  note?: string;
 }
 
 export interface TCreatePostRequest {

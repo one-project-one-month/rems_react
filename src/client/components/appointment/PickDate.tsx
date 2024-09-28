@@ -1,14 +1,13 @@
 import { DatePicker, DatePickerProps } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useAppSelector, useAppDispatch } from "../../../app/hook";
-import { next } from "../../../services/client/features/currentPageSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hook";
 import { addAppointmentDate } from "../../../services/client/features/appointmentSlice";
 
 dayjs.extend(customParseFormat);
 
 interface PickDateProps {
-  nextPage: () => void; // Define the function signature in the props
+  nextPage: () => void;
 }
 
 const PickDate: React.FC<PickDateProps> = ({ nextPage }) => {
@@ -19,7 +18,6 @@ const PickDate: React.FC<PickDateProps> = ({ nextPage }) => {
 
   const onChange: DatePickerProps["onChange"] = (_, dateString) => {
     dispatch(addAppointmentDate(dateString));
-    // dispatch(next());
     nextPage()
   };
 
