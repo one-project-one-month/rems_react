@@ -7,22 +7,6 @@ import { appointmentApi } from "../services/client/api/appointmentApi";
 import { clientReviewApi } from "../services/client/api/Review";
 import appointmentSlice from "../services/client/features/appointmentSlice";
 import currentPageSlice from "../services/client/features/currentPageSlice";
-<<<<<<< HEAD
-import { appointmentApi } from "../services/client/api/appointmentApi";
-import {appointmentApi as AppointmentApiForAdminDashboard} from "../services/admin/api/appointmentApi";
-
-export const store = configureStore({
-	reducer: {
-		appointment: appointmentSlice,
-		currentPage: currentPageSlice,
-		[agentApi.reducerPath]: agentApi.reducer,
-		[clientApi.reducerPath]: clientApi.reducer,
-		// [propertiesApi.reducerPath]: propertiesApi.reducer,
-		[transactionsApi.reducerPath]: transactionsApi.reducer,
-		[appointmentApi.reducerPath]: appointmentApi.reducer,
-		[AppointmentApiForAdminDashboard.reducerPath]: AppointmentApiForAdminDashboard.reducer
-	},
-=======
 import idSlice from "../services/client/features/idSlice";
 
 import agentPropertyFilter from "../agents/agent-services/propertyFilterSearch";
@@ -67,7 +51,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store: any = configureStore({
 	reducer: persistedReducer,
 
->>>>>>> dev_conflict_fixed
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
 			agentApi.middleware,
@@ -77,16 +60,12 @@ export const store: any = configureStore({
 			adminPropertiesApi.middleware,
 			transactionsApi.middleware,
 			appointmentApi.middleware,
-<<<<<<< HEAD
-			AppointmentApiForAdminDashboard.middleware
-=======
 			AgentAppointmentApi.middleware,
 			clientReviewApi.middleware,
 			dashboardApi.middleware,
 			propertyListApi.middleware,
 			userIdApi.middleware,
 			apiAgentSlice.middleware
->>>>>>> dev_conflict_fixed
 		]),
 });
 
