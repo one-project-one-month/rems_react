@@ -14,14 +14,13 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
   const auth = useAuth();
 
 	const items: MenuProps["items"] = [
 		{
 			key: "1",
 			label: (
-				<a onClick={() => auth.logout()} rel='noopener noreferrer'>
+				<a onClick={() => auth.logout()} rel='noopener noreferrer' href='/'>
 					Log out
 				</a>
 			),

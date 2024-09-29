@@ -1,14 +1,18 @@
-import { Button, Space, TimePicker, TimePickerProps, Typography } from "antd";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import dayjs from "dayjs";
 import { ClockCircleOutlined } from "@ant-design/icons";
+import { Button, Space, TimePicker, TimePickerProps, Typography } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useAppDispatch, useAppSelector } from "../../../app/hook";
 import { addAppointmentTime } from "../../../services/client/features/appointmentSlice";
-import { next, prev } from "../../../services/client/features/currentPageSlice";
 
 dayjs.extend(customParseFormat);
 
-const PickTime = () => {
+interface PickTimeProps {
+  nextPage: () => void;
+  prevPage: () => void;
+}
+
+const PickTime: React.FC<PickTimeProps> = ({ nextPage, prevPage }) => {
   const dispatch = useAppDispatch();
   const { appointmentDate, appointmentTime } = useAppSelector(
     (state) => state.appointment
@@ -24,34 +28,34 @@ const PickTime = () => {
         rawAppointmentTime: timeOnly,
       })
     );
-
-    dispatch(next());
+    nextPage()
   };
   return (
-    <>
-      <Space direction="vertical">
-        <Space>
-          <Typography>
-            <Space>
-              <ClockCircleOutlined />
-              {new Date(appointmentDate).toDateString()}
-            </Space>
-          </Typography>
-          <Button type="link" onClick={() => dispatch(prev())}>
-            Change
-          </Button>
-        </Space>
-
-        <TimePicker
-          use12Hours
-          format="h:mm a"
-          onChange={onTimeChange}
-          value={
-            appointmentTime.length > 1 ? dayjs(appointmentTime, "h:mm a") : null
-          }
-        />
+    <Space direction="vertical">
+      <Space>
+        <Typography>
+          <Space>
+            <ClockCircleOutlined />
+            {new Date(appointmentDate).toDateString()}
+          </Space>
+        </Typography>
+        <Button type="link" onClick={() => {
+          prevPage()
+        }}>
+          Change
+        </Button>
       </Space>
-    </>
+
+      <TimePicker
+        use12Hours
+        format="h:mm a"
+        onChange={onTimeChange}
+        style={{ width: '100%' }}
+        value={
+          appointmentTime.length > 1 ? dayjs(appointmentTime, "h:mm a") : null
+        }
+      />
+    </Space>
   );
 };
 

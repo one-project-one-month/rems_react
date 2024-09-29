@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { clearId } from "../../services/client/features/idSlice";
 
 interface User {
+  UserId: number;
   role: string;
   UserId: number;
 }
@@ -34,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const token = localStorageToken();
 
   const [user, setUser] = useState<User | null>(token);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -60,6 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    dispatch(clearId())
   };
 
   return (

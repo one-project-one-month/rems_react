@@ -1,9 +1,11 @@
-import { Flex, Space, Typography } from "antd";
-import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { CalendarOutlined, ClockCircleOutlined, PhoneFilled } from "@ant-design/icons";
+import { Divider, Flex, Space, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-dayjs.extend(customParseFormat);
+import { BiLocationPlus } from "react-icons/bi";
+import { GiNotebook } from "react-icons/gi";
 import { TAppointmentHistory } from "../../../services/client/api/appointmentApi";
+dayjs.extend(customParseFormat);
 
 const AppointHistory = ({
   data,
@@ -24,11 +26,11 @@ const AppointHistory = ({
         return (
           <div
             key={appointment.appointmentId}
-            className="m-4 border-2 shadow border-primary/30 rounded-lg"
+            className="my-4"
           >
             <Flex align="center" dir="ltr">
               <Space
-                className="px-4 py-2 rounded-s-lg ring ring-primary ring-offset-0 bg-primary"
+              className="mx-4 rounded-xl p-3 bg-primary"
                 direction="vertical"
               >
                 <Typography className="text-white">
@@ -46,35 +48,43 @@ const AppointHistory = ({
                   </Space>
                 </Typography>
               </Space>
-              <div className="ml-3 ">
+              <div className="ml-3 flex-1 px-2 py-4">
                 <Space direction="vertical" className="mb-2">
-                  <Typography className="text-xs">
-                    Appointment with{" "}
+                  <Typography.Title level={5} className="text-xs">
+                    Client {" "}
                     <span className="text-primary font-semibold">
-                      {appointment.agentName}clientId
+                      {appointment.clientName}
                     </span>
-                  </Typography>
-                  {/* <Typography >Agent - 
-                                    <span className="text-primary font-semibold"> {appointment.agentName}</span>
-                                    </Typography>                                */}
+                    {" "}Appointment with Agent {" "}
+                    <span className="text-primary font-semibold">
+                      {appointment.agentName}
+                    </span>
+                  </Typography.Title>
                 </Space>
 
                 <div className="flex justify-between items-center text-xs">
-                  <button className="bg-primary text-white px-3 py-1 rounded">
-                    Call
-                  </button>
-                  <p
-                    className={
-                      appointment.status === "done"
-                        ? "text-primary"
-                        : "text-green-800"
+                  <Flex vertical>
+                    <div className="flex items-center gap-2">
+                      <PhoneFilled className="text-primary" />
+                      <span>{appointment.agentPhoneNumber}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <BiLocationPlus className="text-primary" />
+                      <span>{appointment.address},{appointment.state},{appointment.city}</span>
+                    </div>
+                    {
+                      appointment.note &&
+                       <div className="flex items-center gap-2">
+                      <GiNotebook className="text-primary" />
+                      <span>{appointment.note}</span>
+                    </div>
                     }
-                  >
-                    {appointment.status}
-                  </p>
+                  </Flex>
+                  <Tag>{appointment.status}</Tag>
                 </div>
               </div>
             </Flex>
+            <Divider style={{margin: 0}}/>
           </div>
         );
       })}

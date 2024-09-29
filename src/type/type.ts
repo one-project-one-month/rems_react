@@ -44,6 +44,7 @@ export interface Agent {
 }
 
 export interface Transaction {
+  contractDate: string;
   transactionId: number;
   transactionDate: Date;
   salePrice: number;
@@ -101,6 +102,7 @@ export interface CTransactionResponse {
 }
 
 export interface Transactions {
+  status: any;
   transaction: Transaction;
   property: Property;
   client: Client;
@@ -166,11 +168,19 @@ export interface Property {
 }
 
 export interface TAppointment {
+  appointmentId: number;
+  agentName: string;
+  clientName: string;
   appointmentDate: string;
   appointmentTime: string;
-  rawAppointmentTime: Date | null;
-  status: "pending" | "done";
   notes?: string;
+  address: string,
+  city: string,
+  state: string,
+  price: 0.00,
+  size: 0.00,
+  numberOfBedrooms: 0,
+  numberOfBathrooms: 0
 }
 
 export interface Agent {
@@ -189,6 +199,7 @@ export interface PropertyImage {
   url: string;
   description: string;
 }
+
 
 export interface Property {
   id: string;
@@ -209,16 +220,23 @@ export interface Property {
   images: PropertyImage[];
 }
 
+export interface HomeProperties{
+	properties: Properties[];
+	pageSetting: PageSetting
+}
+
 export interface HomeGroupProps {
-  properties: Property[];
+  properties: HomeProperties;
   propertyTypes: string[];
   agents: Agent[];
+  pagination: () => void;
 }
 
 export interface State {
   id: number;
   name: string;
 }
+
 
 export interface PropertyResponse {
   isFetching: boolean;
@@ -230,6 +248,15 @@ export interface PropertyResponse {
       properties: Properties[];
     };
   };
+}
+
+export interface PropertyIdResponse{
+	isFetching: boolean;
+	data: {
+		isSuccess: boolean;
+		isError: boolean;
+		data: Properties
+	};
 }
 
 export interface ChangeStatus {

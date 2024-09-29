@@ -10,10 +10,6 @@ const PropertyDetail = () => {
 
   const [changeStatus] = useChangestatusMutation();
 
-  const handleBackButton = () => {
-    navigate(-1);
-  };
-
   const handleApprove = async () => {
     try {
       await changeStatus({
@@ -48,7 +44,7 @@ const PropertyDetail = () => {
         </Typography.Title>
         <button
           className="bg-gray-400 rounded-md hover:bg-slate-300 cursor-pointer  px-5 py-1 text-white"
-          onClick={handleBackButton}
+          onClick={() => navigate(-1)}
         >
           {" "}
           back{" "}

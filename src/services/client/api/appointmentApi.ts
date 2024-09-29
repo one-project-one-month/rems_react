@@ -1,15 +1,16 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
-import { TResponse } from "../../../type/type";
+import { TAppointment, TResponse } from "../../../type/type";
 
 export interface TAppointmentHistory {
   appointmentId: number;
   agentName: string;
+  agentPhoneNumber: string;
   clientName: string;
   appointmentDate: string;
   appointmentTime: string;
   status: "pending" | "confirmed" | "done";
-  notes?: string;
+  note?: string;
 }
 
 export interface TCreatePostRequest {
@@ -31,8 +32,14 @@ export const appointmentApi = createApi({
       number[]
     >({
       query: (idArray) =>
-        `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
+        `appointments/client/${idArray.join("/")}`,
       providesTags: ["appointments"],
+    }),
+    getAppoitmentByAdmin: builder.query<TResponse<TAppointment>, { pageNumber: number, pageSize: number }>({
+      query: ({ pageNumber, pageSize }) => ({
+        url: `appointments/admin/${pageNumber}/${pageSize}`,
+      }),
+      providesTags: ["appointments"]
     }),
     postAppointment: builder.mutation<TAppointmentHistory, TCreatePostRequest>({
       query: (newAppointment) => ({
@@ -40,9 +47,9 @@ export const appointmentApi = createApi({
         method: "POST",
         body: newAppointment,
       }),
-    }),
+    })
   }),
 });
 
-export const { useGetAppointmentHistoryQuery, usePostAppointmentMutation } =
+export const { useGetAppointmentHistoryQuery, usePostAppointmentMutation, useGetAppoitmentByAdminQuery } =
   appointmentApi;

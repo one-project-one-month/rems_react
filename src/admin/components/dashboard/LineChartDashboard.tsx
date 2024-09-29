@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { WeeklyActivity } from '../../../services/admin/api/dashboardApi';
 
 interface tickProps {
     x: number;
@@ -11,50 +12,9 @@ interface tickProps {
     value?: string;
 }
 
-const data = [
-    {
-        name: 'Monday',
-        sold: 4000,
-        rented: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Tuesday',
-        sold: 3000,
-        rented: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Wednesday',
-        sold: 2000,
-        rented: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Thursday',
-        sold: 2780,
-        rented: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Friday',
-        sold: 1890,
-        rented: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Saturday',
-        sold: 2390,
-        rented: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Sunday',
-        sold: 3490,
-        rented: 4300,
-        amt: 2100,
-    },
-];
+interface LineChartProps {
+    data?: WeeklyActivity[]
+}
 
 class CustomizedLabel extends PureComponent<tickProps> {
     render() {
@@ -82,10 +42,13 @@ class CustomizedAxisTick extends PureComponent<tickProps> {
     }
 }
 
-export default class LineChartDashboard extends PureComponent {
+export default class LineChartDashboard extends PureComponent<LineChartProps> {
     static demoUrl = 'https://codesandbox.io/p/sandbox/line-chart-with-customized-label-d6rytv';
 
+    
     render() {
+        const { data } = this.props;
+
         return (
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart

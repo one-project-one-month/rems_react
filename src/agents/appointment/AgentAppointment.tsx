@@ -61,6 +61,7 @@ export default function AgentAppointment() {
       dataIndex: "status",
       key: "status",
       render: (status: string) => getStatusTag(status),
+      sorter : (a: Appointment, b: Appointment) =>  a.status.localeCompare(b.status),
     },
     {
       title: "Address",

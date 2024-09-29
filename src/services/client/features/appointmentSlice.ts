@@ -28,6 +28,10 @@ export const appointmentSlice = createSlice({
 		addNotes: (state, action) => {
 			state.notes = action.payload;
 		},
+		clearInterval: (state) => {
+			state.appointmentDate = "",
+            state.appointmentTime = ""; 
+		}
 	},
 });
 
@@ -37,6 +41,7 @@ export const {
 	addAppointmentTime,
 	updateStatus,
 	addNotes,
+	clearInterval
 } = appointmentSlice.actions;
 
 // Export the reducer

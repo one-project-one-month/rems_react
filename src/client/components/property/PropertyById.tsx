@@ -1,145 +1,116 @@
-import { useParams } from "react-router";
-import Container from "./Container";
-import { useNavigate } from "react-router-dom";
-import { GiBathtub, GiBunkBeds } from "react-icons/gi";
+import { BackwardFilled } from "@ant-design/icons";
+import { Button, Drawer, Flex, Typography } from "antd";
+import { useState } from "react";
 import { BiLocationPlus, BiRuler } from "react-icons/bi";
+import { GiBathtub, GiBunkBeds } from "react-icons/gi";
+import { useNavigate, useParams } from "react-router";
+import { useAuth } from "../../../login/login-context/AuthContext";
+import { useGetPropertyByIdQuery } from "../../../services/admin/api/propertiesApi";
+import { PropertyIdResponse } from "../../../type/type";
+import Appointment from "../appointment/Appointment";
+import Review from "../review/Review";
 import TransactionCreateForm from "../transaction/TransactionCreateForm";
-import { useGetPropertyByIdQuery } from "../../../services/client/api/propertyApi";
-import { Button } from "antd";
-import Review from "../review/Review"
+import Container from "./Container";
 
 const PropertyById: React.FC = () => {
   const { id } = useParams();
-  const nav = useNavigate();
-  const { data: property } = useGetPropertyByIdQuery(Number(id));
+  const [openDraw, setOpenDraw] = useState(false);
+  const navigate = useNavigate();
+  const { isFetching, data } = useGetPropertyByIdQuery<PropertyIdResponse>(Number(id));
 
-  const handleBuy = () => {
-    nav("/user/appointment");
-  };
+  const property = data?.data ?? [];
+  const { user } = useAuth();
 
   return (
-    <Container>
-      <div className=" font-sans max-w-screen-lg mx-auto">
-        <div className="flex flex-col py-16 gap-6">
-          <div>
+    <>
+      <Drawer open={openDraw} onClose={() => setOpenDraw(false)}>
+        <Appointment propertyId={property?.property?.propertyId} closeDrawer={() => setOpenDraw(false)} />
+      </Drawer>
+      <Container>
+        <div className=" font-sans max-w-screen-lg mx-auto">
+          <Flex gap={10} style={{ width: '100%', marginBlock: 20 }}>
+            <Button type="primary" shape="circle" icon={<BackwardFilled />} onClick={() => navigate(-1)} />
+            <Typography.Title level={3} style={{ margin: 0 }}>
+              Property Detail
+            </Typography.Title>
+          </Flex>
+          <div className="flex flex-col pb-16">
             <div className=" w-full h-auto object-contain rounded-xl  overflow-hidden ">
               {/* <img
                 className=" w-full hover:scale-110 transition-transform duration-300 transform"
-                src={property?.images[0].url}
+                src={property?.images[0]?.imageUrl}
                 alt="PropertyImage"
               /> */}
             </div>
-          </div>
-          <div className=" grid grid-cols-1 mt-4  gap-x-20 gap-y-6 md:grid-cols-7">
-            <div className=" md:col-span-4">
-              <div className=" flex flex-col gap-5">
-                <div className="flex justify-between">
-                  <button className="  bg-[#ff1f1f] w-fit text-sm font-semibold text-white uppercase rounded-md px-3 py-1">
-                    {property?.data.property.status}
-                  </button>
-                  <p className="font-semibold">
-                    {" "}
-                    {property?.data.property.price} kyats
-                  </p>
-                </div>
-                <button
-                  onClick={handleBuy}
-                  className=" uppercase font-semibold text-sm px-4 py-2 w-full hover:bg-white hover:text-black transition duration-300 border-2 hover:border-2 hover:border-black rounded-lg bg-black text-white"
-                >
-                  Checkout
-                </button>
-                <div className="flex justify-between">
-                  <Button href="/client/appointment" type="link">
-                    Get appointment
-                  </Button>
-                  <Button type="link">
-                    <Review userId={0} propertyId={0}/>
-                  </Button>
-                </div>
-
-                {/* <div className="flex flex-col gap-2">
-                  <div className="flex flex-row text-xl gap-2 font-semibold items-center">
-                    <div>{property?.images[0].description}</div>
+            <div className=" grid grid-cols-1 mt-4  gap-x-20 gap-y-6 md:grid-cols-7">
+              <div className=" md:col-span-4">
+                <div className=" flex flex-col gap-5">
+                  <div className="flex justify-between">
+                    <button className="  bg-[#ff1f1f] w-fit text-sm font-semibold text-white uppercase rounded-md px-3 py-1">
+                      {property?.property?.propertyType}
+                    </button>
+                    <p className="font-semibold">
+                      {" "}
+                      {property?.property?.price} kyats
+                    </p>
                   </div>
-                </div>
-                <hr /> */}
-                <h1 className="  text-neutral-500">Features:</h1>
-                <div className=" flex  items-center   gap-4 font-medium text-neutral-950">
-                  <div className=" flex items-center gap-1">
-                    <GiBunkBeds />
-                    <p>{property?.data.property.numberOfBedrooms} beds</p>
+                  <div className="flex justify-between">
+                    <Button type="link" onClick={() => setOpenDraw(true)}>
+                      Get appointment
+                    </Button>
+                    <Button type="link">
+                      <Review userId={user?.UserId} propertyId={property?.property?.propertyId} />
+                    </Button>
                   </div>
-                  <div className="flex items-center gap-1 border-x-[1px] px-3">
-                    <GiBathtub />
-                    {property?.data.property.numberOfBathrooms} bathrooms
+                  <h1 className="  text-neutral-500">Features:</h1>
+                  <div className=" flex  items-center   gap-4 font-medium text-neutral-950">
+                    <div className=" flex items-center gap-1">
+                      <GiBunkBeds />
+                      <p>{property?.property?.numberOfBedrooms} beds</p>
+                    </div>
+                    <div className="flex items-center gap-1 border-x-[1px] px-3">
+                      <GiBathtub />
+                      {property?.property?.numberOfBathrooms} bathrooms
+                      <p></p>
+                    </div>
+                    <div className=" flex items-center gap-1">
+                      <BiRuler />
+                      {property?.property?.size} SqFt
+                    </div>
                     <p></p>
                   </div>
-                  <div className=" flex items-center gap-1">
-                    <BiRuler />
-                    {property?.data.property.size} SqFt
+                  <hr />
+                  <h1 className="  text-neutral-500">Location:</h1>
+                  <div className=" flex flex-row items-center  gap-4 font-medium text-neutral-950">
+                    <BiLocationPlus />
+                    <div className="">{property?.property?.address},</div>
+                    <div className="">{property?.property?.city}</div>
                   </div>
-                  <p></p>
-                </div>
-                <hr />
-                <h1 className="  text-neutral-500">Location:</h1>
-                <div className=" flex flex-row items-center   gap-4 font-medium text-neutral-950">
-                  <BiLocationPlus />
-                  <div className="">{property?.data.property.address},</div>
-                  <div className="">{property?.data.property.city}</div>
-                </div>
-                <hr />
-                <div className=" flex flex-row items-center   gap-4 font-medium text-neutral-500">
-                  <h1 className="  text-neutral-950">Year Built:</h1>
-                  <div className="">{property?.data.property.yearBuilt}</div>
-                </div>
-                <hr />
-                {/* <div className="flex flex-row items-center gap-4">
-                  <div className=" px-3 py-1.5 rounded-full bg-neutral-400">
-                    P
+                  <hr />
+                  <div className=" flex flex-row items-center   gap-4 font-medium text-neutral-500">
+                    <h1 className="  text-neutral-950">Year Built:</h1>
+                    <div className="">{property?.property?.yearBuilt}</div>
                   </div>
-                  <div className="flex flex-col">
-                    <div>
-                      Hosted by <span className="">{"someone"}</span>
-                    </div>
-                    <div className=" text-sm text-neutral-500">
-                      example@gmail.com
+                  <hr />
+                  <div>
+                    <h1 className=" font-bold text-lg mb-2">Description</h1>
+                    <div className=" text-neutral-500">
+                      {property?.property?.description}
                     </div>
                   </div>
-                </div> */}
-                <div>
-                  <h1 className=" font-bold text-lg mb-2">Description</h1>
-                  <div className=" text-neutral-500">
-                    {property?.data.property.description}
-                  </div>
+                  <hr />
                 </div>
-                <hr />
+              </div>
+              <div className=" order-first md:order-last md:col-span-3">                
+                <div className="mt-5">
+                  <TransactionCreateForm id={id} />
+                </div>
               </div>
             </div>
-            {/* <div className=" order-first md:order-last md:col-span-3">
-              <div className=" bg-white shadow-md hover:shadow-lg transition rounded-xl border-[1px] overflow-hidden border-neutral-200">
-                <div className="flex flex-col items-center gap-2 p-4">
-                  <div className="text-2xl">
-                    $ {property?.data.property.price}
-                  </div>
-                  <button
-                    onClick={handleBuy}
-                    className=" uppercase font-semibold text-sm px-4 py-2 w-full hover:bg-white hover:text-black transition duration-300 border-2 hover:border-2 hover:border-black rounded-lg bg-black text-white"
-                  >
-                    Checkout
-                  </button>
-                </div>
-                <hr />
-              </div>
-
-              <div className="mt-5">
-                <TransactionCreateForm id={id}/>
-              </div>
-            </div>
-            </div> */}
           </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 };
 

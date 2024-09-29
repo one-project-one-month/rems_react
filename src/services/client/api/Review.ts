@@ -11,6 +11,7 @@ export interface Review {
 export const clientReviewApi = createApi({
   reducerPath: "review",
   baseQuery: baseUrl,
+  tagTypes: ["review"],
   endpoints: (builder) => ({
     postReview: builder.mutation<Review, Review>({
       query: (review) => ({
@@ -18,6 +19,7 @@ export const clientReviewApi = createApi({
         method: "POST",
         body: review,
       }),
+      invalidatesTags: ["review"]
     }),
   }),
 });
