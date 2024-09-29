@@ -21,7 +21,7 @@ const DashboardHeader = ({ collapsed, setCollapsed }: collapseProp) => {
 		{
 			key: "1",
 			label: (
-				<a onClick={() => auth.logout()} rel='noopener noreferrer' href='/'>
+				<a onClick={() => auth.logout()} rel='noopener noreferrer'>
 					Log out
 				</a>
 			),
