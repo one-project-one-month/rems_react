@@ -6,9 +6,12 @@ export const clientApi = createApi({
   reducerPath: "clientApi",
   baseQuery: baseUrl,
   endpoints: (builder) => ({
-    getAllClients: builder.query<ClientData, void>({
-      query: () => ({
-        url: "clients",
+    getAllClients: builder.query<
+      ClientData,
+      { pageNumber: number; pageSize: number }
+    >({
+      query: ({ pageNumber, pageSize }) => ({
+        url: `clients/${pageNumber}/${pageSize}`,
         method: "GET",
       }),
     }),

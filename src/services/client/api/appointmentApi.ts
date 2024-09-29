@@ -1,25 +1,16 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import baseUrl from "../../../app/hook";
+import { TAppointment, TResponse } from "../../../type/type";
 
 export interface TAppointmentHistory {
   appointmentId: number;
   agentName: string;
+  agentPhoneNumber: string;
   clientName: string;
   appointmentDate: string;
   appointmentTime: string;
   status: "pending" | "confirmed" | "done";
-  notes?: string;
-}
-
-export interface TAppointmentHistoryResponse {
-  isSuccess: boolean;
-  isError: boolean;
-  data: {
-    totalCount: number;
-    pageSize: number;
-    isEndOfPage: boolean;
-    appointmentDetails: TAppointmentHistory[];
-  };
+  note?: string;
 }
 
 export interface TCreatePostRequest {
@@ -36,10 +27,19 @@ export const appointmentApi = createApi({
   baseQuery: baseUrl,
   tagTypes: ["appointments"],
   endpoints: (builder) => ({
-    getAppointmentHistory: builder.query<TAppointmentHistoryResponse, any>({
+    getAppointmentHistory: builder.query<
+      TResponse<TAppointmentHistory>,
+      number[]
+    >({
       query: (idArray) =>
-        `appointments/GetAppointmentByClientId/${idArray.join("/")}`,
+        `appointments/client/${idArray.join("/")}`,
       providesTags: ["appointments"],
+    }),
+    getAppoitmentByAdmin: builder.query<TResponse<TAppointment>, { pageNumber: number, pageSize: number }>({
+      query: ({ pageNumber, pageSize }) => ({
+        url: `appointments/admin/${pageNumber}/${pageSize}`,
+      }),
+      providesTags: ["appointments"]
     }),
     postAppointment: builder.mutation<TAppointmentHistory, TCreatePostRequest>({
       query: (newAppointment) => ({
@@ -47,9 +47,9 @@ export const appointmentApi = createApi({
         method: "POST",
         body: newAppointment,
       }),
-    }),
+    })
   }),
 });
 
-export const { useGetAppointmentHistoryQuery, usePostAppointmentMutation } =
+export const { useGetAppointmentHistoryQuery, usePostAppointmentMutation, useGetAppoitmentByAdminQuery } =
   appointmentApi;

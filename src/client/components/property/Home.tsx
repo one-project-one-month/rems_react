@@ -1,134 +1,51 @@
-import React, { useEffect, useState, ChangeEvent, MouseEvent } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router";
-import { Property, Agent, City, State } from "../../../type/type";
-import PropertyGroup from "./PropertyGroup";
+import { Button, Skeleton } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useAuth } from "../../../login/login-context/AuthContext";
+import { useGetAllPropertiesQuery } from "../../../services/admin/api/propertiesApi";
+import { useGetClientUserIdQuery } from "../../../services/client/api/userIdApi";
+import { updateClientId } from "../../../services/client/features/idSlice";
+import { HomeProperties, PropertyResponse } from "../../../type/type";
+import PropertyCard from "./PropertyCard";
+
 
 const Home: React.FC = () => {
-	const [states, setStates] = useState<State[]>([]);
-	const [properties, setProperties] = useState<Property[]>([]);
-	const [cities, setCities] = useState<City[]>([]);
-	const [agents, setAgents] = useState<Agent[]>([]);
 	const [propertyTypes] = useState<string[]>([
 		"All",
-		"Condo",
+		"Condominium",
 		"Apartment",
-		"House",
-		"Office",
+		"Townhouses",
 	]);
-	const [selectedState, setSelectedState] = useState<number | "">("");
-	const [selectedCity, setSelectedCity] = useState<number | "">("");
-	const [selectedPropertyType, setSelectedPropertyType] = useState<
-		number | ""
-	>("");
-	const [buttonDisabled, setButtonDisabled] = useState(true);
+	const [page, setPage] = useState({ pageNumber: 1, pageSize: 10 });
+	const [activeType, setActiveType] = useState("All");
 
-	const navigate = useNavigate(); // Hook for navigation
+	const dispatch = useDispatch();
+	const { user } = useAuth();
+	const userId = user?.UserId;
 
-	useEffect(() => {
-		fetchStates();
-		fetchProperties();
-		fetchAgents();
-	}, []);
+	const { data: userIdData } = useGetClientUserIdQuery({ userId })
+	const clientData = userIdData?.data || null;
 
 	useEffect(() => {
-		if (selectedState) {
-			fetchCities(selectedState);
-		} else {
-			setCities([]);
-		}
-	}, [selectedState]);
+		dispatch(updateClientId(clientData))
+	}, [clientData])
 
-	// Function to check if all fields are selected
-	const checkButtonDisabled = () => {
-		setButtonDisabled(
-			!(selectedState && selectedCity && selectedPropertyType)
-		);
-	};
+	const params = {
+		...page,
+		propertyType: activeType === "All" ? "" : activeType
+	}
 
-	// Use effect to check button state when any selection changes
-	useEffect(() => {
-		checkButtonDisabled();
-	}, [selectedState, selectedCity, selectedPropertyType]);
+	const { isFetching, data: PropertyData } = useGetAllPropertiesQuery<PropertyResponse>(params);
 
-	const fetchProperties = async () => {
-		try {
-			const { data } = await axios.get<Property[]>(
-				"http://localhost:3000/properties"
-			);
-			setProperties(data);
-		} catch (error) {
-			console.error("Error fetching properties:", error);
-		}
-	};
+	const properties: HomeProperties = PropertyData?.data ?? [];
 
-	const fetchAgents = async () => {
-		try {
-			const { data } = await axios.get<Agent[]>(
-				"http://localhost:3000/agents"
-			);
-			setAgents(data);
-		} catch (error) {
-			console.error("Error fetching agents:", error);
-		}
-	};
+	const nextPage = () => {
+		setPage({ ...page, pageNumber: page.pageNumber + 1 });
+	}
 
-	const fetchStates = async () => {
-		try {
-			const { data } = await axios.get<State[]>(
-				"http://localhost:3000/states"
-			);
-			setStates(data);
-		} catch (error) {
-			console.error("Error fetching states:", error);
-		}
-	};
-
-	const fetchCities = async (stateId: number | "") => {
-		try {
-			const { data } = await axios.get<City[]>(
-				`http://localhost:3000/cities?state_id=${stateId}`
-			);
-			setCities(data);
-		} catch (error) {
-			console.error("Error fetching cities:", error);
-		}
-	};
-
-	const handleStateChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelectedState(Number(e.target.value));
-		setSelectedCity(""); // Reset city selection when state changes
-		setSelectedPropertyType(""); // Reset property type selection when state changes
-	};
-
-	const handleCityChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelectedCity(Number(e.target.value));
-	};
-
-	const handlePropertyTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		setSelectedPropertyType(Number(e.target.value));
-	};
-
-	const handleFilter = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault(); // Prevent default form submission behavior
-
-		navigate("/user/filter", {
-			state: {
-				state:
-					selectedState !== ""
-						? states.find((s) => s.id === selectedState)?.name
-						: "",
-				city:
-					selectedCity !== ""
-						? cities.find((c) => c.id === selectedCity)?.name
-						: "",
-				propertyType:
-					selectedPropertyType !== ""
-						? propertyTypes[selectedPropertyType]
-						: "",
-			},
-		});
-	};
+	const prevPage = () => {
+		setPage({ ...page, pageNumber: page.pageNumber - 1 });
+	}
 
 	return (
 		<div className='relative min-h-screen w-full overflow-hidden bg-orange-50'>
@@ -147,7 +64,7 @@ const Home: React.FC = () => {
 			{/* Scrollable Content */}
 			<div className='relative z-20 w-full pt-20 text-white'>
 				<div className='w-full mx-auto'>
-					<div className='h-screen mt-20'>
+					<div className='mt-20'>
 						<header className='text-center mb-8'>
 							<h1 className='text-7xl font-bold mb-20'>
 								Find Your Dream Home
@@ -158,13 +75,49 @@ const Home: React.FC = () => {
 								let’s discuss your dream house?
 							</p>
 						</header>
-
 						<div className='left-0 right-0 w-full max-w-[1600px] bg-white text-black'>
-							<PropertyGroup
-								agents={agents}
-								properties={properties}
-								propertyTypes={propertyTypes}
-							/>
+							<div className="px-10 py-10">
+								{
+									isFetching ? <Skeleton />
+										:
+										<>
+											<ul className="text-black flex items-center justify-center gap-5 mb-5">
+												{propertyTypes?.map((type, index) => (
+													<li
+														key={index}
+														onClick={() => setActiveType(type)}
+														className={`px-6 py-2 text-[16px] cursor-pointer rounded-md ${activeType === type
+															? "bg-blue-500 text-white"
+															: "border border-blue-500 text-blue-500"
+															}`}
+													>
+														{type}
+													</li>
+												))}
+											</ul>
+											<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+												{properties.properties?.map((property) => (
+													<PropertyCard key={property.property.propertyId} property={property} />
+												))}
+											</div>
+											<div className="flex justify-center align-center mt-5">
+												<Button
+													disabled={page.pageNumber === 1}
+													onClick={prevPage}
+												>
+													Prev
+												</Button>
+												<Button>{page.pageNumber}</Button>
+												<Button
+													disabled={properties.pageSetting.isEndOfPage}
+													onClick={nextPage}
+												>
+													Next
+												</Button>
+											</div>
+										</>
+								}
+							</div>
 						</div>
 					</div>
 				</div>
